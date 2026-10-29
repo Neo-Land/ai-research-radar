@@ -1,0 +1,169 @@
+{
+  "question": "How can companies reduce hallucinations when using LLMs on their own documents?",
+  "papers": [
+    "2610.27027",
+    "2610.04409",
+    "2610.02976",
+    "2610.19728",
+    "2610.12981",
+    "2610.29669",
+    "2609.32617",
+    "2610.26645"
+  ],
+  "brief": {
+    "summary": "None of the provided papers directly tests grounding an LLM on a company's own documents (for example, retrieval over internal files), so this brief cannot give a validated answer to that question. The closest evidence points to layered checks: adversarial cross-model verification with an audit trail, confidence estimates that flag likely-wrong answers, and evaluating fixes across varied configurations rather than one setup. Most gains reported are on general benchmarks or other settings, and the multi-agent evidence suggests that adding more models does not reliably reduce hallucination by itself.",
+    "key_findings": [
+      {
+        "claim": "BiasGuard-D has two adversarial roles from different model families exchange typed claims, a three-model majority vote adjudicates, and a deterministic referential-plus-semantic check validates the verdict. Removing the iterative loop sharply drops invariant satisfaction. On HaluEval QA, the deliberation layer raised right-answer recovery by 49 percentage points, and a cross-family second auditor was needed to keep recall on objective hallucinations.",
+        "citations": [
+          "2610.29669"
+        ]
+      },
+      {
+        "claim": "In clinical tasks, multi-agent collaboration improved task performance but did not reliably reduce hallucination inside the reasoning. Of 36 model-system-task comparisons, only 12 were resolvable: four decreased hallucination and eight increased it. When shown their own flagged errors, every model except Llama-3.2-3B-Instruct reduced hallucination.",
+        "citations": [
+          "2610.27027"
+        ]
+      },
+      {
+        "claim": "Instruction-tuned models produced 10x to 35x more high-confidence factual errors (probability at least 0.95) than unaligned base models on long-tail factual queries. Bounding confidence margins in DPO reduced high-confidence errors by up to 35.3% relative to standard DPO on Mistral-7B, while keeping performance on the evaluated general reasoning benchmarks.",
+        "citations": [
+          "2609.32617"
+        ]
+      },
+      {
+        "claim": "A reliability predictor that adds groups derived from chain-of-thought properties to topic-based multicalibration reduced Brier score for both hallucination prediction and unsafe-response detection. Calibrating on chain-of-thought groups alone also improved calibration across topics.",
+        "citations": [
+          "2610.26645"
+        ]
+      },
+      {
+        "claim": "EscapeGuard, a training-free inference-time method, reduced tool-selection hallucination by 9.0 percentage points across six benchmarks. The authors also found that existing mitigations can lower hallucination on the tool configuration they were tuned on while raising it on others, a failure they call hallucination escape.",
+        "citations": [
+          "2610.04409"
+        ]
+      }
+    ],
+    "implications": [
+      {
+        "implication": "Companies that check LLM outputs against source material can add a second verifier from a different model family and log every claim and verdict. This gives an audit trail, which the authors tie to emerging AI regulations. The gain has been shown only on HaluEval QA, and the paper does not show it working on internal document collections.",
+        "who_it_affects": "Compliance, risk and platform teams running document Q&A or record generation",
+        "citations": [
+          "2610.29669"
+        ]
+      },
+      {
+        "implication": "Adding more agents or roles should not be assumed to reduce hallucination. Teams should measure hallucination in the reasoning as well as in the final answer, and test whether a self-correction step, where the model sees its own flagged errors, helps for their specific model.",
+        "who_it_affects": "Teams building multi-agent LLM pipelines, especially in regulated domains such as healthcare",
+        "citations": [
+          "2610.27027"
+        ]
+      },
+      {
+        "implication": "Teams that fine-tune or post-train their own models may find that standard preference tuning increases confident errors. Bounded-margin objectives are a possible fix, but the evidence comes from one 7B model and general benchmarks, so it needs testing on the company's own data before use.",
+        "who_it_affects": "ML teams doing post-training or fine-tuning on proprietary data",
+        "citations": [
+          "2609.32617"
+        ]
+      },
+      {
+        "implication": "Confidence scores for answers can be made more informative by also using features from the model's reasoning trace. This could support routing low-confidence answers to human review, though the paper reports Brier score gains rather than end-to-end accuracy gains.",
+        "who_it_affects": "Product teams that expose answer confidence or route answers to human reviewers",
+        "citations": [
+          "2610.26645"
+        ]
+      },
+      {
+        "implication": "A fix that works on one tool or document setup may make errors worse in another. Evaluation should cover several configurations and paired queries, not a single benchmark setup.",
+        "who_it_affects": "Teams building LLM agents that call internal tools or APIs",
+        "citations": [
+          "2610.04409"
+        ]
+      }
+    ],
+    "maturity": "early research",
+    "maturity_rationale": "The papers report benchmark results from research settings. Several are narrow (one 7B model for the DPO bound, HaluEval QA for verification, clinical tasks for multi-agent comparisons). None evaluates retrieval or question answering over a company's own documents, and results from one model or task often did not transfer to others.",
+    "risks_and_limitations": [
+      "No provided paper studies enterprise document grounding, such as retrieval-augmented generation over internal files, so the recommendations are extrapolated from related settings.",
+      "The clinical multi-agent study found that effects depend on the model, with no topology reliably better; results may not transfer to other domains.",
+      "The DPO margin bound was tested only on Mistral-7B and on general reasoning benchmarks, not on factual document tasks.",
+      "The verification approach relies on several model calls per answer, which adds cost and latency; the papers do not report those costs in the provided abstracts.",
+      "The audio-visual and video papers (2610.02976, 2610.19728, 2610.12981) address other modalities and were not used for the recommendations above.",
+      "Several abstracts report relative or benchmark-specific gains (for example, percentage points on particular benchmarks), which may not carry over to a company's own data."
+    ]
+  },
+  "judgement": {
+    "verdicts": [
+      {
+        "claim_number": 1,
+        "verdict": "supported",
+        "reason": "The abstract matches every detail: the adversarial roles from distinct model families, the three-model majority quorum, the referential-plus-semantic invariant, the sharp drop without the iterative loop, the +49 pp recovery on HaluEval QA, and the need for a cross-family second auditor."
+      },
+      {
+        "claim_number": 2,
+        "verdict": "supported",
+        "reason": "The abstract states that collaboration improves task performance but does not lower hallucination as a rule. It reports 12 of 36 resolvable comparisons (four decreases, eight increases) and that every model except Llama-3.2-3B-Instruct reduces hallucination when shown its flagged errors."
+      },
+      {
+        "claim_number": 3,
+        "verdict": "supported",
+        "reason": "The abstract reports 10x to 35x more high-confidence errors (p \u2265 0.95) for instruction-tuned models on long-tail factual queries. It also reports up to a 35.3% reduction versus standard DPO on Mistral-7B, with performance maintained on the evaluated general reasoning benchmarks."
+      },
+      {
+        "claim_number": 4,
+        "verdict": "supported",
+        "reason": "The abstract states that adding CoT groups to topic-based multicalibration reduces Brier score for both hallucination prediction and unsafe-response detection, and that CoT groups alone improve calibration across topics."
+      },
+      {
+        "claim_number": 5,
+        "verdict": "supported",
+        "reason": "The abstract describes EscapeGuard as training-free and inference-time, reports a 9.0 pp reduction across six benchmarks, and defines hallucination escape exactly as the claim does."
+      },
+      {
+        "claim_number": 6,
+        "verdict": "partially supported",
+        "reason": "The cross-family second auditor, the typed-record audit trail, the link to AI regulations, and the HaluEval QA result all appear in the abstract. However, the claim reduces a multi-role adversarial and quorum system to simply adding a second verifier, and the practical advice to companies is an extrapolation."
+      },
+      {
+        "claim_number": 7,
+        "verdict": "supported",
+        "reason": "The recommendations follow directly from the abstract's findings. Collaboration does not reliably reduce hallucination, hallucination must be measured in the reasoning, and the benefit of self-correction depends on the model."
+      },
+      {
+        "claim_number": 8,
+        "verdict": "partially supported",
+        "reason": "The paper attributes confident errors to post-training alignment and instruction tuning in general, not specifically to standard preference tuning. The caveat that the evidence comes from a single 7B model is accurate, but the claim's framing narrows the cause."
+      },
+      {
+        "claim_number": 9,
+        "verdict": "supported",
+        "reason": "The abstract reports that CoT-derived groups improve reliability prediction, measured by Brier score. The human-review routing is presented as a hedged possibility, and the caveat that the gains are in Brier score rather than end-to-end accuracy is accurate."
+      },
+      {
+        "claim_number": 10,
+        "verdict": "partially supported",
+        "reason": "The paper shows that mitigations can help on one tool configuration while hurting others, and it uses paired-query evaluation. Extending this finding to 'document setups' goes beyond what the abstract covers."
+      }
+    ],
+    "usefulness": 4,
+    "usefulness_reason": "The brief gives concrete, numbered findings with sensible caveats and practical takeaways about verifiers, audit trails, calibration and multi-configuration testing. However, none of the cited work directly tests hallucination reduction on companies' own document collections (e.g., RAG grounding), so the brief only partly answers the question."
+  },
+  "n_claims": 10,
+  "citation_validity": 1.0,
+  "faithfulness": 0.85,
+  "finding_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "implication_scores": [
+    0.5,
+    1.0,
+    0.5,
+    1.0,
+    0.5
+  ],
+  "usefulness": 4
+}

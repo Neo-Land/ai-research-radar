@@ -1,0 +1,259 @@
+{
+  "question": "How is AI governance and regulation evolving, and what should compliance teams watch?",
+  "papers": [
+    "2609.24784",
+    "2609.20016",
+    "2609.27994",
+    "2609.36228",
+    "2609.26175",
+    "2609.27632",
+    "2610.33253",
+    "2609.24515"
+  ],
+  "brief": {
+    "summary": "The papers show governance shifting from single-system checks toward population-level and runtime controls, especially for agentic and generative AI in regulated finance and healthcare. Most work is still conceptual or based on small validations, and the EU AI Act compliance tools reviewed are not yet reliable substitutes for legal review. The set does not measure how regulators are actually enforcing these rules, so the regulatory trajectory is inferred from research proposals rather than from enforcement evidence.",
+    "key_findings": [
+      {
+        "claim": "Current regulation is mostly single-system-centric; a formal framework (convex AI compositionality) is proposed to govern collections of related AI system instantiations and their configuration changes over time.",
+        "citations": [
+          "2609.24784"
+        ]
+      },
+      {
+        "claim": "Governance-as-Code translates EU AI Act technical requirements into 43 machine-checkable criteria in a CI/CD pipeline, emitting Article-indexed audit evidence. On two enterprise deployments it reproduced all findings of a manual audit, including three penalty-triggering violations, while cutting audit labor by about 75%.",
+        "citations": [
+          "2609.20016"
+        ]
+      },
+      {
+        "claim": "The same work argues that under Article 25 and Chapter V a downstream deployer relies on the upstream provider's Article 53 training-data summary, so verification should target that summary rather than per-sample documentation.",
+        "citations": [
+          "2609.20016"
+        ]
+      },
+      {
+        "claim": "Local compliance does not guarantee collective compliance: a simulation shows shared-signal thin-file exclusion under local controls, which is a collective disparate-impact risk. The authors call this constitutional non-compositionality and propose ARIA, a finance reference architecture with population-level monitoring. It is a research agenda, not a validated product.",
+        "citations": [
+          "2609.27994"
+        ]
+      },
+      {
+        "claim": "In a constructed drift regime, observed-versus-expected distributional monitoring gave earlier warning than the alternatives tested in the simulations.",
+        "citations": [
+          "2609.27994"
+        ]
+      },
+      {
+        "claim": "An empirical study of 12 EU AI Act compliance checkers found quality varies significantly. They tend to oversimplify or omit key obligations and rarely give determinate, actionable guidance, so the authors say they should be treated as early-stage orientation tools that can create a false sense of compliance.",
+        "citations": [
+          "2609.36228"
+        ]
+      },
+      {
+        "claim": "EADC is a benchmark of 4,435+ QA pairs built from an AI compliance knowledge graph and reviewed by legal experts. It covers bias, fairness, privacy and values, and the authors report it exposes compliance blind spots in state-of-the-art LLMs, including implicit risks in long multi-turn interactions.",
+        "citations": [
+          "2609.26175"
+        ]
+      },
+      {
+        "claim": "A tiered multi-agent architecture for DACH finance binds evidence, decisions and reason codes to a permissioned DAG with deterministic timestamps, enabling replay and provenance checks. Clause-level legal indexing with effective dates is used for portability across the EU.",
+        "citations": [
+          "2609.27632"
+        ]
+      },
+      {
+        "claim": "In a company case study (Zafin AIOS), governed agentic workflows reduced effort by 38% on a pricing execution platform and reporting work by 76% on a deal negotiation platform, while keeping data privacy, role-based access and audit guardrails. The results are self-reported and descriptive.",
+        "citations": [
+          "2610.33253"
+        ]
+      },
+      {
+        "claim": "An expert-informed study (23 experts) identifies reporting elements for AI agent security incidents, such as agent memory, actual and potential autonomy levels, and tool usage. It also flags risks that reports themselves leak data or become attack targets.",
+        "citations": [
+          "2609.24515"
+        ]
+      }
+    ],
+    "implications": [
+      {
+        "implication": "Compliance teams may be able to automate parts of EU AI Act evidence collection, but only for requirements that can be turned into measurable thresholds. Open-textured duties like 'appropriate levels' still need documented, defensible numbers chosen by the provider.",
+        "who_it_affects": "Providers of high-risk and generative AI systems; their compliance and MLOps teams",
+        "citations": [
+          "2609.20016"
+        ]
+      },
+      {
+        "implication": "Deployers that build on upstream foundation models may need to shift their diligence toward verifying the upstream training-data summary and documenting only the layers they control. This could change contract terms and vendor audit requests.",
+        "who_it_affects": "Downstream deployers, procurement and legal teams in regulated industries",
+        "citations": [
+          "2609.20016"
+        ]
+      },
+      {
+        "implication": "Fair-lending and conduct reviews may need population-level outcome monitoring for multi-agent or multi-model systems, not only per-model validation. Current model-risk processes built around single components may miss collective harms.",
+        "who_it_affects": "Banks and lenders; model risk management and fair-lending teams",
+        "citations": [
+          "2609.27994",
+          "2609.27632"
+        ]
+      },
+      {
+        "implication": "Off-the-shelf EU AI Act checkers should not be used as the basis for a compliance sign-off. They are useful for orientation, but a legal and technical review is still needed.",
+        "who_it_affects": "SMEs and individual developers who might rely on automated checkers; compliance officers evaluating vendors",
+        "citations": [
+          "2609.36228"
+        ]
+      },
+      {
+        "implication": "Benchmarks based on legal knowledge graphs and expert review could become a basis for testing LLMs against regulatory risk. Results are not yet a standard, so they should be treated as one input to testing.",
+        "who_it_affects": "LLM developers and third-party evaluators; AI assurance teams",
+        "citations": [
+          "2609.26175"
+        ]
+      },
+      {
+        "implication": "Incident response processes may need to capture agent-specific data such as memory access, autonomy level and tool calls. Reporting pipelines themselves need protection from leakage.",
+        "who_it_affects": "Security and incident response teams deploying AI agents; legal teams handling incident reporting obligations",
+        "citations": [
+          "2609.24515"
+        ]
+      },
+      {
+        "implication": "Audit-trail architectures (DAG-based or governed workflow control planes) may make AI decisions easier to replay and verify. Vendor productivity claims should be checked against independent evaluation before being relied upon.",
+        "who_it_affects": "Regulated finance firms adopting agentic AI; internal audit functions",
+        "citations": [
+          "2609.27632",
+          "2610.33253"
+        ]
+      }
+    ],
+    "maturity": "emerging",
+    "maturity_rationale": "Some tools have been tested on real deployments (GaC on two enterprise systems, Zafin AIOS on two production codebases), but the evidence is small, often self-reported, or simulated. The compliance checkers reviewed are judged early-stage, and several papers explicitly present research agendas rather than validated systems.",
+    "risks_and_limitations": [
+      "Several results come from simulations or constructed scenarios (ARIA) rather than live deployments.",
+      "The Zafin case study is a single company's self-reported results and is described as descriptive rather than causal.",
+      "The GaC audit benchmark compares against one manual expert audit on two deployments, which limits generalizability.",
+      "The EADC benchmark's coverage and reliability beyond its own evaluation are not established in the abstract.",
+      "The convex compositionality paper is formal and illustrative; practical deployment is not demonstrated.",
+      "Compliance checkers may give a false sense of compliance, according to the checker study.",
+      "Incident reporting frameworks may create new data-leakage and attack surfaces.",
+      "The papers offer no evidence of how regulators are enforcing these rules in practice, so the regulatory direction is inferred from research proposals."
+    ]
+  },
+  "judgement": {
+    "verdicts": [
+      {
+        "claim_number": 1,
+        "verdict": "supported",
+        "reason": "The abstract says regulation is predominantly single-system-centric. It introduces convex AI compositionality to represent and monitor the configurations of AI system populations over time."
+      },
+      {
+        "claim_number": 2,
+        "verdict": "supported",
+        "reason": "The abstract gives 43 machine-checkable criteria in a CI/CD pipeline and Article-indexed evidence. It also reports two enterprise deployments, reproduction of all manual audit findings including three penalty-triggering violations, and roughly 75% less audit labor."
+      },
+      {
+        "claim_number": 3,
+        "verdict": "supported",
+        "reason": "The abstract directly states the Article 25 / Chapter V reasoning and that GaC verifies the Article 53 summary rather than per-sample documentation."
+      },
+      {
+        "claim_number": 4,
+        "verdict": "supported",
+        "reason": "The abstract defines constitutional non-compositionality and lists disparate impact as a collective outcome. It describes a simulation of thin-file exclusion under local controls, proposes ARIA with population-level monitoring, and closes with a validation agenda rather than a production claim."
+      },
+      {
+        "claim_number": 5,
+        "verdict": "partially supported",
+        "reason": "The abstract mentions earlier warning from observed-versus-expected monitoring in a constructed drift regime. It does not say what this was compared against, so 'than the alternatives tested' adds detail."
+      },
+      {
+        "claim_number": 6,
+        "verdict": "supported",
+        "reason": "The abstract reports 12 checkers, significant quality variation, oversimplified or omitted obligations, and lack of determinate, actionable guidance. It calls them early-stage orientation tools that may create a false sense of compliance."
+      },
+      {
+        "claim_number": 7,
+        "verdict": "partially supported",
+        "reason": "The size, knowledge-graph basis, expert review, taxonomy and exposure of blind spots are all stated. However, the abstract does not specifically tie the exposed blind spots to implicit risks in long multi-turn interactions; it only says the dataset includes long-horizon interactions."
+      },
+      {
+        "claim_number": 8,
+        "verdict": "supported",
+        "reason": "The title and abstract describe a tiered multi-agent DACH finance framework with a permissioned DAG, deterministic timestamping, replay and provenance checks. They also cover clause-level legal indexing with effective dates for portability across the EU."
+      },
+      {
+        "claim_number": 9,
+        "verdict": "supported",
+        "reason": "The abstract reports a 38% effort reduction and a 76% reduction in reporting work with guardrails maintained. It describes an internal Customer Zero case study and calls the results descriptive."
+      },
+      {
+        "claim_number": 10,
+        "verdict": "supported",
+        "reason": "The abstract mentions 23 experts, reporting elements including memory, autonomy levels and tool usage, and the risks of data leakage and of attacks on the reporting infrastructure."
+      },
+      {
+        "claim_number": 11,
+        "verdict": "partially supported",
+        "reason": "The abstract shows open-textured standards converted into declared numbers based on provider baselines. The limitation 'only for requirements that can be turned into measurable thresholds' is the brief's inference."
+      },
+      {
+        "claim_number": 12,
+        "verdict": "partially supported",
+        "reason": "The shift to verifying the upstream summary and documenting only controlled layers is stated. The effect on contract terms and vendor audit requests is speculation not found in the abstract."
+      },
+      {
+        "claim_number": 13,
+        "verdict": "supported",
+        "reason": "The ARIA abstract says component-centric governance is insufficient for collective risk. It proposes population-level monitoring mapped to fair-lending, model-risk and conduct-supervision needs."
+      },
+      {
+        "claim_number": 14,
+        "verdict": "supported",
+        "reason": "The abstract calls the checkers orientation tools only and warns that relying on them may create a false sense of compliance, which directly implies they should not be the basis for sign-off."
+      },
+      {
+        "claim_number": 15,
+        "verdict": "partially supported",
+        "reason": "The abstract presents EADC as a rigorous benchmark. The point that it is 'not yet a standard' and should be treated as one input is an editorial addition."
+      },
+      {
+        "claim_number": 16,
+        "verdict": "supported",
+        "reason": "The abstract lists memory accesses, autonomy levels and tool usage as reporting elements and flags data leakage and attacks on the reporting infrastructure."
+      },
+      {
+        "claim_number": 17,
+        "verdict": "partially supported",
+        "reason": "Replay and verification are supported for the DAG architecture, but the Zafin abstract mentions observability, not replay. The advice to seek independent evaluation is inferred from the self-described case-study nature of the results."
+      }
+    ],
+    "usefulness": 4,
+    "usefulness_reason": "The brief is concrete, with specific numbers, named frameworks and clear takeaways for compliance teams (checkers, deployer duties, population monitoring, incident reporting), and it flags evidence limits. Some recommendations go beyond what the sources show, and the dense jargon may challenge non-specialists."
+  },
+  "n_claims": 17,
+  "citation_validity": 1.0,
+  "faithfulness": 0.8235294117647058,
+  "finding_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.5,
+    1.0,
+    0.5,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "implication_scores": [
+    0.5,
+    0.5,
+    1.0,
+    1.0,
+    0.5,
+    1.0,
+    0.5
+  ],
+  "usefulness": 4
+}

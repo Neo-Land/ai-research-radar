@@ -1,0 +1,195 @@
+{
+  "question": "What are the main security risks of deploying autonomous AI agents in an enterprise?",
+  "papers": [
+    "2610.30445",
+    "2610.27483",
+    "2609.22712",
+    "2610.26664",
+    "2609.13334",
+    "2609.24515",
+    "2609.18605",
+    "2609.15422"
+  ],
+  "brief": {
+    "summary": "Across these eight papers, the main enterprise security risks of autonomous agents are: untrusted content injecting instructions (indirect prompt injection), agents misusing standing or delegated permissions, compromised or misaligned agents acting inside the organization, memory contamination and cross-session leakage, and rule violations under user pressure. Several papers offer mitigations (behavioral fraud detection, task-scoped permissions, honeypots, governance frameworks), but most results are from simulated data, synthetic benchmarks, or position papers, so the evidence does not yet show how these controls perform in live enterprise deployments.",
+    "key_findings": [
+      {
+        "claim": "Agents create distinct security risks because untrusted web, email, document, and database content can enter the same context as system instructions, and tool access can turn a wrong model response into a real-world action.",
+        "citations": [
+          "2609.22712"
+        ]
+      },
+      {
+        "claim": "Enterprise agents are typically provisioned with a static credential set covering every permission a role might need, so unused credentials stay exposed and can be used by a compromised or misaligned agent. A task-based permission architecture reduced severity-weighted attack surface: the role ceiling alone closed 27.9%, and adding a task classifier closed 84.4%.",
+        "citations": [
+          "2609.15422"
+        ]
+      },
+      {
+        "claim": "In a simulated agentic-commerce study using synthetic transactions, behavioral features raised mean F1 from 52.12% to 67.49%, and agent-specific features raised it to 69.46%. Detection was 99.77% for abnormal behavior, 99.73% for impersonation, and 100% for malicious delegation, but compromised-agent detection reached only 72.27%.",
+        "citations": [
+          "2610.27483"
+        ]
+      },
+      {
+        "claim": "In a benchmark of 48 scenarios across 12 regulated domains, even the strongest of 22 LLMs misapplied a rule on 6 to 10% of items, and ordinary user pressure raised violation rates by 65% on average.",
+        "citations": [
+          "2609.18605"
+        ]
+      },
+      {
+        "claim": "Honeypots, meaning decoy opportunities for harmful actions planted in production, are proposed to detect and deter misbehaving internal agents, including when chain-of-thought monitoring degrades. This is a proposal with research questions still open, not a measured result.",
+        "citations": [
+          "2610.26664"
+        ]
+      },
+      {
+        "claim": "Memory is a distinct risk: persistent memory can carry compromised information across sessions and enable cross-session data leakage. Reporting frameworks for agent incidents need to capture memory accesses, autonomy levels, and tool usage, and expert feedback flagged that the incident reporting infrastructure itself can be attacked.",
+        "citations": [
+          "2609.22712",
+          "2609.24515"
+        ]
+      },
+      {
+        "claim": "Indirect prompt injection also arises on the compile path of proposed shared enterprise knowledge substrates, so retrieval pipelines that feed agents need to be treated as attack surfaces.",
+        "citations": [
+          "2609.13334"
+        ]
+      }
+    ],
+    "implications": [
+      {
+        "implication": "Security teams should give agents only the permissions needed for the current task rather than standing role-wide credentials, since the evidence suggests task-granular scoping removes far more exposed attack surface than role-level limits alone. This rests on one evaluation.",
+        "who_it_affects": "Enterprise security and IAM teams deploying agents with access to internal systems",
+        "citations": [
+          "2609.15422"
+        ]
+      },
+      {
+        "implication": "Financial and payment-authorization agents may need layered controls (behavioral analytics, delegated authorization limits, explanations for review decisions), but the detection numbers come from synthetic data and would need validation on real transactions before being relied on.",
+        "who_it_affects": "Fintech, payments, and commerce teams allowing agents to initiate transactions",
+        "citations": [
+          "2610.27483"
+        ]
+      },
+      {
+        "implication": "Agents handling compliance-sensitive work such as hiring, healthcare, or finance cannot be assumed to follow rules under pressure, so model selection and guardrails should be tested under adversarial multi-turn pressure before deployment.",
+        "who_it_affects": "Compliance, legal, and HR teams in regulated industries",
+        "citations": [
+          "2609.18605"
+        ]
+      },
+      {
+        "implication": "Organizations may need audit trails, escalation paths, and staged autonomy increases, though the framework described is conceptual and not yet empirically tested.",
+        "who_it_affects": "Governance and risk leaders setting agent autonomy policies",
+        "citations": [
+          "2610.30445",
+          "2609.22712"
+        ]
+      },
+      {
+        "implication": "Incident response may need to track agent-specific details such as memory access and tool calls, which current reporting frameworks may not capture. This is still an open research area.",
+        "who_it_affects": "Security operations and compliance teams writing incident playbooks",
+        "citations": [
+          "2609.24515"
+        ]
+      }
+    ],
+    "maturity": "early research",
+    "maturity_rationale": "The strongest quantitative results come from synthetic data (2610.27483), a single permission-scoping evaluation (2609.15422), and a benchmark of model behavior (2609.18605). The lifecycle framework (2609.22712) states it is not yet empirically validated, and the honeypot (2610.26664) and governance (2610.30445) papers are proposals. None of these report live enterprise deployments, so the set does not support calling these controls ready to pilot.",
+    "risks_and_limitations": [
+      "Key detection results (2610.27483) come from synthetic transaction data and simulated agents; the authors themselves call for validation on real transactions.",
+      "The permission-scoping result (2609.15422) is a single evaluation of a classifier on a 600-prompt dataset, and its gains assume tasks arrive as machine-readable text.",
+      "Honeypot effectiveness (2610.26664) is argued rather than measured; the paper lists robustness and deterrence as open questions.",
+      "Several papers are position or review pieces (2609.13334, 2609.22712, 2610.30445), so their recommendations are not empirically tested.",
+      "The papers do not cover the full set of enterprise risks such as cost of incidents, vendor and supply-chain risk, or operational costs of oversight, so the list of risks here is partial.",
+      "The summary of risks draws only on these eight papers and may not reflect the wider literature."
+    ]
+  },
+  "judgement": {
+    "verdicts": [
+      {
+        "claim_number": 1,
+        "verdict": "supported",
+        "reason": "The abstract states nearly verbatim that untrusted web, email, document and database content enters the same context as system instructions, and that tool access can turn incorrect responses into real-world actions."
+      },
+      {
+        "claim_number": 2,
+        "verdict": "supported",
+        "reason": "The abstract describes static role-wide credentials leaving standing exposure usable by a compromised or misaligned agent. It gives the 27.9% and 84.4% figures. 'Typically' slightly generalises the abstract's 'in many enterprise settings'."
+      },
+      {
+        "claim_number": 3,
+        "verdict": "supported",
+        "reason": "All the F1 and detection figures match the abstract, as does its use of synthetic and simulated data."
+      },
+      {
+        "claim_number": 4,
+        "verdict": "supported",
+        "reason": "The abstract states 48 scenarios, 12 domains and 22 LLMs, that even the strongest models misapply rules on 6\u201310% of items, and that user pressure raises violations by 65% on average."
+      },
+      {
+        "claim_number": 5,
+        "verdict": "supported",
+        "reason": "The abstract proposes production honeypots to detect and deter misbehaving agents, including when chain-of-thought monitorability degrades, and lists open research questions."
+      },
+      {
+        "claim_number": 6,
+        "verdict": "supported",
+        "reason": "The memory risks and cross-session leakage come from 2609.22712. The reporting elements (memory accesses, autonomy, tool usage) and expert concerns about attacks on reporting infrastructure come from 2609.24515."
+      },
+      {
+        "claim_number": 7,
+        "verdict": "partially supported",
+        "reason": "The abstract only lists indirect prompt injection on the compile path as a risk of the proposed substrate. The broader conclusion about retrieval pipelines being attack surfaces is an extrapolation it does not make."
+      },
+      {
+        "claim_number": 8,
+        "verdict": "supported",
+        "reason": "This is a reasonable recommendation that follows directly from the task-based scoping evaluation, and the claim correctly notes it rests on a single study."
+      },
+      {
+        "claim_number": 9,
+        "verdict": "supported",
+        "reason": "The abstract describes behavioral analytics, delegated authorization controls and SHAP explanations, evaluated on synthetic data, with an explicit call for real-world validation."
+      },
+      {
+        "claim_number": 10,
+        "verdict": "supported",
+        "reason": "The abstract names hiring, healthcare and finance, shows violations under multi-turn pressure, and motivates guardrails and careful model selection."
+      },
+      {
+        "claim_number": 11,
+        "verdict": "supported",
+        "reason": "The 3P framework covers auditable controls, escalation management and progressive autonomy. The TADL abstract explicitly says that framework has not been empirically validated."
+      },
+      {
+        "claim_number": 12,
+        "verdict": "supported",
+        "reason": "The abstract says current frameworks must be adapted to agents, lists memory accesses and tool usage as reporting elements, and identifies open research questions."
+      }
+    ],
+    "usefulness": 4,
+    "usefulness_reason": "The brief is concrete: it names specific risk categories (injection, standing credentials, compliance under pressure, insider threat, memory) with quantitative findings and actionable recommendations. It also clearly flags which results are synthetic, single-study or conceptual. It is somewhat dense and leans on single papers, but it is informative for a non-specialist."
+  },
+  "n_claims": 12,
+  "citation_validity": 1.0,
+  "faithfulness": 0.9583333333333334,
+  "finding_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.5
+  ],
+  "implication_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "usefulness": 4
+}

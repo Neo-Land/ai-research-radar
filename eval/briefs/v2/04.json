@@ -1,0 +1,195 @@
+{
+  "question": "How can companies reduce hallucinations when using LLMs on their own documents?",
+  "papers": [
+    "2610.27027",
+    "2610.04409",
+    "2610.02976",
+    "2610.19728",
+    "2610.12981",
+    "2610.29669",
+    "2609.32617",
+    "2610.26645"
+  ],
+  "brief": {
+    "summary": "The papers provided do not directly test how companies reduce hallucinations when LLMs answer questions over their own document collections, so this brief can only offer indirect evidence. The most relevant results come from a benchmark-based verification pipeline (HaluEval QA), a clinical multi-agent study, a post-training study, and a tool-use study. Together they suggest that verification layers, per-model testing, and attention to post-training choices may matter, but none of them establishes a method for private-document use.",
+    "key_findings": [
+      {
+        "claim": "BiasGuard-D, a pipeline where two adversarial roles from different model families exchange typed claim documents and a three-model quorum votes, raised right-answer recovery by 49 percentage points on HaluEval QA when the deliberation layer was transferred to hallucination remediation. A cross-family second auditor was needed to maintain recall on objective hallucination. Every claim, vote, and instruction is stored as a typed record, which gives an audit trail.",
+        "citations": [
+          "2610.29669"
+        ]
+      },
+      {
+        "claim": "In a clinical study, multi-agent collaboration improved task performance but did not reduce hallucination as a rule, and no topology was reliably better than another. Of 36 model-system-task comparisons, 12 were large enough to resolve: four decreases and eight increases. The model, rather than the topology or number of agents, set the level and direction of change.",
+        "citations": [
+          "2610.27027"
+        ]
+      },
+      {
+        "claim": "In the same clinical study, when models were shown their own flagged errors (a self-correction experiment), every model except Llama-3.2-3B-Instruct reduced hallucination. Llama-3.2-3B-Instruct, the model whose hallucination collaboration amplified most, did not reduce its hallucination at all.",
+        "citations": [
+          "2610.27027"
+        ]
+      },
+      {
+        "claim": "On factual benchmarks across five model families, instruction-tuned models multiplied high-confidence errors (p >= 0.95) by 10x to 35x compared with unaligned base models. The authors attribute this to post-training alignment, which they call the Alignment Paradox. A bounded-margin DPO objective reduced high-confidence errors by up to 35.3% relative to standard DPO in multi-epoch experiments with Mistral-7B, while maintaining performance on evaluated general reasoning benchmarks.",
+        "citations": [
+          "2609.32617"
+        ]
+      },
+      {
+        "claim": "In a tool-using agent study across six benchmarks, EscapeGuard, a training-free inference-time method, reduced tool-selection hallucination by 9.0 percentage points and lowered the cross-configuration mean by 23.7 percentage points. The study also reports an 89.1% net improvement in paired-query evaluation. The authors identify 'hallucination escape': existing mitigations reduce hallucination on the configuration they were tuned on but increase it on others.",
+        "citations": [
+          "2610.04409"
+        ]
+      },
+      {
+        "claim": "Adding groups derived from chain-of-thought (CoT) properties to topic-based multicalibration reduced Brier score for both hallucination prediction and unsafe-response detection across benchmarks. This improves estimates of whether a response is reliable, not the rate of hallucination itself.",
+        "citations": [
+          "2610.26645"
+        ]
+      }
+    ],
+    "implications": [
+      {
+        "implication": "Organizations that answer questions from internal documents could add a separate checking layer that compares answers against the source text, using a model from a different family and keeping a record of each verdict. This may help with review and compliance, but the reported gains come from HaluEval QA rather than enterprise documents.",
+        "who_it_affects": "Teams building document Q&A or compliance tools in regulated industries, where an audit trail may matter.",
+        "citations": [
+          "2610.29669"
+        ]
+      },
+      {
+        "implication": "Adding more agents or a multi-agent workflow may not reduce hallucination, and the effect may differ by model. Teams could measure hallucination directly on their own models and tasks, rather than assuming that a collaborative setup is more trustworthy.",
+        "who_it_affects": "Engineering teams choosing between single-model and multi-agent designs for high-stakes answers.",
+        "citations": [
+          "2610.27027"
+        ]
+      },
+      {
+        "implication": "Feedback that shows a model its own flagged errors may reduce hallucination for most models, though not all. Teams could test this on their own models before relying on it.",
+        "who_it_affects": "Teams running iterative review or self-correction loops on generated answers.",
+        "citations": [
+          "2610.27027"
+        ]
+      },
+      {
+        "implication": "Choice of model and post-training may affect how confidently a model gives wrong answers. Companies that fine-tune with preference optimization could, in principle, consider bounded-margin objectives, but the evidence comes from one model in one study.",
+        "who_it_affects": "Teams fine-tuning or selecting instruction-tuned models for factual answers.",
+        "citations": [
+          "2609.32617"
+        ]
+      },
+      {
+        "implication": "A mitigation that works on one tool or document configuration may not transfer to others. Evaluations across varied setups could catch cases where gains are offset elsewhere.",
+        "who_it_affects": "Teams deploying tool-using agents or document pipelines that change over time.",
+        "citations": [
+          "2610.04409"
+        ]
+      },
+      {
+        "implication": "Reliability predictors that use features from the model's reasoning trace could help flag answers that are likely wrong for human review, though they do not reduce hallucination themselves.",
+        "who_it_affects": "Teams that route AI answers to human reviewers and need confidence estimates.",
+        "citations": [
+          "2610.26645"
+        ]
+      }
+    ],
+    "maturity": "early research",
+    "maturity_rationale": "None of the papers evaluates hallucination reduction on a company's own documents. The results come from benchmarks (HaluEval QA, clinical tasks, factual benchmarks, tool-use suites), with small sample sizes in places and some findings that do not hold across models. The methods are mostly research prototypes, and several are described as proposals or training-free methods still under study.",
+    "risks_and_limitations": [
+      "No paper tests retrieval or document-grounded question answering over private corpora, so transfer to company documents is unverified.",
+      "BiasGuard-D's recall on objective hallucination depended on adding a cross-family second auditor, and its gains are reported on HaluEval QA only.",
+      "In the clinical study, only 12 of 36 comparisons were large enough to resolve, and self-correction did not help Llama-3.2-3B-Instruct.",
+      "The alignment result is shown for Mistral-7B in multi-epoch DPO experiments; the broader claim rests on five model families evaluated on factual benchmarks.",
+      "EscapeGuard's gains are reported for tool-selection hallucination in tool-using agents, not for text answers drawn from documents.",
+      "The reliability-predictor paper improves estimates of correctness (Brier score) rather than reducing the underlying hallucination rate.",
+      "The multimodal papers (2610.02976, 2610.19728, 2610.12981) address audio-visual and video or image models, so they were not used for this question."
+    ]
+  },
+  "judgement": {
+    "verdicts": [
+      {
+        "claim_number": 1,
+        "verdict": "supported",
+        "reason": "The abstract describes the two cross-family adversarial roles, typed claim documents, three-model quorum, 49 pp gain on HaluEval QA, cross-family second auditor, and typed-record audit trail."
+      },
+      {
+        "claim_number": 2,
+        "verdict": "supported",
+        "reason": "The abstract states that collaboration improves task performance but not hallucination as a rule, that no topology is reliably better, gives the 36/12 comparisons with 4 decreases and 8 increases, and says the model sets the effect."
+      },
+      {
+        "claim_number": 3,
+        "verdict": "supported",
+        "reason": "The abstract directly states the self-correction result and the Llama-3.2-3B-Instruct exception."
+      },
+      {
+        "claim_number": 4,
+        "verdict": "supported",
+        "reason": "The abstract gives the 10x\u201335x increase in high-confidence errors versus base models across five families, names the Alignment Paradox, and reports a reduction of up to 35.3% with bounded DPO on Mistral-7B while maintaining reasoning benchmarks."
+      },
+      {
+        "claim_number": 5,
+        "verdict": "supported",
+        "reason": "The abstract matches the claim: a training-free method, 9.0 pp, 23.7 pp, 89.1% net improvement, six benchmarks, and the definition of hallucination escape."
+      },
+      {
+        "claim_number": 6,
+        "verdict": "supported",
+        "reason": "The abstract reports reduced Brier score in both tasks when CoT groups are added. The framework concerns reliability prediction, not reducing hallucination itself."
+      },
+      {
+        "claim_number": 7,
+        "verdict": "partially supported",
+        "reason": "Cross-family auditing, recorded verdicts, and the HaluEval-only caveat are grounded in the abstract. However, it describes a multi-agent adversarial quorum with invariant checks, not simply a single checking layer comparing answers to source text, and it gives no evidence for internal-document use."
+      },
+      {
+        "claim_number": 8,
+        "verdict": "supported",
+        "reason": "This is a hedged recommendation that follows directly from the finding that collaboration does not reliably reduce hallucination and that the effect is model-dependent."
+      },
+      {
+        "claim_number": 9,
+        "verdict": "supported",
+        "reason": "This is a hedged recommendation consistent with the self-correction result, in which all models except one reduced hallucination."
+      },
+      {
+        "claim_number": 10,
+        "verdict": "supported",
+        "reason": "It is consistent with the abstract: post-training drives confident errors, and the bounded DPO evidence comes from Mistral-7B in multi-epoch experiments. The caveat is accurate."
+      },
+      {
+        "claim_number": 11,
+        "verdict": "partially supported",
+        "reason": "The abstract supports non-transfer across tool configurations, but extending this to document configurations goes beyond it."
+      },
+      {
+        "claim_number": 12,
+        "verdict": "supported",
+        "reason": "This is a hedged application of the finding that CoT-based groups improve reliability prediction. It correctly notes that the method does not reduce hallucination itself."
+      }
+    ],
+    "usefulness": 4,
+    "usefulness_reason": "The brief gives concrete numbers and practical, appropriately caveated recommendations: cross-family checking with audit trails, not assuming multi-agent setups help, testing across configurations, and calibrated flagging. It is clear about which evidence comes from benchmarks rather than enterprise documents, though only one finding directly targets document QA."
+  },
+  "n_claims": 12,
+  "citation_validity": 1.0,
+  "faithfulness": 0.9166666666666666,
+  "finding_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "implication_scores": [
+    0.5,
+    1.0,
+    1.0,
+    1.0,
+    0.5,
+    1.0
+  ],
+  "usefulness": 4
+}

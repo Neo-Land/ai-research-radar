@@ -1,0 +1,208 @@
+{
+  "question": "What does research say about using AI in education and training?",
+  "papers": [
+    "2610.10463",
+    "2609.18274",
+    "2609.20484",
+    "2609.21600",
+    "2610.29140",
+    "2610.07097",
+    "2609.29363",
+    "2609.28504"
+  ],
+  "brief": {
+    "summary": "Recent papers suggest AI can help in specific educational tasks, such as structured practice before class, course-grounded study support, and first-pass screening. The evidence is thin, though: most studies come from a single course, institution, or country, and none tests long-term learning across settings. Several findings are also mixed, with AI still falling short of human experts on classroom judgement tasks, so the papers do not establish that AI reliably improves education or training.",
+    "key_findings": [
+      {
+        "claim": "In a preregistered field experiment with 759 MBA students in ten sections of one course, two assigned preparation sessions with a voice-based AI discussion partner were followed by about 31% more voluntary in-class contributions in each later session. Students who used the partner more also reported greater comfort speaking up and greater perceived learning, but not greater focus or motivation.",
+        "citations": [
+          "2610.10463"
+        ]
+      },
+      {
+        "claim": "In a two-cohort difference-in-differences study of a compulsory first-year economics course (170 students), access to expert-verified AI study materials (podcasts, FAQs, quiz-based guides) was associated with a 2.34-mark advantage on a 50-mark component. The share of marks below the upper-second boundary fell by 24.7 percentage points, and roughly three-quarters of the average effect came from the bottom quintile. The threshold result held when the lowest-scoring students were removed from the pre-intervention cohort, but the average effect did not.",
+        "citations": [
+          "2610.07097"
+        ]
+      },
+      {
+        "claim": "In a study of 87 video-recorded observations from 38 kindergarten classrooms in Hong Kong, GPT-5 scoring of teacher-child interactions from transcripts converged most with human raters on Emotional Support, especially Quality of Feedback. It diverged more on procedural or context-dependent items in Classroom Organization and Instructional Support. The authors conclude it cannot yet reproduce calibrated human judgements across the full CLASS framework.",
+        "citations": [
+          "2609.18274"
+        ]
+      },
+      {
+        "claim": "On Edustories, a dataset of 1,492 teacher-written case studies of real elementary and high-school classroom situations, the strongest of four LLM families reached 58% accuracy in predicting whether teacher interventions succeeded, compared with 64% for human experts.",
+        "citations": [
+          "2609.20484"
+        ]
+      },
+      {
+        "claim": "In a design-based study of Beacon, a course-specific retrieval-augmented generation (RAG) assistant grounded in approved teaching materials, students at one higher-education institution rated its answers as more closely aligned with module content and more trustworthy than unrestricted generative AI tools. They valued its pseudocode and scaffolded explanations over direct solutions, but stayed cautious about trusting AI output without verification. The evaluation used questionnaires and interviews, with no reported learning gains.",
+        "citations": [
+          "2609.21600"
+        ]
+      },
+      {
+        "claim": "Interviews with 23 students and recent graduates of Indian engineering and computing programmes found a split between AI-first workplaces and AI-free placement screens and examinations. Participants described uncertainty about whether grades and screen scores still certify readiness once AI can help produce them. This is a qualitative study and does not measure outcomes.",
+        "citations": [
+          "2610.29140"
+        ]
+      },
+      {
+        "claim": "A contribution on automated programming assessment for machine learning courses frames ML exercises as deterministic input-output tasks that tools such as VPL for Moodle, Codeforces, and MOJ can grade. The authors describe this as a perspective based on their teaching experience, not an experimental result, and they do not claim it improves learning outcomes.",
+        "citations": [
+          "2609.29363"
+        ]
+      }
+    ],
+    "implications": [
+      {
+        "implication": "Short, structured, repeated practice with an AI conversation partner before class may help quieter students take part in discussion. This could change how instructors prepare seminar-style courses, but the result comes from one MBA course, and the gains were measured through participation and self-reported comfort rather than exam results.",
+        "who_it_affects": "Instructors and students in discussion-heavy courses, especially business and graduate programmes",
+        "citations": [
+          "2610.10463"
+        ]
+      },
+      {
+        "implication": "Expert-verified, course-grounded AI materials may help students who are behind the most, not only the average student. Because the average effect was not robust, schools may need to check distributional effects before adopting such resources widely.",
+        "who_it_affects": "Course designers, tutors, and university teaching teams in introductory courses",
+        "citations": [
+          "2610.07097"
+        ]
+      },
+      {
+        "implication": "Course-grounded assistants may give students a first point of support that stays tied to course materials, without replacing lecturers. This could lower the barrier to asking for help, but students still need to check the answers.",
+        "who_it_affects": "Lecturers, support staff, and students in computing and other technical modules",
+        "citations": [
+          "2609.21600"
+        ]
+      },
+      {
+        "implication": "Transcript-based AI scoring could serve as a preliminary screening tool for classroom observation, giving teachers feedback for reflection, while human observers remain needed for high-stakes judgements. The paper says this directly, and its divergence on procedural items is the reason.",
+        "who_it_affects": "Early childhood education leaders, observation programmes, and teacher trainers",
+        "citations": [
+          "2609.18274"
+        ]
+      },
+      {
+        "implication": "AI assistants for teachers may help with planning and reflection on classroom interventions, but current models fall well short of experienced teachers at predicting outcomes, so their advice would need human review.",
+        "who_it_affects": "Practising teachers and school leaders considering AI feedback tools",
+        "citations": [
+          "2609.20484"
+        ]
+      },
+      {
+        "implication": "Changes to assessment design may be needed when AI can produce the work that grades certify. The Indian study raises this as a concern but does not test any specific fix.",
+        "who_it_affects": "Employers, universities, and hiring teams that rely on exams and screening tests",
+        "citations": [
+          "2610.29140"
+        ]
+      }
+    ],
+    "maturity": "early research",
+    "maturity_rationale": "The studies are useful but limited. The strongest quantitative results come from single courses or single institutions (one MBA course, one economics course, one Hong Kong sample). Several papers are interviews, design studies, or perspectives without learning outcomes. The benchmark results show AI still trails human experts on some judgement tasks. None of the papers tests long-term learning or broad deployment.",
+    "risks_and_limitations": [
+      "Most studies are from one institution, course, or country, so the results may not transfer to other learners or subjects.",
+      "The MBA participation result relies on voluntary in-class contributions and self-reported comfort and learning, not on exam performance.",
+      "The economics study's average effect was not robust to removing the lowest-scoring students, and its 2.34-mark gain is small on a 50-mark component.",
+      "The classroom observation study covers only 87 observations from 38 classrooms, and AI scores diverged most on procedural and context-dependent items.",
+      "Edustories shows AI at 58% accuracy against 64% for human experts; this is a gap, not a finding that AI is ready to advise teachers.",
+      "Beacon and the Indian interview study rely on self-reported perceptions, and participants stayed cautious about trusting AI output.",
+      "The programming-assessment paper is a perspective, not an experiment, so its ideas are not evidence of improved learning.",
+      "The AI in Science paper studies scientists' productivity, not education or training, so it is not used as evidence here."
+    ]
+  },
+  "judgement": {
+    "verdicts": [
+      {
+        "claim_number": 1,
+        "verdict": "supported",
+        "reason": "The abstract matches every detail: a preregistered field experiment with 759 MBA students in ten sections, two assigned sessions with a voice AI partner, about 31% more contributions per later session, and greater comfort and perceived learning but not focus or motivation."
+      },
+      {
+        "claim_number": 2,
+        "verdict": "supported",
+        "reason": "All the figures match the abstract: two-cohort DiD, 170 students, a 2.34-mark advantage on a 50-mark component, a 24.7 pp drop below the upper-second boundary, three-quarters of the effect from the bottom quintile, and the robustness pattern."
+      },
+      {
+        "claim_number": 3,
+        "verdict": "supported",
+        "reason": "The abstract reports 87 observations from 38 classrooms in Hong Kong. It describes convergence on Emotional Support and Quality of Feedback, divergence on procedural or context-dependent items in Classroom Organization and Instructional Support, and states that the model cannot yet reproduce calibrated judgements across the full CLASS framework."
+      },
+      {
+        "claim_number": 4,
+        "verdict": "supported",
+        "reason": "The abstract gives 1,492 teacher-written case studies, four model families, and 58% versus 64% accuracy for the strongest models against human experts."
+      },
+      {
+        "claim_number": 5,
+        "verdict": "supported",
+        "reason": "The abstract describes a course-specific RAG system grounded in approved materials, evaluated with design-based research using questionnaires and interviews. Students found it aligned and more trustworthy, valued pseudocode and scaffolding, and remained cautious without verification. No learning gains are reported."
+      },
+      {
+        "claim_number": 6,
+        "verdict": "partially supported",
+        "reason": "The interviews and the theme of AI-first workplaces versus AI-free screens are supported. However, the question of what grades and screen scores certify is framed as the authors' signaling-theory discussion, not explicitly as uncertainty voiced by participants."
+      },
+      {
+        "claim_number": 7,
+        "verdict": "partially supported",
+        "reason": "The abstract supports the experience-based perspective framing ML exercises as deterministic input-output tasks for VPL, Codeforces and MOJ. But the essay does present itself as an innovative approach to improving the learning of machine learning, so saying the authors do not claim it improves learning is somewhat inaccurate."
+      },
+      {
+        "claim_number": 8,
+        "verdict": "partially supported",
+        "reason": "The participation and comfort findings and the single-course caveat follow from the abstract. The specific benefit to 'quieter students' and the implication for seminar course design are not stated."
+      },
+      {
+        "claim_number": 9,
+        "verdict": "supported",
+        "reason": "Bottom-quintile gains and the non-robust average effect are reported, and the abstract explicitly argues that mean-only evaluations miss whether the intended students gain."
+      },
+      {
+        "claim_number": 10,
+        "verdict": "supported",
+        "reason": "The abstract directly states the first point of support, the intermediary role that preserves lecturers, lowered barriers to help-seeking, and students' caution about verification."
+      },
+      {
+        "claim_number": 11,
+        "verdict": "supported",
+        "reason": "The abstract explicitly recommends preliminary screening and reflection rather than high-stakes evaluation, following from the divergence and the lack of calibrated judgement."
+      },
+      {
+        "claim_number": 12,
+        "verdict": "partially supported",
+        "reason": "The gap in predicting outcomes is supported. However, 'well short' overstates a 6-point gap, 'experienced teachers' rephrases 'human experts', and help with planning and reflection is not mentioned in the abstract."
+      },
+      {
+        "claim_number": 13,
+        "verdict": "supported",
+        "reason": "The abstract discusses what grades certify once AI can help produce them and offers recommendations. It is a qualitative interview study, so it tests no intervention."
+      }
+    ],
+    "usefulness": 4,
+    "usefulness_reason": "The brief is concrete and specific, with sample sizes, effect sizes and clear limitations across varied settings. It explains who is affected (instructors, students, teachers). A few implications slightly stretch beyond the evidence, and it lacks an overarching synthesis."
+  },
+  "n_claims": 13,
+  "citation_validity": 1.0,
+  "faithfulness": 0.8461538461538461,
+  "finding_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.5,
+    0.5
+  ],
+  "implication_scores": [
+    0.5,
+    1.0,
+    1.0,
+    1.0,
+    0.5,
+    1.0
+  ],
+  "usefulness": 4
+}

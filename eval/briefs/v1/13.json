@@ -1,0 +1,196 @@
+{
+  "question": "How well do current reasoning models handle everyday logic and common-sense decisions?",
+  "papers": [
+    "2610.22538",
+    "2610.21204",
+    "2609.35833",
+    "2610.08966",
+    "2610.21244",
+    "2610.26793",
+    "2609.34327",
+    "2610.00571"
+  ],
+  "brief": {
+    "summary": "Current reasoning models do not reliably handle everyday logic or common-sense decisions. The papers show that extra thinking can push models toward literal, formal readings of language (for example, treating 'some' as not implying 'not all'), that the strongest model tested on intuitive visual reasoning scored 53.6% against 93.1% for humans, and that some non-reasoning models with chain-of-thought beat comparable reasoning models on everyday logic. The evidence comes from newly introduced benchmarks and abstracts only, so it shows where models fail more than how widespread the failures are in deployment.",
+    "key_findings": [
+      {
+        "claim": "On a new benchmark of everyday logical reasoning based on linguistic and pragmatic phenomena, reasoning models often perform worse when the everyday reasoning departs from formal logic rules. Some non-reasoning models with chain-of-thought prompting outperform comparable reasoning models, and extra prompt instructions give only limited control over reasoning behavior.",
+        "citations": [
+          "2610.22538"
+        ]
+      },
+      {
+        "claim": "Increasing thinking time with weights fixed makes models read logical words literally: it cancels the 'not all' implicature of 'some' and the 'not both' implicature of 'or' in most tested open reasoning models and in GPT-5. Context-driven inferences such as indirect answers improve with thinking. Traces suggest models first entertain the enriched reading and cancel it later, and answering from that early reading recovers the implicatures without losing literal accuracy, though this remedy is exploratory.",
+        "citations": [
+          "2610.21204"
+        ]
+      },
+      {
+        "claim": "On the Humanity's Sixth Sense benchmark for intuitive visual reasoning (implicit temporal, spatial, social and abstract structure in images and videos), participants reached 93.1% accuracy while the strongest model, GPT-6-astra, reached 53.6% even at maximum reasoning effort. Agentic setups that apply dynamic visual manipulation narrow the gap but do not close it.",
+        "citations": [
+          "2610.08966"
+        ]
+      },
+      {
+        "claim": "In System1-Arena, a benchmark of 92k questions across 105 tasks and 138 closed-loop environments, the largest single-pass probability-based models matched or exceeded fast closed LLMs on non-agentic decisions, with better-calibrated probabilities at one-quarter of the latency. A reasoning LLM was the most accurate but at about 70 times the cost of a fast LLM. In closed loops, large open LLMs succeeded most often (up to 32.9%) and small single-pass models rarely succeeded.",
+        "citations": [
+          "2610.21244"
+        ]
+      },
+      {
+        "claim": "SOMA, a training-free monitor in which a single-pass model watches a reasoning model and intervenes when needed, cut reasoning tokens by up to 36% while improving average accuracy on overthinking, and raised abstention on unanswerable questions from 70.5% to 87.2% across two reasoning models.",
+        "citations": [
+          "2610.26793"
+        ]
+      },
+      {
+        "claim": "A neurosymbolic router for small models on a Raspberry Pi 4B routes structured queries to deterministic solvers and the small model to open word problems. On 100 untested prompts drawn from DeepMind Mathematics, GSM8K and RuleTaker, it reached 98.3% overall accuracy (93.3% on word problems) versus 72.0% for Program-of-Thought, and answered formatted queries in 1 to 11 ms.",
+        "citations": [
+          "2609.35833"
+        ]
+      }
+    ],
+    "implications": [
+      {
+        "implication": "Teams deploying reasoning models for customer-facing judgments or everyday logic should evaluate on pragmatic and common-sense cases, not only math benchmarks. Non-reasoning chain-of-thought models may be competitive or better for some of these tasks, which could change model selection and cost.",
+        "who_it_affects": "Product teams and ML engineers choosing models for assistants, support triage or decision tools",
+        "citations": [
+          "2610.22538",
+          "2610.21204"
+        ]
+      },
+      {
+        "implication": "Evaluation practice may shift toward measuring how models interpret language, not only whether their final answers are correct, since a model can be accurate on literal questions while misreading what a speaker meant.",
+        "who_it_affects": "Benchmark designers and AI evaluation teams",
+        "citations": [
+          "2610.21204"
+        ]
+      },
+      {
+        "implication": "Robotics, embodied agents and visual assistants should not assume human-like intuitive scene understanding from current multimodal models. Human-facing visual tasks that depend on implicit cues need separate testing.",
+        "who_it_affects": "Teams building visual assistants, navigation aids, and robots that operate alongside people",
+        "citations": [
+          "2610.08966"
+        ]
+      },
+      {
+        "implication": "For high-volume classification-style decisions such as flagging phishing or escalating tickets, single-pass probability models may offer lower latency and cost with comparable accuracy. Agentic closed-loop tasks remain weak for small models, so this applies mainly to non-agentic decisions.",
+        "who_it_affects": "Operations and trust-and-safety teams running large volumes of automated decisions",
+        "citations": [
+          "2610.21244"
+        ]
+      },
+      {
+        "implication": "Monitoring a reasoning model with a fast model and intervening only when problems persist could reduce wasted reasoning tokens and improve abstention, without retraining. This could lower serving costs, though it has been shown on only two reasoning models.",
+        "who_it_affects": "Engineers paying for reasoning-token budgets and building production LLM pipelines",
+        "citations": [
+          "2610.26793"
+        ]
+      },
+      {
+        "implication": "On edge devices, routing structured logic and arithmetic to exact solvers and reserving a small model for open-ended questions could make local assistants more reliable and energy-efficient, if the results hold beyond the tested prompt set.",
+        "who_it_affects": "Developers of on-device and privacy-sensitive assistants, and IoT or embedded product teams",
+        "citations": [
+          "2609.35833"
+        ]
+      }
+    ],
+    "maturity": "early research",
+    "maturity_rationale": "The core evidence comes from benchmarks introduced in these papers and evaluated on specific task sets. The most deployment-oriented result, the edge router, was tested on 100 prompts. The remedies (early-reading answering, SOMA monitoring) are exploratory or tested on few models. None of the abstracts reports independent replication or production use.",
+    "risks_and_limitations": [
+      "These findings come from abstracts only; full methods, variance, and exact prompt conditions were not reviewed.",
+      "Several headline numbers involve specific models (GPT-5, GPT-6-astra) and new benchmarks whose coverage of real-world everyday reasoning is not established.",
+      "The implicature remedy is described as exploratory and its robustness beyond the tested phenomena is unknown.",
+      "The edge router was evaluated on 100 prompts and depends on hand-selected solvers for structured tasks; it does not address open-ended everyday judgment.",
+      "SOMA was tested on two reasoning models and two failure types; generalization is unclear.",
+      "System1-Arena's closed-loop results show low success rates for small single-pass models, so probability-based decisions do not transfer to agentic settings.",
+      "Two retrieved papers (on knowledge bottlenecks in small reasoning models and on step-wise repetition in math reasoning) concern mathematical reasoning rather than everyday logic and were not used for the conclusions."
+    ]
+  },
+  "judgement": {
+    "verdicts": [
+      {
+        "claim_number": 1,
+        "verdict": "supported",
+        "reason": "The abstract states all three findings directly: degraded performance when everyday reasoning departs from formal logic, some CoT non-reasoning models outperforming comparable reasoning models, and limited control from extra instructions."
+      },
+      {
+        "claim_number": 2,
+        "verdict": "supported",
+        "reason": "The abstract matches every element: fixed weights with varied thinking, cancellation of the 'some' and 'or' implicatures in most open models and GPT-5, improved indirect answers, the entertain-then-cancel trace, and the exploratory early-answer remedy."
+      },
+      {
+        "claim_number": 3,
+        "verdict": "supported",
+        "reason": "The abstract gives the benchmark scope, human accuracy of 93.1%, GPT-6-astra at 53.6% at maximum effort, and states that agentic visual manipulation narrows but does not close the gap."
+      },
+      {
+        "claim_number": 4,
+        "verdict": "supported",
+        "reason": "The abstract reports 92k questions, 105 tasks and 138 environments. It says the largest System-1 models match or exceed fast closed LLMs with better calibration at one-quarter latency, a reasoning LLM is most accurate at about 70x cost, and large open LLMs reach up to 32.9% in closed loops while small System-1 models rarely succeed."
+      },
+      {
+        "claim_number": 5,
+        "verdict": "supported",
+        "reason": "The abstract describes a training-free S1 monitor of an S2 reasoning model that cuts tokens by up to 36% while improving accuracy and raises abstention from 70.5% to 87.2% on two reasoning models."
+      },
+      {
+        "claim_number": 6,
+        "verdict": "supported",
+        "reason": "The abstract matches the Raspberry Pi 4B setup, the routing design, the 100 prompts from the three datasets, 98.3% overall and 93.3% on word problems versus 72.0% for Program-of-Thought, and 1-11 ms on formatted queries."
+      },
+      {
+        "claim_number": 7,
+        "verdict": "partially supported",
+        "reason": "The call for broader evaluation and the competitiveness of CoT non-reasoning models are backed. The customer-facing framing and the cost implications are extrapolations not given in the abstracts."
+      },
+      {
+        "claim_number": 8,
+        "verdict": "supported",
+        "reason": "The abstract explicitly says evaluations should measure how models interpret, not only accuracy. It also notes models preserve literal accuracy while cancelling implicatures."
+      },
+      {
+        "claim_number": 9,
+        "verdict": "supported",
+        "reason": "This is a reasonable implication of the large human-model gap. The abstract stresses relevance to MLLMs deployed alongside people and to everyday navigation."
+      },
+      {
+        "claim_number": 10,
+        "verdict": "partially supported",
+        "reason": "The abstract supports the latency advantage, comparable accuracy to fast LLMs, and weak closed-loop results for small models. It does not report cost for System-1 models, and a reasoning LLM was still more accurate, so 'comparable accuracy' holds only relative to fast LLMs."
+      },
+      {
+        "claim_number": 11,
+        "verdict": "supported",
+        "reason": "The token reduction, improved abstention, absence of training, remind-then-take-over design, and two-model scope are all in the abstract. The cost claim is a hedged inference from fewer tokens."
+      },
+      {
+        "claim_number": 12,
+        "verdict": "supported",
+        "reason": "The abstract reports improved accuracy and 2.8x energy efficiency from routing to exact solvers. The claim appropriately caveats generalisation beyond the tested prompts."
+      }
+    ],
+    "usefulness": 4,
+    "usefulness_reason": "The brief is concrete, with specific benchmarks, numbers and mechanisms such as the entertain-then-cancel finding. It ties findings to practical implications for deployment, evaluation, cost and edge devices. Some implications slightly extrapolate, and the mix of topics is a little broad for a single question."
+  },
+  "n_claims": 12,
+  "citation_validity": 1.0,
+  "faithfulness": 0.9166666666666666,
+  "finding_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "implication_scores": [
+    0.5,
+    1.0,
+    1.0,
+    0.5,
+    1.0,
+    1.0
+  ],
+  "usefulness": 4
+}

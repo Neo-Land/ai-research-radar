@@ -1,0 +1,170 @@
+{
+  "question": "How are LLM agents being used for financial or investment research, and how reliable are they?",
+  "papers": [
+    "2610.26101",
+    "2609.34004",
+    "2610.11732",
+    "2610.26887",
+    "2610.20099",
+    "2609.37658",
+    "2610.26932",
+    "2610.14381"
+  ],
+  "brief": {
+    "summary": "LLM agents for finance are being studied across strategy development, stock forecasting, portfolio management, financial document analysis, and retrieval for financial services. The papers report gains over baselines, but almost all are self-reported results on the authors' own benchmarks or backtests, and the reliability evidence is narrow. Several papers also show agents still fail in ways that final metrics can hide, so the reliability question is only partly answered.",
+    "key_findings": [
+      {
+        "claim": "QuantHarness, a two-layer agent harness that structures financial strategy development and enforces stage-specific boundaries, reports the highest Task Success at 90.72% on its own FinRelBench benchmark, versus 74.23%-84.54% for comparison systems. The paper argues that final code and metrics alone cannot establish fidelity to the request, so it also records runtime evidence.",
+        "citations": [
+          "2610.26101"
+        ]
+      },
+      {
+        "claim": "RICE-Alpha, a point-in-time stock-scoring framework, reports the strongest results among the evaluated LLM-based agents and momentum on daily Nasdaq-100 and Hang Seng Index panels from 2024 to 2026. Net Sharpe ratios reach 1.656 (U.S.) and 1.725 (Hong Kong), and its ICIR more than doubles that of the strongest baseline. U.S. ablations show significant IC and RankIC drops after Holm adjustment when major components are removed.",
+        "citations": [
+          "2609.34004"
+        ]
+      },
+      {
+        "claim": "MemTrial addresses a known failure in LLM portfolio agents: they often do worse than the equal-weight (1/N) portfolio because they credit memories with market moves. It tests each memory against drafts with and without it, then uses a hierarchical Bayesian model and falls back to 1/N when values do not hold. On four benchmarks it loses at most 2.2% below 1/N on PortBench and InvestorBench, versus 15-38% for the best experience-learning agent, and improves the utility of that agent by 21.2% averaged over five settings.",
+        "citations": [
+          "2610.11732"
+        ]
+      },
+      {
+        "claim": "Navalia generates financial analysis tasks from corporate reports using verifiable synthesis, then applies SFT and RL. Initialized from Qwen3.6-35B-A3B, it gains over the base model across five benchmarks, including OfficeQA Pro, FinSearchComp, and Finance Agent Benchmark. The abstract does not give effect sizes.",
+        "citations": [
+          "2610.26887"
+        ]
+      },
+      {
+        "claim": "For financial services retrieval, expert-guided graded rubrics used as dense rewards in GRPO improve Recall@3 by up to 6% and MRR@3 by up to 6.7% compared with sparse-reward baselines. The gain depends on a small, fixed amount of subject-matter expert judgment.",
+        "citations": [
+          "2610.26932"
+        ]
+      },
+      {
+        "claim": "On EnterpriseBench, which includes financial QA and interactive business simulations, nine agent methods across four backbone models did not reach stable, comprehensive, or cross-task reliability in enterprise scenarios.",
+        "citations": [
+          "2609.37658"
+        ]
+      }
+    ],
+    "implications": [
+      {
+        "implication": "Institutions building LLM-driven strategy pipelines may find that scoring outputs by backtest metrics alone hides errors such as look-ahead information use or silent strategy repairs. Trajectory-level logging and stage boundaries could make such errors easier to detect, though QuantHarness's advantage was measured only on its own benchmark.",
+        "who_it_affects": "Quant researchers, model risk teams, and firms automating strategy research",
+        "citations": [
+          "2610.26101"
+        ]
+      },
+      {
+        "implication": "Portfolio tools that use past agent experience may need a conservative fallback, such as equal weighting, when learned memory values are unproven. This could limit downside in volatile markets, but the evidence comes from four benchmarks and a semi-synthetic setting.",
+        "who_it_affects": "Asset managers and developers of LLM portfolio agents",
+        "citations": [
+          "2610.11732"
+        ]
+      },
+      {
+        "implication": "Stock-selection teams may consider graded, reliability-calibrated historical event signals as a residual correction on top of an existing forecast. The reported Sharpe ratios are from 2024-2026 backtests with cost-adjusted net returns, not live trading, and the ablation significance is shown only for the U.S. panel.",
+        "who_it_affects": "Quantitative equity investors and systematic fund managers",
+        "citations": [
+          "2609.34004"
+        ]
+      },
+      {
+        "implication": "Financial-analysis assistants that answer questions over filings could benefit from synthetic, verifiable training data, which may reduce the cost of expert-written tasks. Whether the gains carry to production document workloads is not established by these papers.",
+        "who_it_affects": "Financial analysts and vendors of document-analysis agents",
+        "citations": [
+          "2610.26887",
+          "2610.26932"
+        ]
+      }
+    ],
+    "maturity": "early research",
+    "maturity_rationale": "Results come from new benchmarks and backtests written by the same authors, often on short or single-market periods. Live deployment, independent replication, and audited production use are not reported. EnterpriseBench reports that agents lack stable cross-task reliability, which supports treating this as early research.",
+    "risks_and_limitations": [
+      "Most headline numbers come from the authors' own benchmarks (FinRelBench, PortBench, InvestorBench, EnterpriseBench), so they may not transfer to other tasks or firms.",
+      "RICE-Alpha's backtests cover 2024-2026 on two equity indices and do not report transaction-cost or capacity limits beyond the net Sharpe figures; live performance is not tested.",
+      "MemTrial's robustness claims rely on a semi-synthetic benchmark with known experience quality and on LLM sampling that the authors note is noisy.",
+      "Navalia's abstract reports gains without effect sizes, so the size of improvement over the base model cannot be judged from it.",
+      "Expert-guided rubric results depend on a small amount of subject-matter expert input; the abstract does not describe how much or how the experts were selected.",
+      "EnterpriseBench and ACED-Bench both find that agents struggle with stopping and commitment decisions and with stable multi-step behavior, which are relevant risks for autonomous financial workflows.",
+      "EvalBuilder and ACED-Bench are not finance-specific and were used only for context on reliability limits, not as evidence about financial performance."
+    ]
+  },
+  "judgement": {
+    "verdicts": [
+      {
+        "claim_number": 1,
+        "verdict": "supported",
+        "reason": "The abstract gives the two-layer harness, stage-specific boundaries, the 90.72% vs 74.23%-84.54% Task Success, and states that final code and metrics are insufficient. FinRelBench is introduced in the same paper and evaluates runtime evidence."
+      },
+      {
+        "claim_number": 2,
+        "verdict": "supported",
+        "reason": "Markets, period, strongest results, net Sharpe values, ICIR more than doubling the strongest baseline, and the Holm-adjusted U.S. ablations all match the abstract."
+      },
+      {
+        "claim_number": 3,
+        "verdict": "supported",
+        "reason": "The failure mode (crediting memories with market moves and underperforming 1/N), the with/without drafts, the hierarchical Bayesian pooling, the 1/N anchoring, the 2.2% vs 15-38% figures, and the 21.2% improvement all match the abstract."
+      },
+      {
+        "claim_number": 4,
+        "verdict": "supported",
+        "reason": "The abstract describes verifiable task synthesis from corporate reports, SFT and RL, initialization from Qwen3.6-35B-A3B, and consistent gains on five benchmarks including those named. It gives no effect sizes."
+      },
+      {
+        "claim_number": 5,
+        "verdict": "supported",
+        "reason": "The abstract reports up to 6% Recall@3 and 6.7% MRR@3 gains over sparse-reward baselines using GRPO with a small, fixed investment of expert judgment. The claim omits that the reward is a hybrid with retrieval metrics, a minor simplification."
+      },
+      {
+        "claim_number": 6,
+        "verdict": "supported",
+        "reason": "The abstract states that nine agent methods under four backbones have not achieved stable, comprehensive, and cross-task reliability. The benchmark includes financial QA and interactive business simulations."
+      },
+      {
+        "claim_number": 7,
+        "verdict": "supported",
+        "reason": "The abstract names failure modes such as using information unavailable at decision time and obscured repairs. It argues that metrics alone are insufficient and reports results only on FinRelBench, so the caveat is accurate and the implication is reasonably hedged."
+      },
+      {
+        "claim_number": 8,
+        "verdict": "partially supported",
+        "reason": "Anchoring at 1/N and limiting losses are supported. The claim of limiting downside 'in volatile markets' extrapolates beyond the abstract, and the semi-synthetic benchmark is one of the four, not an additional setting."
+      },
+      {
+        "claim_number": 9,
+        "verdict": "partially supported",
+        "reason": "The residual correction, the 2024-2026 net Sharpe ratios, and U.S.-only ablation significance are supported. The 'graded' descriptor is not in the abstract, and the backtest and cost details are inferred rather than stated."
+      },
+      {
+        "claim_number": 10,
+        "verdict": "supported",
+        "reason": "Navalia addresses costly expert task authoring with verified synthetic tasks from financial reports. The caveat that production transfer is not established is appropriate."
+      }
+    ],
+    "usefulness": 4,
+    "usefulness_reason": "The brief gives specific numbers and concrete mechanisms (harness boundaries, memory crediting with a 1/N fallback, event graphs, synthetic training data), and it addresses reliability directly with practitioner-oriented implications and caveats. Some jargon (ICIR, RankIC, GRPO, Holm adjustment) is unexplained for a non-specialist."
+  },
+  "n_claims": 10,
+  "citation_validity": 1.0,
+  "faithfulness": 0.9,
+  "finding_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "implication_scores": [
+    1.0,
+    0.5,
+    0.5,
+    1.0
+  ],
+  "usefulness": 4
+}

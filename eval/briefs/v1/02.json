@@ -1,0 +1,257 @@
+{
+  "question": "What does recent research say about using AI for medical diagnosis and clinical decision support?",
+  "papers": [
+    "2609.34780",
+    "2610.34871",
+    "2610.26215",
+    "2609.15794",
+    "2609.31763",
+    "2609.25852",
+    "2610.07800",
+    "2610.24024"
+  ],
+  "brief": {
+    "summary": "Recent papers show promising benchmark and small-scale results for AI in diagnosis and clinical decision support, including a randomized crossover clinician study for rare-disease diagnosis and a large vendor-reported documentation metric. However, most evidence is retrospective, benchmark-based, self-reported, or conceptual, and none of the provided papers shows improved patient outcomes in routine care. The papers also flag bias, over-reliance by novice users, and missing deployment evidence, so the research supports piloting with oversight rather than broad clinical use.",
+    "key_findings": [
+      {
+        "claim": "FusionRare, which combines symbolic reasoning, deep learning, case retrieval and LLM inference, reached a macro-averaged Recall@1 of 51% for phenotype-only rare-disease diagnosis and 79% for phenotype-genotype analysis across 2,528 strictly isolated cases. The authors report these as ahead of DeepRare, GPT 5.5, PhenoBrain and LIRICAL under anti-leakage protocols.",
+        "citations": [
+          "2610.24024"
+        ]
+      },
+      {
+        "claim": "In a randomized, crossover clinician-AI validation of FusionRare, the tool raised the true diagnosis's rank in 45% of decisions, improved physician confidence in 62%, and reduced time to diagnosis by 21%.",
+        "citations": [
+          "2610.24024"
+        ]
+      },
+      {
+        "claim": "DocTalk, a chart-grounded question-answering system over de-identified discharge summaries, improved after LoRA instruction tuning on 500 QA pairs. The best tuned model, Llama-3-Med42-8B, scored ROUGE-L 0.40, BERTScore-F1 0.76 and UMLS-F1 0.49.",
+        "citations": [
+          "2610.34871"
+        ]
+      },
+      {
+        "claim": "On the external PubMedQA benchmark, DocTalk-style tuning raised accuracy from 0.931 to 0.977 for Llama-3.1-8B-Instruct and from 0.935 to 0.943 for Llama-3-Med42-8B. Gains were small for the biomedical model, which started higher.",
+        "citations": [
+          "2610.34871"
+        ]
+      },
+      {
+        "claim": "KnowBench proposes Effort Reduction, the share of AI-generated clinical documentation a clinician accepts. Knowtex reports an aggregate ER of 97.99% over more than one million signed encounters across 13 specialties, with per-specialty values of 96.8-98.9%. The authors state that some companion statistics are withheld and the checklist is only partly reported.",
+        "citations": [
+          "2609.15794"
+        ]
+      },
+      {
+        "claim": "SMARtCARE, an agentic ICU monitoring design, flagged one prior-pattern recurrence among 14 two-admission patients in MIMIC-III and found no matches among 9 patients in MIMIC-IV. The authors say this shows a fixed pattern library's limits, and they explicitly make no clinical efficacy claim.",
+        "citations": [
+          "2609.31763"
+        ]
+      },
+      {
+        "claim": "Clinical AI models can look accurate by predicting outcomes from information that clinicians already generated. Standard checks such as leakage tests, overall predictive performance and external validation do not show whether the AI adds value before recognition or across care processes.",
+        "citations": [
+          "2609.25852"
+        ]
+      },
+      {
+        "claim": "In a between-subjects study of 110 novice participants doing a clinical entity extraction task with AI assistance, explanations were associated with systematic drift toward over-reliance. Higher self-reported task understanding was associated with more selective reliance.",
+        "citations": [
+          "2610.07800"
+        ]
+      },
+      {
+        "claim": "A review of bias in AI disease detection screened 64,389 articles from seven digital libraries and kept 23 studies from 2015-2026. It identifies algorithmic, demographic, model and deployment bias and reports significant research gaps, especially around explainability, data diversity and fairness.",
+        "citations": [
+          "2610.26215"
+        ]
+      },
+      {
+        "claim": "A perspective on large language models in clinical medicine finds their flexibility broadens potential uses beyond narrow deep-learning tasks, but raises unresolved questions about reliability, accuracy, transparency, safety and appropriate role.",
+        "citations": [
+          "2609.34780"
+        ]
+      }
+    ],
+    "implications": [
+      {
+        "implication": "Rare-disease diagnostic support could shorten the diagnostic odyssey if prospective, multi-site validation confirms the reported ranking gains and the 21% reduction in time to diagnosis. Until then, tools like FusionRare should be treated as prioritization aids that a clinician reviews, not as diagnostic decision-makers.",
+        "who_it_affects": "Rare-disease specialists, genetics clinics, diagnostic labs and patients with undiagnosed conditions",
+        "citations": [
+          "2610.24024"
+        ]
+      },
+      {
+        "implication": "Vendors and health systems may use benchmark and effort-reduction numbers in procurement. Because these figures are self-reported and partly withheld, buyers should ask for audited methods, independent evaluation and outcome data before relying on them.",
+        "who_it_affects": "Hospital procurement teams, clinical informatics leaders, and documentation-AI vendors",
+        "citations": [
+          "2609.15794"
+        ]
+      },
+      {
+        "implication": "Strong scores on QA benchmarks such as PubMedQA do not show the system is safe or useful for chart-based clinical questions. Teams deploying EHR question-answering should run local evaluations on their own records, with clinician review of answers.",
+        "who_it_affects": "Clinical informaticists, EHR vendors and hospital IT teams building chart-query tools",
+        "citations": [
+          "2610.34871"
+        ]
+      },
+      {
+        "implication": "Evaluation standards for clinical prediction may need to change. Regulators, journals and hospital committees may need to require evidence that a model adds value beyond clinicians' existing judgment, not just accuracy and external validation.",
+        "who_it_affects": "Regulators, hospital AI governance committees, and journal reviewers of clinical prediction studies",
+        "citations": [
+          "2609.25852"
+        ]
+      },
+      {
+        "implication": "Explanations alone may not produce appropriate trust in AI advice. Interface designs for junior clinicians, residents and trainees may need features that support calibrated reliance, and training may need to address over-reliance.",
+        "who_it_affects": "Medical educators, junior clinicians, and designers of clinical decision-support interfaces",
+        "citations": [
+          "2610.07800"
+        ]
+      },
+      {
+        "implication": "Bias audits are likely to become standard expectations for diagnostic AI. Developers and purchasers may need to test performance across demographic groups and deployment settings, since current research has clear gaps here.",
+        "who_it_affects": "Developers of diagnostic imaging and detection AI, health equity officers, and patient advocacy groups",
+        "citations": [
+          "2610.26215"
+        ]
+      },
+      {
+        "implication": "ICU and inpatient monitoring tools that flag patients by comparing them to prior history may reduce missed deterioration. The current evidence is too limited to show benefit, since matches were rare and the approach is not claimed to be clinically effective.",
+        "who_it_affects": "ICU nurses and physicians, and developers of early-warning systems",
+        "citations": [
+          "2609.31763"
+        ]
+      }
+    ],
+    "maturity": "early research",
+    "maturity_rationale": "The strongest evidence is a single randomized crossover clinician study for rare-disease diagnosis, but it is one study of one tool. Other results come from retrospective benchmarks, self-reported vendor metrics, small-sample pilots without clinical efficacy claims, a novice user study and reviews or perspectives. None of the provided papers reports patient outcomes from routine clinical deployment.",
+    "risks_and_limitations": [
+      "Most results come from retrospective benchmarks or curated datasets, which may not match real clinical workflows or patient populations.",
+      "The KnowBench ER figure is vendor-reported, with some statistics withheld, so it cannot be independently verified from the paper.",
+      "FusionRare's superiority claims are relative to comparators chosen by the authors, and the clinician study's size and setting are not described in the abstract.",
+      "DocTalk's PubMedQA gains are small for the biomedical model and do not establish clinical safety or accuracy on real EHR questions.",
+      "SMARtCARE's real-data evaluation involved very few patients (14 and 9 two-admission patients), so its results are illustrative only.",
+      "The bias review found significant gaps in the literature, and only 23 of 64,389 screened articles met its inclusion criteria.",
+      "Over-reliance on explanations among novices suggests AI assistance could degrade decisions for less experienced users.",
+      "Several papers focus on frameworks or position arguments rather than measured results."
+    ]
+  },
+  "judgement": {
+    "verdicts": [
+      {
+        "claim_number": 1,
+        "verdict": "supported",
+        "reason": "The abstract gives the four-paradigm design, 2,528 isolated cases, and Recall@1 of 51% and 79%. It also reports advantages over DeepRare, GPT 5.5, PhenoBrain and LIRICAL under anti-leakage protocols."
+      },
+      {
+        "claim_number": 2,
+        "verdict": "supported",
+        "reason": "The abstract states the randomized crossover validation results exactly: 45% rank elevation, 62% confidence improvement and 21% time reduction."
+      },
+      {
+        "claim_number": 3,
+        "verdict": "supported",
+        "reason": "The abstract confirms the 500 QA pairs, LoRA tuning, consistent improvements, and Llama-3-Med42-8B scores of 0.40, 0.76 and 0.49."
+      },
+      {
+        "claim_number": 4,
+        "verdict": "supported",
+        "reason": "The PubMedQA figures match the abstract. The note about smaller gains from a higher start follows directly from those numbers."
+      },
+      {
+        "claim_number": 5,
+        "verdict": "partially supported",
+        "reason": "The figures and the withheld or partial reporting are accurate. However, the claim defines ER only as accepted documentation, while the abstract defines it broadly across tasks (codes, orders, summaries, decision support) under expert and safety review."
+      },
+      {
+        "claim_number": 6,
+        "verdict": "supported",
+        "reason": "The abstract states the MIMIC-III and MIMIC-IV results, the pattern-library limitation, and the explicit disclaimer of clinical efficacy."
+      },
+      {
+        "claim_number": 7,
+        "verdict": "supported",
+        "reason": "This closely paraphrases the abstract."
+      },
+      {
+        "claim_number": 8,
+        "verdict": "supported",
+        "reason": "The abstract states the 110-participant between-subjects design, the over-reliance drift with explanations, and the link between higher self-reported understanding and selective reliance."
+      },
+      {
+        "claim_number": 9,
+        "verdict": "supported",
+        "reason": "The abstract gives the 64,389 screened articles, seven libraries, 23 reviewed studies, the 2015-2026 window, the four bias types, the research gaps, and the emphasis on explainability, diversity and fairness."
+      },
+      {
+        "claim_number": 10,
+        "verdict": "supported",
+        "reason": "The abstract contrasts narrow deep-learning tasks with the broader flexibility of LLMs and lists the same concerns."
+      },
+      {
+        "claim_number": 11,
+        "verdict": "partially supported",
+        "reason": "The abstract supports diagnostic-odyssey framing and the 21% figure. The call for prospective multi-site validation and the prioritization-aid framing are the brief's own recommendations."
+      },
+      {
+        "claim_number": 12,
+        "verdict": "partially supported",
+        "reason": "The abstract confirms the figures are company-reported with withheld statistics and says the protocol aims for auditability. The procurement advice is extrapolation."
+      },
+      {
+        "claim_number": 13,
+        "verdict": "not supported",
+        "reason": "The DocTalk abstract presents PubMedQA gains as evidence of generalization. It does not argue that benchmark scores fail to show safety, nor does it recommend local evaluation."
+      },
+      {
+        "claim_number": 14,
+        "verdict": "partially supported",
+        "reason": "The paper proposes evidence requirements beyond accuracy and external validation, aimed at hospitals. Extending this to regulators and journals goes beyond the abstract."
+      },
+      {
+        "claim_number": 15,
+        "verdict": "partially supported",
+        "reason": "The abstract supports the finding that explanations led to over-reliance and mentions design guidelines. Participants were novices, not specifically clinicians, and training recommendations are not mentioned."
+      },
+      {
+        "claim_number": 16,
+        "verdict": "partially supported",
+        "reason": "The review identifies research gaps and bias types. The prediction that audits will become standard and the testing recommendations are extrapolation."
+      },
+      {
+        "claim_number": 17,
+        "verdict": "partially supported",
+        "reason": "The abstract supports that matches were rare and that no efficacy claim is made. That such tools may reduce missed deterioration is a speculative motivation, not a finding."
+      }
+    ],
+    "usefulness": 4,
+    "usefulness_reason": "The brief is concrete, with specific numbers, named systems and clear caveats, and it covers diagnosis, documentation, monitoring, human reliance and bias. Some implication claims stretch beyond their sources, and the evidence comes from a small set of preprints."
+  },
+  "n_claims": 17,
+  "citation_validity": 1.0,
+  "faithfulness": 0.7352941176470589,
+  "finding_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.5,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "implication_scores": [
+    0.5,
+    0.5,
+    0.0,
+    0.5,
+    0.5,
+    0.5,
+    0.5
+  ],
+  "usefulness": 4
+}

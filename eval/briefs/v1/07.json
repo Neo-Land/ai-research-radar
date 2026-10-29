@@ -1,0 +1,170 @@
+{
+  "question": "What progress has been made on making self-driving systems safer?",
+  "papers": [
+    "2610.08825",
+    "2609.31186",
+    "2610.04088",
+    "2610.12233",
+    "2610.30319",
+    "2610.03948",
+    "2610.14020",
+    "2609.34085"
+  ],
+  "brief": {
+    "summary": "The provided papers show progress on driving safety mainly in simulators and benchmarks. A hybrid planner that falls back to model-predictive control in unfamiliar situations cut collisions by 89% versus a neural-only planner in CARLA, and a policy trained by self-play reached top scores on NAVSIM without human demonstrations. No paper reports real-road testing, so these are early signals rather than evidence that deployed systems are safer. Three of the eight provided papers concern non-driving AI safety or laboratory video and were not used for the driving conclusions.",
+    "key_findings": [
+      {
+        "claim": "A dual-process design pairs a neural planner for routine driving with model predictive control for unfamiliar situations. A meta-cognitive module uses a knowledge graph of traffic rules and social norms to decide when to switch. In CARLA out-of-distribution scenarios where emergency vehicles run red lights, it reduced collisions by 89% compared with the neural-only planner and improved right-of-way compliance.",
+        "citations": [
+          "2610.04088"
+        ]
+      },
+      {
+        "claim": "A policy pretrained by self-play, with no human driving demonstrations, outperformed published imitation-based end-to-end methods on the HUGSim closed-loop benchmark. Its planner scored 59.4 EPDMS on NAVSIM navhard, above the best published method listed (DriveZero-Scale at 57.1), and 95.5 PDMS on navtest.",
+        "citations": [
+          "2610.30319"
+        ]
+      },
+      {
+        "claim": "CPW-Drive injects value principles from Confucian texts into an LLM retrieval-augmented planner. On the Highway-env multilane task it reached 93.0%, 86.0% and 72.0% success across three traffic configurations, beating the strongest baseline by 8.0, 22.5 and 25.0 points. It also had the highest collision-free step count, with noted efficiency and latency trade-offs.",
+        "citations": [
+          "2610.03948"
+        ]
+      },
+      {
+        "claim": "AD-E2E-JEPA adds a learned projector to a joint-embedding world model. It cuts planning patches 16x and embedding dimension 4x for a 100x inference speedup, taking 0.8 seconds for an 8-frame rollout over 256 candidate trajectories. Without any driving policy, it reached goals 20 m away within 4.0 m (256 candidates) or 2.8 m (8,192 candidates) on average, and scored 67.3/72.9 EPDMS on NAVSIMv2 in zero-shot planning. Pretraining the projector raised imitation learning from 80.2 to 85.4 EPDMS.",
+        "citations": [
+          "2609.34085"
+        ]
+      },
+      {
+        "claim": "The authors argue that the field has over 600 autonomous driving datasets from nearly 50 countries, but most are underused because of fragmentation, incompatible protocols and benchmark incentives. They propose community-shared data infrastructure. This paper gives a position and an early example, not a measured safety result.",
+        "citations": [
+          "2610.08825"
+        ]
+      }
+    ],
+    "implications": [
+      {
+        "implication": "Developers of onboard driving stacks may find that a learned planner with a rule-aware fallback handles rare situations better. The 89% collision reduction is from CARLA scenarios against one baseline, so it may not carry over to real sensors, traffic or other vehicles.",
+        "who_it_affects": "Autonomous vehicle software teams and safety engineers",
+        "citations": [
+          "2610.04088"
+        ]
+      },
+      {
+        "implication": "Self-play could reduce reliance on large logs of human driving for rare safety-critical cases, which are thin in such logs. Whether the simulated diversity transfers to real sensor data is untested.",
+        "who_it_affects": "Companies whose driving data collection is expensive, and teams working on rare-event coverage",
+        "citations": [
+          "2610.30319"
+        ]
+      },
+      {
+        "implication": "Encoding traffic rules and social norms in an explicit knowledge graph or value layer could make rule compliance easier to inspect and audit. Both papers show this only in simulation, and CPW-Drive also pays latency and efficiency costs.",
+        "who_it_affects": "Safety assessors, regulators and standards bodies interested in verifiable compliance",
+        "citations": [
+          "2610.04088",
+          "2610.03948"
+        ]
+      },
+      {
+        "implication": "Faster world-model planning and a pretrained projector could make learned planners cheaper to run and improve imitation policies. Onboard compute budgets would decide whether the speedup matters in practice.",
+        "who_it_affects": "Teams building onboard compute and efficiency-sensitive planners",
+        "citations": [
+          "2609.34085"
+        ]
+      },
+      {
+        "implication": "Shared, well-documented datasets could make safety evaluation more comparable across groups, if the community adopts the proposed infrastructure.",
+        "who_it_affects": "Academic researchers, dataset maintainers and companies that release driving data",
+        "citations": [
+          "2610.08825"
+        ]
+      }
+    ],
+    "maturity": "early research",
+    "maturity_rationale": "All results come from simulators or offline benchmarks (CARLA, Highway-env, HUGSim, NAVSIM). None reports on-road testing or real-world incident rates. Metrics such as EPDMS and PDMS are benchmark-specific, and comparisons rely on each paper's own baselines.",
+    "risks_and_limitations": [
+      "Evidence is simulation and benchmark only; real-world sensor noise, unusual road users and hardware limits are not tested.",
+      "Headline gains are often measured against one or a few baselines, so improvements may not hold against the strongest current systems.",
+      "Hybrid fallback and knowledge-graph approaches add latency and engineering complexity, which CPW-Drive reports as a trade-off.",
+      "Benchmark scores (EPDMS, PDMS, success rate) may not reflect rare-event safety, which is the central concern.",
+      "The data-paradigm paper offers an argument and a plan rather than a measured safety improvement.",
+      "Three provided papers (2609.31186, 2610.12233, 2610.14020) concern recursive AI safety or laboratory video, not self-driving, so they were excluded from the driving conclusions."
+    ]
+  },
+  "judgement": {
+    "verdicts": [
+      {
+        "claim_number": 1,
+        "verdict": "supported",
+        "reason": "The abstract describes the neural network plus MPC dual-process design and the meta-cognitive switch using a knowledge graph of rules and norms. It also reports the CARLA red-light scenarios, the 89% collision reduction against the NN-only planner, and improved right-of-way compliance."
+      },
+      {
+        "claim_number": 2,
+        "verdict": "supported",
+        "reason": "The abstract states the self-play pretraining with no human demonstrations and that the closed-loop policy outperforms every published imitation-based method on HUGSim. It gives the same figures: 59.4 EPDMS on navhard versus DriveZero-Scale's 57.1, and 95.5 PDMS on navtest."
+      },
+      {
+        "claim_number": 3,
+        "verdict": "supported",
+        "reason": "The abstract matches on Confucian-derived value principles in a RAG LLM framework, the 93.0/86.0/72.0% success rates, and the 8.0/22.5/25.0-point margins. It also reports the highest collision-free step count and efficiency and latency trade-offs."
+      },
+      {
+        "claim_number": 4,
+        "verdict": "supported",
+        "reason": "All figures match the abstract: 16x fewer patches, 4x smaller embedding, 100x speedup, 0.8 s per rollout, and 4.0/2.8 m goal displacement at 20 m. The 67.3/72.9 EPDMS zero-shot scores and the 80.2 to 85.4 imitation improvement also match."
+      },
+      {
+        "claim_number": 5,
+        "verdict": "supported",
+        "reason": "The abstract gives the 600+ datasets from nearly 50 countries, the causes of underuse, and the call for a community-driven paradigm with an early realization. It is a position paper with no measured safety result."
+      },
+      {
+        "claim_number": 6,
+        "verdict": "supported",
+        "reason": "The abstract supports a learned planner with a rule-aware fallback handling novel situations, with the 89% figure coming from CARLA against the NN-only planner. The caveat about real-world transfer is a reasonable framing that does not contradict it."
+      },
+      {
+        "claim_number": 7,
+        "verdict": "partially supported",
+        "reason": "The abstract supports that logs only thinly cover the safety-critical tail and that self-play removes the need for demonstrations. However, the students are trained on paired image frames and evaluated on photorealistic HUGSim and NAVSIM, which draws on real driving data. Calling transfer to real sensor data 'untested' is therefore not backed and is arguably contradicted."
+      },
+      {
+        "claim_number": 8,
+        "verdict": "partially supported",
+        "reason": "Both abstracts confirm explicit rule and value encoding, simulation-only evaluation, and CPW-Drive's latency and efficiency trade-offs. Neither abstract claims the approach makes compliance easier to inspect or audit."
+      },
+      {
+        "claim_number": 9,
+        "verdict": "supported",
+        "reason": "The abstract reports the 100x inference speedup and the pretrained projector improving imitation learning. The point about onboard compute budgets is a hedged caveat that does not contradict it."
+      },
+      {
+        "claim_number": 10,
+        "verdict": "partially supported",
+        "reason": "The abstract says the paradigm would improve evaluation of diverse datasets. It does not specifically mention making safety evaluation comparable across groups or well-documented datasets, so the claim extrapolates."
+      }
+    ],
+    "usefulness": 4,
+    "usefulness_reason": "The brief gives concrete numbers, names specific methods and states sensible caveats such as simulation-only results and single baselines. It also notes who could benefit. However, benchmark jargon like EPDMS, PDMS, navhard and HUGSim goes unexplained for a non-specialist, and one caveat misstates the testing scope."
+  },
+  "n_claims": 10,
+  "citation_validity": 1.0,
+  "faithfulness": 0.85,
+  "finding_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "implication_scores": [
+    1.0,
+    0.5,
+    0.5,
+    1.0,
+    0.5
+  ],
+  "usefulness": 4
+}

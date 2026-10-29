@@ -1,0 +1,40 @@
+{"query": "Can reinforcement learning help models write better text descriptions of sensor or signal data over time?", "relevant": ["2610.01800"]}
+{"query": "How do you figure out cause-and-effect relationships when the dataset has lots of gaps or blanks?", "relevant": ["2610.19211"]}
+{"query": "Optimization algorithms that remember the situations in which past search strategies worked or failed", "relevant": ["2609.35657"]}
+{"query": "Can LLM agents do the full investment research loop of coming up with a trading idea, coding it and backtesting it?", "relevant": ["2610.30113"]}
+{"query": "Cheaper way to check whether an AI's written explanation of a defect in an image is actually correct", "relevant": ["2610.27565"]}
+{"query": "What-if explanations for AI that diagnoses breast cancer from several kinds of medical data", "relevant": ["2609.20067"]}
+{"query": "Making Arabic chatbots respect cultural norms that differ from country to country", "relevant": ["2610.25362"]}
+{"query": "Self-driving car control that adjusts how cautious it is based on a fear-like signal from neuroscience", "relevant": ["2609.38016"]}
+{"query": "Predicting whether drivers will brake hard or run a red light when the traffic signal changes", "relevant": ["2609.16058"]}
+{"query": "Protecting an AI assistant's long-term memory from being poisoned by malicious injected content", "relevant": ["2610.28987"]}
+{"query": "Problems with how we test regression models when the target values are very unevenly distributed", "relevant": ["2609.25152"]}
+{"query": "Can AI agents improve their own game strategies over a long competition by rewriting their rules?", "relevant": ["2610.12341"]}
+{"query": "What oversight and controls are needed once coding agents become better than human developers?", "relevant": ["2610.31306"]}
+{"query": "Has the writing style of scientific papers changed faster since ChatGPT-style tools appeared?", "relevant": ["2610.26008"]}
+{"query": "Testing whether language models can figure out which sub-questions are worth asking to solve a hard problem", "relevant": ["2609.35879"]}
+{"query": "Training vision models to read construction blueprints and engineering drawings", "relevant": ["2609.34082"]}
+{"query": "Generating long animations of people interacting with objects and their surroundings by combining several specialist models", "relevant": ["2610.27725"]}
+{"query": "When should a self-driving car ask a powerful cloud model for help instead of relying on its onboard system?", "relevant": ["2610.09520"]}
+{"query": "Teaching small agents to use tools by learning from a bigger model, focusing on the actions that matter most", "relevant": ["2610.25693"]}
+{"query": "Programs to bring AI and robotics education to rural K-12 schools using college mentors", "relevant": ["2609.18072"]}
+{"query": "Better ways to score how well natural language is converted into formal logic statements", "relevant": ["2609.33612"]}
+{"query": "Stress-testing whether AI judges used for grading model outputs are reliable", "relevant": ["2610.28886"]}
+{"query": "Does US government AI policy focus on the industries where AI is most risky?", "relevant": ["2609.16260"]}
+{"query": "Using generated video to help vision-language models reason about motion and changing viewpoints", "relevant": ["2610.21910"]}
+{"query": "Keeping diffusion-model driving planners from producing unsafe paths in unfamiliar conditions", "relevant": ["2610.11483"]}
+{"query": "Benchmark using a made-up world to measure whether robots really learn new domain knowledge rather than recalling pre-training", "relevant": ["2609.22285"]}
+{"query": "Using an agent to combine several pretrained defect detectors when they disagree", "relevant": ["2610.28560"]}
+{"query": "AI writing assistance for volunteers who support people struggling with mental health online", "relevant": ["2609.14886"]}
+{"query": "How does exercise lower dementia risk, using LLM-guided causal analysis of UK health records?", "relevant": ["2610.02221"]}
+{"query": "Agents that create images combining several reference photos without missing or duplicating people", "relevant": ["2609.35530"]}
+{"query": "Synthetic telecom network outage data with known root causes for training diagnosis tools", "relevant": ["2610.30004"]}
+{"query": "Reinforcement learning for strategy games where a high-level choice of plan is separated from unit control", "relevant": ["2610.11663"]}
+{"query": "Security risks of autonomous AI agents in next-generation mobile networks", "relevant": ["2610.30436"]}
+{"query": "Security scanning of the public marketplace of add-on skills for a viral AI agent", "relevant": ["2609.17274"]}
+{"query": "Benchmark for describing how someone speaks, like their tone and emotion, rather than what they say", "relevant": ["2610.33036"]}
+{"query": "Predicting whether a coding agent's change will break other systems that depend on the code", "relevant": ["2610.04940"]}
+{"query": "How accurate and well-calibrated is a multiple-choice-only AI model on medical diagnosis questions?", "relevant": ["2609.34024"]}
+{"query": "Why do trained agents sometimes pursue the wrong objective when placed in new environments?", "relevant": ["2610.19731"]}
+{"query": "AI agents managing wireless networking for fleets of different kinds of drones", "relevant": ["2609.19538"]}
+{"query": "Are step-by-step reasoning models actually better at everyday common-sense logic than regular models?", "relevant": ["2610.22538"]}

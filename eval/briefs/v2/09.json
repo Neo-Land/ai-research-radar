@@ -1,0 +1,219 @@
+{
+  "question": "How is AI governance and regulation evolving, and what should compliance teams watch?",
+  "papers": [
+    "2609.24784",
+    "2609.20016",
+    "2609.27994",
+    "2609.36228",
+    "2609.26175",
+    "2609.27632",
+    "2610.33253",
+    "2609.24515"
+  ],
+  "brief": {
+    "summary": "The papers show a shift from single-system compliance toward governing populations of AI systems and agents, plus early tooling for EU AI Act compliance, but they do not describe how regulation itself is changing. Most are proposals, frameworks, or small evaluations rather than validated practice, so they indicate where compliance work may head rather than what is settled. Compliance teams would likely watch EU AI Act tooling and agent-level governance, and treat the reported numbers as case-specific.",
+    "key_findings": [
+      {
+        "claim": "Current regulation is described as single-system-centric. The authors propose a formal way to represent configurations of AI system populations (convex compositions of operational states), illustrated with healthcare and recruitment examples. This is a theoretical framework, not an empirical result.",
+        "citations": [
+          "2609.24784"
+        ]
+      },
+      {
+        "claim": "Local compliance checks on individual agents need not add up to acceptable collective outcomes. The authors call this 'constitutional non-compositionality' and propose a finance reference architecture (ARIA). Two simulations show shared-signal thin-file exclusion under local controls and earlier warning from population-level distributional monitoring in a constructed drift regime. The paper is a research agenda and explicitly makes no production-effectiveness claim.",
+        "citations": [
+          "2609.27994"
+        ]
+      },
+      {
+        "claim": "A Governance-as-Code framework of 43 machine-checkable criteria across six modules runs in CI/CD and emits Article-indexed audit evidence. The authors argue that Articles 8-15 leave seven technical gaps for generative systems. On two enterprise deployments, it reproduced all findings of a manual audit, including three penalty-triggering violations, while cutting audit labor by roughly 75%.",
+        "citations": [
+          "2609.20016"
+        ]
+      },
+      {
+        "claim": "In a study of 12 automated EU AI Act compliance checkers, quality varied significantly. The checkers tended to oversimplify or omit key obligations and did not give determinate, actionable guidance. The authors conclude they are early-stage orientation tools and that relying on them may foster a false sense of compliance.",
+        "citations": [
+          "2609.36228"
+        ]
+      },
+      {
+        "claim": "EADC is a benchmark of 4,435+ QA pairs for LLM compliance, covering bias, fairness, privacy, and values, built from an AI compliance knowledge graph and reviewed by legal experts. The authors report that it exposes regulatory blind spots in state-of-the-art LLMs. Specific results are not given in the abstract.",
+        "citations": [
+          "2609.26175"
+        ]
+      },
+      {
+        "claim": "Zafin AIOS, a governed orchestration platform, was evaluated in a single company's internal case study ('Customer Zero') with two production codebases. It reduced effort by 38% on a pricing execution platform and reporting work by 76% on a client deal negotiation platform, while keeping data privacy, access, and audit guardrails. The authors describe these as descriptive results.",
+        "citations": [
+          "2610.33253"
+        ]
+      },
+      {
+        "claim": "A DACH-oriented architecture treats regulation as an orientation layer. It compiles a regulatory-intent matrix into prohibitions, obligations, and runtime budgets, and records evidence in a permissioned DAG with deterministic timestamps. The paper is a design proposal with no reported measurements.",
+        "citations": [
+          "2609.27632"
+        ]
+      },
+      {
+        "claim": "Based on input from 23 experts, the authors identify information needed to report security incidents involving AI agents. Examples include agent memory and memory accesses, levels of autonomy, and tool usage. They also flag risks such as data leakage and attacks on the reporting infrastructure itself. This is expert consensus input, not a tested reporting system.",
+        "citations": [
+          "2609.24515"
+        ]
+      }
+    ],
+    "implications": [
+      {
+        "implication": "Compliance teams for high-risk AI could use automated, CI/CD-integrated checks that map evidence to specific Articles. This may reduce manual audit effort, but the 75% figure comes from two deployments and is benchmarked against one manual audit.",
+        "who_it_affects": "Compliance and engineering teams at providers of high-risk generative AI systems",
+        "citations": [
+          "2609.20016"
+        ]
+      },
+      {
+        "implication": "Off-the-shelf EU AI Act compliance checkers may be useful for orientation but could lead teams to believe they are compliant when they are not. Legal review may still be needed for determinate obligations.",
+        "who_it_affects": "SMEs, individual developers, and compliance staff relying on automated checkers",
+        "citations": [
+          "2609.36228"
+        ]
+      },
+      {
+        "implication": "Organizations running multi-agent systems in credit or fraud may need population-level monitoring, not only per-component approval, to detect collective harms such as disparate impact. This is supported by simulations only, so real-world effectiveness is unknown.",
+        "who_it_affects": "Financial institutions deploying agentic workflows in lending, fraud, and collections",
+        "citations": [
+          "2609.27994"
+        ]
+      },
+      {
+        "implication": "Incident response playbooks for AI agents may need to capture memory, autonomy level, and tool use, which standard incident formats may not cover. This could change what regulators and internal audit ask for, but no standard has been adopted in these papers.",
+        "who_it_affects": "Security teams, incident responders, and regulators shaping AI incident reporting rules",
+        "citations": [
+          "2609.24515"
+        ]
+      },
+      {
+        "implication": "Governed agent orchestration with audit guardrails may allow regulated firms to adopt AI-assisted engineering. The gains reported come from one vendor's internal case study, so they may not transfer to other firms.",
+        "who_it_affects": "Engineering and compliance leaders in regulated finance considering AI-assisted software development",
+        "citations": [
+          "2610.33253"
+        ]
+      },
+      {
+        "implication": "Benchmarks such as EADC could become a way to test LLMs against legal risk categories. Their value depends on how well they match real legal interpretation, which the abstract does not evaluate.",
+        "who_it_affects": "LLM evaluation teams and AI providers preparing compliance evidence",
+        "citations": [
+          "2609.26175"
+        ]
+      }
+    ],
+    "maturity": "early research",
+    "maturity_rationale": "Most papers are formal frameworks, design proposals, or research agendas. The strongest empirical results are small: two enterprise deployments, two simulations, and one vendor case study. The compliance checker study suggests current tools are not yet reliable. None of the papers reports a regulator-endorsed or broadly adopted approach.",
+    "risks_and_limitations": [
+      "The papers do not describe regulatory developments such as new rules, enforcement actions, or guidance, so the question about how regulation is evolving is only partly answered.",
+      "Several results are self-reported or from single deployments: the 75% audit-labor reduction, the 38% and 76% productivity gains, and the simulation results.",
+      "The Governance-as-Code benchmark compares against one manual expert audit, so its detection accuracy in other settings is untested.",
+      "The ARIA architecture and the DACH framework are proposals with no production validation, and the authors say so.",
+      "The EADC benchmark's performance results are not given in the abstract, so its ability to detect regulatory blind spots cannot be judged from the summary.",
+      "The incident-reporting paper draws on expert input from 23 people, which may not represent all stakeholders.",
+      "The convex-compositionality paper is a formal framework illustrated with examples and does not report empirical validation."
+    ]
+  },
+  "judgement": {
+    "verdicts": [
+      {
+        "claim_number": 1,
+        "verdict": "supported",
+        "reason": "The abstract states that regulation is single-system-centric, introduces convex AI compositionality, and gives healthcare and recruitment examples. Calling it theoretical is a fair characterization."
+      },
+      {
+        "claim_number": 2,
+        "verdict": "supported",
+        "reason": "Every element (the non-compositionality term, ARIA, the two simulations, and the absence of a production-effectiveness claim) matches the abstract."
+      },
+      {
+        "claim_number": 3,
+        "verdict": "supported",
+        "reason": "The 43 criteria, six modules, CI/CD integration, Article-indexed evidence, seven gaps, two deployments, three penalty-triggering violations and roughly 75% labor reduction all match the abstract."
+      },
+      {
+        "claim_number": 4,
+        "verdict": "supported",
+        "reason": "The abstract directly states that 12 checkers were studied, quality varied significantly, obligations were oversimplified or omitted, guidance was not determinate or actionable, and reliance may create a false sense of compliance."
+      },
+      {
+        "claim_number": 5,
+        "verdict": "supported",
+        "reason": "The 4,435+ QA pairs, knowledge-graph basis, legal expert review, taxonomy and exposure of blind spots are all stated in the abstract."
+      },
+      {
+        "claim_number": 6,
+        "verdict": "supported",
+        "reason": "The 38% and 76% reductions, the Customer Zero internal case study, the two codebases, the maintained guardrails and the 'descriptive' framing all match the abstract."
+      },
+      {
+        "claim_number": 7,
+        "verdict": "supported",
+        "reason": "The design elements match the abstract. The abstract reports no measurements, which is consistent with calling it a design proposal."
+      },
+      {
+        "claim_number": 8,
+        "verdict": "supported",
+        "reason": "The 23 experts, the reporting elements (memory, autonomy, tool usage) and the risks of data leakage and attacks on reporting infrastructure all match. 'Expert consensus' slightly reframes 'expert input', but the substance holds."
+      },
+      {
+        "claim_number": 9,
+        "verdict": "supported",
+        "reason": "This is a reasonable hedged implication, and its caveat about two deployments and one manual audit matches the abstract."
+      },
+      {
+        "claim_number": 10,
+        "verdict": "partially supported",
+        "reason": "Orientation use and the false sense of compliance are supported. The recommendation of legal review is an added inference the abstract does not make."
+      },
+      {
+        "claim_number": 11,
+        "verdict": "supported",
+        "reason": "This hedged implication is consistent with the abstract's argument and its simulation-only, non-production caveat."
+      },
+      {
+        "claim_number": 12,
+        "verdict": "partially supported",
+        "reason": "The reporting elements are supported. The claims that standard formats may not cover them and that this could change what regulators ask for are extrapolations, though the abstract does say current frameworks must be adapted."
+      },
+      {
+        "claim_number": 13,
+        "verdict": "supported",
+        "reason": "The single internal case study is noted in the abstract, and the transferability caveat is a reasonable hedge."
+      },
+      {
+        "claim_number": 14,
+        "verdict": "partially supported",
+        "reason": "The benchmark's purpose is supported. The assertion that the abstract does not evaluate alignment with real legal interpretation is debatable, since legal experts reviewed the benchmark."
+      }
+    ],
+    "usefulness": 4,
+    "usefulness_reason": "The brief is concrete, with specific numbers and named frameworks, and it gives clear caveats about evidence strength along with actionable watch-points for compliance teams. Some 'may need' recommendations are generic, and the brief offers little synthesis of an overall regulatory trend."
+  },
+  "n_claims": 14,
+  "citation_validity": 1.0,
+  "faithfulness": 0.8928571428571429,
+  "finding_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "implication_scores": [
+    1.0,
+    0.5,
+    1.0,
+    0.5,
+    1.0,
+    0.5
+  ],
+  "usefulness": 4
+}

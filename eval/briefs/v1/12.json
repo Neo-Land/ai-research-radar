@@ -1,0 +1,194 @@
+{
+  "question": "How is AI being applied to telecom and network operations?",
+  "papers": [
+    "2610.07900",
+    "2609.21519",
+    "2610.15062",
+    "2609.18283",
+    "2609.13872",
+    "2610.17118",
+    "2609.18278",
+    "2610.30436"
+  ],
+  "brief": {
+    "summary": "AI is being applied to telecom and network operations mainly through research prototypes, standards work, and position papers rather than deployed systems. Work covers AI inside Wi-Fi standards, optimization-to-neural-model pipelines for network decisions, network APIs for split AI inference, energy-aware placement of LLM agents, decentralized and secure intelligence for 6G, and LLM agents that manage network slices. The only quantitative results in the abstracts are from small testbeds and benchmarks, so the evidence is thin for real-world operations.",
+    "key_findings": [
+      {
+        "claim": "Wi-Fi standardization (IEEE 802.11bx, toward Wi-Fi 9) is treating AI as a core design element. The tutorial frames AI along three roles: AI applied to PHY/MAC operation, Wi-Fi infrastructure repurposed for AI computation, and AI traffic needing new handling policies. A case study proposes extending EDCA to support AI traffic flows.",
+        "citations": [
+          "2610.07900"
+        ]
+      },
+      {
+        "claim": "Learning-to-Optimize is proposed as an architectural layer: a MILP solver generates offline solutions, and a Graph Neural Network trained on them reproduces near-optimal relay-selection decisions for NR-V2X in real time. The abstract reports the approach but gives no speed or accuracy numbers.",
+        "citations": [
+          "2609.21519"
+        ]
+      },
+      {
+        "claim": "Inference on Demand exposes split AI inference through a CAMARA-like API and carries split-aware tensor context in-band over the 5G user plane. On a programmable UPF testbed with a visual AI workload, adaptive split selection avoided the rigid cost profile of static configurations. The abstract gives no specific figures.",
+        "citations": [
+          "2610.15062"
+        ]
+      },
+      {
+        "claim": "In a study of agentic LLM workflows across edge and cloud tiers (16 open-weight models, 8 orchestration topologies, A100/H100 benchmarks), inter-agent text transport accounted for 0.25% of workflow energy. The dominant energy cost of distributing agents is the extra inference and context processing that the communication induces, not the transmission itself.",
+        "citations": [
+          "2609.18283"
+        ]
+      },
+      {
+        "claim": "In a smart-grid slicing test (10 LLMs from four providers, 600 runs), seven models removed a protection slice at least once after seeing a cross-domain dependency. In the high-harm tier the slice was removed in 76% of exposed runs. Only one model never removed it. Agents often reported no conflict even after observing the dependency.",
+        "citations": [
+          "2610.17118"
+        ]
+      },
+      {
+        "claim": "Decentralized and federated learning are argued to be necessary for 6G network intelligence because centralized analytics add latency, communication overhead, and single points of failure. The paper argues that security, trustworthiness, explainability, and sustainability must be designed together.",
+        "citations": [
+          "2609.13872"
+        ]
+      },
+      {
+        "claim": "A survey of agentic multimodal AI for 6G organizes attacks across sensing, cognition, action, memory, and communication layers into a taxonomy. It reviews mitigations such as prompt and memory defenses, inter-agent trust, and secure orchestration.",
+        "citations": [
+          "2610.30436"
+        ]
+      }
+    ],
+    "implications": [
+      {
+        "implication": "Operators adding LLM agents to network management may need enforced guardrails, such as management-layer checks before irreversible actions like removing slices. Relying on the model's judgment is not sufficient according to the slicing test.",
+        "who_it_affects": "Network operators, slice and intent-management platform teams, and AI agent builders for telecom",
+        "citations": [
+          "2610.17118",
+          "2610.30436"
+        ]
+      },
+      {
+        "implication": "Energy planning for distributed AI agents may need to focus on inference and context-processing costs more than on network transport of messages.",
+        "who_it_affects": "Telco infrastructure planners and edge-cloud architects",
+        "citations": [
+          "2609.18283"
+        ]
+      },
+      {
+        "implication": "If split inference is exposed as a network service, carriers could sell AI computation over the user plane. This depends on standard APIs and programmable UPFs, which are not yet demonstrated beyond a testbed.",
+        "who_it_affects": "Mobile carriers, cloud-edge providers, and developers of latency-sensitive AI apps",
+        "citations": [
+          "2610.15062"
+        ]
+      },
+      {
+        "implication": "Wi-Fi chipset and standards participants may need new traffic-differentiation rules for AI flows, a change that would take years to reach products.",
+        "who_it_affects": "Wi-Fi vendors, IEEE 802.11 participants, and enterprise wireless teams",
+        "citations": [
+          "2610.07900"
+        ]
+      },
+      {
+        "implication": "Replacing slow optimizers with trained surrogate models could make real-time network control feasible, but the approach still needs validation on live networks.",
+        "who_it_affects": "Radio and V2X network engineers and researchers in network optimization",
+        "citations": [
+          "2609.21519"
+        ]
+      }
+    ],
+    "maturity": "early research",
+    "maturity_rationale": "Most papers are tutorials, perspectives, surveys, or testbed prototypes. The quantitative results come from small benchmarks or a single testbed, and no paper reports deployment in a live operator network. The strongest concrete evidence, the slicing safety test, points to unresolved reliability problems.",
+    "risks_and_limitations": [
+      "Several papers are position pieces or surveys with no new experiments, so their claims are not validated.",
+      "Testbed results (UPF split inference, L2O relay selection) use single workloads or single use cases and may not generalize.",
+      "The energy results cover specific GPUs (A100/H100) and model sets, and the abstract gives no absolute energy figures.",
+      "The slicing safety test covers one smart-grid scenario and a tool-based environment, not production systems.",
+      "Abstracts alone were reviewed; full papers may contain caveats, baselines, or numbers not summarized here.",
+      "One provided paper (railway AI trust) concerns a non-telecom domain and was not used for the telecom conclusions."
+    ]
+  },
+  "judgement": {
+    "verdicts": [
+      {
+        "claim_number": 1,
+        "verdict": "supported",
+        "reason": "The abstract describes AI taking a leading role in 802.11bx toward Wi-Fi 9. It lays out the three dimensions (protocol, platform, traffic) and an EDCA extension case study for AI traffic."
+      },
+      {
+        "claim_number": 2,
+        "verdict": "supported",
+        "reason": "The abstract describes L2O as the missing architectural layer. A MILP solver generates solutions that train a GNN to reproduce near-optimal NR-V2X relay-selection decisions in real time. No numbers are given, as the claim notes."
+      },
+      {
+        "claim_number": 3,
+        "verdict": "supported",
+        "reason": "The abstract matches the claim: a CAMARA-like API, in-band split-aware tensor context, and a programmable UPF testbed with a visual AI workload. Adaptive split selection avoided the rigid cost profile of static configurations."
+      },
+      {
+        "claim_number": 4,
+        "verdict": "partially supported",
+        "reason": "The setup and the 0.25% figure match. However, the abstract says the dominant cost is 'often' not transmission, and the claim drops that hedge and states it categorically."
+      },
+      {
+        "claim_number": 5,
+        "verdict": "supported",
+        "reason": "All figures match the abstract: 10 models, four providers, 600 runs, seven models removing the slice, 76% in the high-harm tier, and only one model never removing it. The abstract also reports agents often claiming no conflict."
+      },
+      {
+        "claim_number": 6,
+        "verdict": "partially supported",
+        "reason": "The abstract argues decentralization is a fundamental requirement because centralization adds overhead, latency and single points of failure. It frames FL/DFL as introducing trade-offs rather than as necessary. Its joint-design list is decentralization, trustworthiness, explainability and sustainability, with security described as intertwined."
+      },
+      {
+        "claim_number": 7,
+        "verdict": "supported",
+        "reason": "The abstract states the attack-surface layers, the taxonomy, and the mitigations named in the claim."
+      },
+      {
+        "claim_number": 8,
+        "verdict": "supported",
+        "reason": "The slicing paper concludes that dependency verification should be enforced by the management architecture before irreversible actions, rather than left to the LLM's judgment."
+      },
+      {
+        "claim_number": 9,
+        "verdict": "supported",
+        "reason": "This is a hedged implication that follows directly from the finding that transport is 0.25% of workflow energy and that induced inference and context processing dominate."
+      },
+      {
+        "claim_number": 10,
+        "verdict": "partially supported",
+        "reason": "The abstract supports network-native AI services and a testbed-only evaluation. The commercial framing of carriers 'selling AI computation' and the stated dependencies are extrapolation."
+      },
+      {
+        "claim_number": 11,
+        "verdict": "partially supported",
+        "reason": "The abstract supports the need for new traffic-handling policies and EDCA differentiation for AI flows. The 'years to reach products' timeline is not in the abstract."
+      },
+      {
+        "claim_number": 12,
+        "verdict": "partially supported",
+        "reason": "The abstract supports surrogate models enabling low-latency real-time inference. The need for live-network validation is the brief's own inference, not stated in the abstract."
+      }
+    ],
+    "usefulness": 4,
+    "usefulness_reason": "The brief covers a concrete range of work: Wi-Fi standards, L2O, split-inference APIs, agent energy and agent-safety findings. It includes specific numbers and draws practical implications for operators and vendors. Some implications are speculative, and a non-specialist would struggle with jargon such as EDCA, UPF and MILP."
+  },
+  "n_claims": 12,
+  "citation_validity": 1.0,
+  "faithfulness": 0.7916666666666666,
+  "finding_scores": [
+    1.0,
+    1.0,
+    1.0,
+    0.5,
+    1.0,
+    0.5,
+    1.0
+  ],
+  "implication_scores": [
+    1.0,
+    1.0,
+    0.5,
+    0.5,
+    0.5
+  ],
+  "usefulness": 4
+}

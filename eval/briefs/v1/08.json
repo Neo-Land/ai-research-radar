@@ -1,0 +1,171 @@
+{
+  "question": "Can smaller, cheaper language models match large models for everyday tasks?",
+  "papers": [
+    "2610.19345",
+    "2610.08775",
+    "2609.32795",
+    "2610.14576",
+    "2610.00416",
+    "2610.21412",
+    "2610.22538",
+    "2610.23344"
+  ],
+  "brief": {
+    "summary": "For narrow, repetitive, well-defined subtasks with enough recorded examples, the papers show smaller models can match or beat larger ones at a fraction of the cost and latency. For open-ended everyday tasks the papers do not give a clear answer: they test narrow domains, and one suggests that large reasoning models can underperform on everyday reasoning. Treat the answer as yes for specific subtasks and unproven in general.",
+    "key_findings": [
+      {
+        "claim": "Smaller models win on short multi-step agent tasks and larger models win on long ones. A pilot of 15 open-weight models (0.6B to 27B) on two agent tasks, with measured GPU energy, found crossover task lengths that roughly matched predictions from per-step measurements.",
+        "citations": [
+          "2610.19345"
+        ]
+      },
+      {
+        "claim": "A Qwen3-8B LoRA model trained on 11.6k recorded production decisions reached 0.913 agreement on a yes/no safety decision. The teacher model, re-run on its own prompts, agreed with itself only 72.7% of the time. On disagreements, a blinded professional scheduler sided with the student 48 to 29. The student had about 2.5 times lower median latency and a fraction of the cost.",
+        "citations": [
+          "2610.14576"
+        ]
+      },
+      {
+        "claim": "A 4B decision model (AgentDecision-4B) trained on agent error states solved 91.5% of tasks unlike its training data, versus 82.0% for the Jev baseline. On tasks like its training data, 4B models made agents 81.1% to 89.0% cheaper and up to 2.5 times faster, without losing 3 or more points of task success.",
+        "citations": [
+          "2610.21412"
+        ]
+      },
+      {
+        "claim": "Letting agents build cheaper task-specific solutions (called bottling) is uneven. 48 of 60 runs scored below the lower bound of their model's zero-shot confidence interval, and 31 of 60 underperformed a small-model distillation baseline. Still, on query-product relevance classification, one model kept about 82% of its zero-shot macro-F1 at a reported cost roughly 657 times lower. These cost figures are vendor-reported.",
+        "citations": [
+          "2610.08775"
+        ]
+      },
+      {
+        "claim": "Large reasoning models degraded on everyday logical reasoning when that reasoning departed from formal logic. Some non-reasoning models with chain-of-thought prompting outperformed comparable reasoning models on these everyday tasks. Extra prompt instructions gave limited control over reasoning behavior.",
+        "citations": [
+          "2610.22538"
+        ]
+      },
+      {
+        "claim": "Models differ systematically in how they carry out everyday tasks. For example, most GPT and Claude models stated assumptions and offered alternatives when requirements conflicted, while Qwen and Google models more often left them unstated. Fine-tuning on another model's trajectories changed only part of a model's behavioral profile.",
+        "citations": [
+          "2609.32795"
+        ]
+      }
+    ],
+    "implications": [
+      {
+        "implication": "High-volume narrow subtasks inside agent pipelines, such as yes/no routing or classification, are good candidates to move to distilled small models. The savings in cost and latency are real in these settings, but each one needs its own recorded data and ongoing retraining as behavior changes.",
+        "who_it_affects": "Engineering teams and operators running LLM-based agents or classification pipelines at scale",
+        "citations": [
+          "2610.14576",
+          "2610.21412",
+          "2610.08775"
+        ]
+      },
+      {
+        "implication": "Model choice should depend on how many steps a task takes. Short workflows can use smaller models, while long chains need larger ones or a crossover analysis. Measuring cost per completed task rather than per call avoids misleading comparisons.",
+        "who_it_affects": "Product and platform teams designing agent workflows, and those concerned with energy budgets",
+        "citations": [
+          "2610.19345"
+        ]
+      },
+      {
+        "implication": "Swapping in a smaller model for a general-purpose assistant may change how tasks get done, such as whether it asks clarifying questions or states assumptions, even when the answer looks similar. Users may notice these differences even if accuracy holds.",
+        "who_it_affects": "Consumer and enterprise teams deploying general assistants, and end users who rely on consistent behavior",
+        "citations": [
+          "2609.32795"
+        ]
+      },
+      {
+        "implication": "Choosing a reasoning model for everyday logic is not automatically better. A cheaper non-reasoning model with chain-of-thought prompting may match or beat it, which could change cost decisions for everyday assistant use.",
+        "who_it_affects": "Teams selecting models for everyday reasoning or assistant features",
+        "citations": [
+          "2610.22538"
+        ]
+      }
+    ],
+    "maturity": "emerging",
+    "maturity_rationale": "Narrow production-like pilots show small or distilled models matching larger ones at much lower cost and latency. However, the evidence comes from a few specific domains, some cost figures are vendor-reported or projected, and no paper directly benchmarks small versus large models on general everyday consumer tasks.",
+    "risks_and_limitations": [
+      "The papers do not test general everyday consumer tasks head to head; evidence comes from narrow domains such as home-care scheduling, query-product relevance, and agent tool choice.",
+      "Some cost savings are vendor-reported or projected (for example, the 657 times figure in the bottling study) rather than measured in deployment.",
+      "The home-care study's 'teacher' was a nano model, so it is a comparison of a small model with another small model, not a frontier model.",
+      "The 72.7% teacher self-agreement figure is a consistency measure, not accuracy, and the claim that the student is more consistent is an inference.",
+      "The energy crossover study used a pilot of two tasks; generalization to other task types is not established.",
+      "Many agent-level results rely on specific harnesses, benchmarks, and training data, so they may not transfer to other settings.",
+      "The LM2LM paper (2610.23344) and the chess prompt-optimization benchmark (2610.00416) were not used as evidence here because they concern model development or prompt tuning rather than everyday task performance."
+    ]
+  },
+  "judgement": {
+    "verdicts": [
+      {
+        "claim_number": 1,
+        "verdict": "supported",
+        "reason": "The abstract describes three regimes: smaller models are preferred for short tasks and larger ones for long tasks. It reports a pilot of 15 open-weight models (0.6B\u201327B) on two agent tasks with measured GPU energy, and says observed crossovers generally match those predicted from per-step measurements."
+      },
+      {
+        "claim_number": 2,
+        "verdict": "supported",
+        "reason": "All figures match the abstract: Qwen3-8B LoRA, 11.6k decisions, 0.913 agreement, 72.7% teacher self-agreement, 48-29 scheduler preference, about 2.5x lower median latency and a fraction of the cost."
+      },
+      {
+        "claim_number": 3,
+        "verdict": "supported",
+        "reason": "The abstract states 91.5% vs 82.0% on out-of-distribution tasks. On in-distribution tasks it reports 81.1-89.0% lower cost and up to 2.5x faster, without losing 3 or more points of success."
+      },
+      {
+        "claim_number": 4,
+        "verdict": "partially supported",
+        "reason": "The 48/60 runs, 31/60 runs, roughly 82% of macro-F1 and roughly 657x figures match. The abstract says only 'reported cost'; it does not say the figures are vendor-reported, so that detail is added."
+      },
+      {
+        "claim_number": 5,
+        "verdict": "partially supported",
+        "reason": "The three findings match the abstract, but the abstract qualifies them with 'in many cases' and the claim states them as general results."
+      },
+      {
+        "claim_number": 6,
+        "verdict": "supported",
+        "reason": "The abstract directly states the GPT/Claude vs Qwen/Google contrast and that fine-tuning on another model's trajectories changes only part of a model's profile."
+      },
+      {
+        "claim_number": 7,
+        "verdict": "partially supported",
+        "reason": "The papers support cost and latency savings from distilling narrow subtasks, and one notes that retraining whenever behavior changes is slow. The blanket recommendation and the claim that each subtask needs ongoing retraining are the brief's own synthesis, beyond what the abstracts state."
+      },
+      {
+        "claim_number": 8,
+        "verdict": "supported",
+        "reason": "The abstract says per-call comparisons can mislead and recommends evaluating per completed task. It describes crossover task lengths, with smaller models suited to short tasks and larger ones to long tasks."
+      },
+      {
+        "claim_number": 9,
+        "verdict": "partially supported",
+        "reason": "AgentHabit shows models differ in behaviors such as asking clarifying questions and stating assumptions, even when their answers are useful. It does not study swapping in smaller models specifically, so applying it to that case is an extrapolation."
+      },
+      {
+        "claim_number": 10,
+        "verdict": "partially supported",
+        "reason": "The abstract says some non-reasoning models with chain-of-thought prompting outperform comparable reasoning models. It does not say these models are cheaper or discuss cost decisions."
+      }
+    ],
+    "usefulness": 4,
+    "usefulness_reason": "The brief gives concrete numbers and practical rules of thumb: task length matters, distillation suits narrow high-volume subtasks, and behavioral differences can appear beyond accuracy. It also notes caveats. A few claims stretch beyond their sources, and two of the cited papers (behavioral habits and reasoning vs non-reasoning models) are only loosely tied to the small-vs-large question."
+  },
+  "n_claims": 10,
+  "citation_validity": 1.0,
+  "faithfulness": 0.75,
+  "finding_scores": [
+    1.0,
+    1.0,
+    1.0,
+    0.5,
+    0.5,
+    1.0
+  ],
+  "implication_scores": [
+    0.5,
+    1.0,
+    0.5,
+    0.5
+  ],
+  "usefulness": 4
+}

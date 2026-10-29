@@ -1,0 +1,195 @@
+{
+  "question": "What does research say about using AI in education and training?",
+  "papers": [
+    "2610.10463",
+    "2609.18274",
+    "2609.20484",
+    "2609.21600",
+    "2610.29140",
+    "2610.07097",
+    "2609.29363",
+    "2609.28504"
+  ],
+  "brief": {
+    "summary": "Research on AI in education is early and mostly comes from single-institution studies. The strongest evidence is a preregistered field experiment showing that practicing with a voice-based AI partner raised voluntary class participation, and a difference-in-differences study showing that expert-verified AI study materials helped lower-scoring students most. Other work finds that AI tools are useful as screening or support aids but still fall short of human experts at judging classroom teaching and predicting outcomes, so the evidence does not yet support replacing teachers or instructors.",
+    "key_findings": [
+      {
+        "claim": "In a preregistered field experiment with 759 MBA students, two uses of a voice-based AI discussion partner before class were followed by about 31% more voluntary in-class contributions in each later session. Heavier users also reported more comfort speaking up and more perceived learning, but not more focus or motivation.",
+        "citations": [
+          "2610.10463"
+        ]
+      },
+      {
+        "claim": "Expert-verified AI study materials (podcasts, FAQs, quiz-based guides) were associated with a 2.34-mark advantage on a 50-mark component in a first-year economics course. The share of marks below the upper-second boundary fell by 24.7 percentage points, and about three-quarters of the average gain came from the bottom quintile. The threshold effect held after removing the lowest-scoring students from the pre-intervention cohort, but the average effect did not.",
+        "citations": [
+          "2610.07097"
+        ]
+      },
+      {
+        "claim": "A course-specific RAG assistant (Beacon), grounded in approved teaching materials, was rated by students as more trustworthy and better aligned with module content than unrestricted generative AI tools. Students valued its pseudocode and scaffolded explanations over direct solutions, and they still wanted to verify its output. They saw it as a first point of help before consulting lecturers.",
+        "citations": [
+          "2609.21600"
+        ]
+      },
+      {
+        "claim": "When an LLM (GPT-5) scored 87 early-childhood classroom observations using transcripts, it agreed most with human raters on Emotional Support and Quality of Feedback. Agreement was weaker for procedural or context-dependent items in Classroom Organization and Instructional Support, so the authors judge it suitable only as a preliminary screening tool.",
+        "citations": [
+          "2609.18274"
+        ]
+      },
+      {
+        "claim": "Edustories is a dataset of 1,492 teacher-written case studies on classroom behavior and interventions. The strongest tested LLMs predicted intervention outcomes with 58% accuracy, versus 64% for human experts.",
+        "citations": [
+          "2609.20484"
+        ]
+      },
+      {
+        "claim": "Interviews with 23 Indian engineering students and recent graduates found that AI is used heavily in coursework and in AI-first workplaces, while placement screens and many exams exclude it. Students were uncertain about their readiness for work, and faculty enforcement varied.",
+        "citations": [
+          "2610.29140"
+        ]
+      },
+      {
+        "claim": "A design-based study of machine learning course exercises argues that framing ML problems as deterministic input-output tasks lets existing automated programming assessment tools (such as VPL for Moodle, Codeforces, and MOJ) be used in AI courses. This is an essay describing teaching experience, not an evaluation with outcome data.",
+        "citations": [
+          "2609.29363"
+        ]
+      }
+    ],
+    "implications": [
+      {
+        "implication": "Instructors running discussion-heavy courses may be able to use short, structured AI practice sessions before class to raise participation. The gain is measured in participation rather than test scores, and it was not tied to focus or motivation, so the effect on learning outcomes is still open.",
+        "who_it_affects": "University instructors and course designers, especially in seminar-style or business courses",
+        "citations": [
+          "2610.10463"
+        ]
+      },
+      {
+        "implication": "Support that is grounded in expert-verified materials may narrow attainment gaps rather than widen them. Average-effect evaluations can miss this, so schools may need to report results by student band.",
+        "who_it_affects": "Academic support staff, module leaders, and institutions judging AI learning resources",
+        "citations": [
+          "2610.07097",
+          "2609.21600"
+        ]
+      },
+      {
+        "implication": "AI scoring of classroom observations may speed up preliminary feedback, but it cannot yet replace trained observers for high-stakes decisions. Human review would still be needed for items where the AI diverges.",
+        "who_it_affects": "Early childhood education quality inspectors, school leaders, and teachers receiving observation feedback",
+        "citations": [
+          "2609.18274"
+        ]
+      },
+      {
+        "implication": "Current LLMs are not yet reliable enough to replace teacher judgment about which classroom interventions will work. They may be more useful as tools that suggest options for teachers to evaluate.",
+        "who_it_affects": "Teacher educators, edtech developers, and teachers seeking AI feedback on classroom practice",
+        "citations": [
+          "2609.20484"
+        ]
+      },
+      {
+        "implication": "Employers and institutions may need to rethink what grades and screen scores certify when AI can help produce the work they measure. Students may enter the workforce with unclear readiness if assessment and AI policies are inconsistent.",
+        "who_it_affects": "Engineering graduates, university policy makers, and recruiters in India's technology sector",
+        "citations": [
+          "2610.29140"
+        ]
+      }
+    ],
+    "maturity": "early research",
+    "maturity_rationale": "The studies are informative but limited. Most come from one institution or course, use small or single-cohort designs, and rely partly on self-report or interviews. The gains are not yet replicated across settings, and tools such as LLM scoring and outcome prediction still fall short of human experts. Some course-specific tools with verification look closer to pilot-ready, but the evidence base as a whole does not support wide deployment.",
+    "risks_and_limitations": [
+      "Most studies come from single institutions, courses, or cohorts, so generalization is limited.",
+      "The 31% participation gain was measured only in MBA students, and it did not show a gain in focus or motivation.",
+      "The materials study uses a difference-in-differences design. Its average effect was not robust to removing the lowest-scoring students, so the threshold result needs replication.",
+      "Interviews and self-reports (e.g., Beacon, engineering students) may reflect perception rather than measured learning.",
+      "LLM-based classroom scoring and outcome prediction underperform human experts, especially for procedural or context-dependent judgments.",
+      "The Edustories accuracy comparison (58% vs 64%) is a single benchmark and may not reflect real classroom decisions.",
+      "Few papers measure long-term learning, and none in this set assesses cost, teacher workload, or equity beyond the subgroup analysis."
+    ]
+  },
+  "judgement": {
+    "verdicts": [
+      {
+        "claim_number": 1,
+        "verdict": "supported",
+        "reason": "The abstract matches every detail: a preregistered experiment, 759 MBA students, two uses, about 31% more contributions per later session, and more comfort and perceived learning but not more focus or motivation."
+      },
+      {
+        "claim_number": 2,
+        "verdict": "supported",
+        "reason": "The abstract states the 2.34-mark advantage on a 50-mark component, the 24.7 percentage-point drop below the upper-second boundary, roughly three-quarters of the gain from the bottom quintile, and the same robustness asymmetry."
+      },
+      {
+        "claim_number": 3,
+        "verdict": "supported",
+        "reason": "The abstract reports that students found responses aligned with module content and more trustworthy than unrestricted tools, valued pseudocode and scaffolding, stayed cautious about verification, and saw it as a first point of support before lecturers."
+      },
+      {
+        "claim_number": 4,
+        "verdict": "supported",
+        "reason": "The abstract reports GPT-5 scoring 87 observations from transcripts, with greater convergence on Emotional Support and Quality of Feedback, divergence on procedural or context-dependent items in Classroom Organization and Instructional Support, and use as a preliminary screening tool."
+      },
+      {
+        "claim_number": 5,
+        "verdict": "supported",
+        "reason": "The abstract gives 1,492 teacher-written case studies, 58% accuracy for the strongest models and 64% for human experts."
+      },
+      {
+        "claim_number": 6,
+        "verdict": "partially supported",
+        "reason": "The abstract lists themes on coursework use, AI-free screens, faculty enforcement and readiness concerns. It does not say AI was used 'heavily' or that enforcement 'varied'; these are characterisations the abstract does not give."
+      },
+      {
+        "claim_number": 7,
+        "verdict": "supported",
+        "reason": "The abstract describes an essay reporting experience of framing ML problems as deterministic input-output tasks for tools such as VPL, Codeforces and MOJ. Calling it a 'design-based study' is loose labelling, but the claim itself clarifies it is an essay."
+      },
+      {
+        "claim_number": 8,
+        "verdict": "partially supported",
+        "reason": "The participation gain and the absence of a focus or motivation effect are supported. The sessions are never described as 'short', and the claim omits that perceived learning did increase. The practical implication is the brief's own extrapolation."
+      },
+      {
+        "claim_number": 9,
+        "verdict": "supported",
+        "reason": "The verified-materials study argues that expert verification can narrow gaps, finds gains concentrated in the bottom quintile, and states that mean-only evaluations cannot detect who gains. Reporting by student band is a modest, hedged inference from this."
+      },
+      {
+        "claim_number": 10,
+        "verdict": "partially supported",
+        "reason": "The abstract supports use as preliminary screening and not as a replacement for high-stakes evaluation. It says nothing about speeding up feedback or about human review of divergent items specifically."
+      },
+      {
+        "claim_number": 11,
+        "verdict": "partially supported",
+        "reason": "The abstract supports that models fall short of human experts. The idea of LLMs as tools that suggest options for teachers to evaluate goes beyond its brief mention of 'potential as assistants'."
+      },
+      {
+        "claim_number": 12,
+        "verdict": "supported",
+        "reason": "The abstract discusses what grades and screen scores certify once AI can help produce them, gives recommendations for employers and institutions, and reports readiness concerns in a context without AI guidelines."
+      }
+    ],
+    "usefulness": 4,
+    "usefulness_reason": "The brief covers a varied set of recent studies with concrete numbers, designs and caveats, and spells out practical implications for instructors, schools and employers. Some implications are mildly extrapolated, and it lacks an overarching synthesis."
+  },
+  "n_claims": 12,
+  "citation_validity": 1.0,
+  "faithfulness": 0.8333333333333334,
+  "finding_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.5,
+    1.0
+  ],
+  "implication_scores": [
+    0.5,
+    1.0,
+    0.5,
+    0.5,
+    1.0
+  ],
+  "usefulness": 4
+}

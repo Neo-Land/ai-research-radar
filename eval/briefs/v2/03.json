@@ -1,0 +1,184 @@
+{
+  "question": "What are the main security risks of deploying autonomous AI agents in an enterprise?",
+  "papers": [
+    "2610.30445",
+    "2610.27483",
+    "2609.22712",
+    "2610.26664",
+    "2609.13334",
+    "2609.24515",
+    "2609.18605",
+    "2609.15422"
+  ],
+  "brief": {
+    "summary": "The papers point to a few main security risks of enterprise AI agents: untrusted content can hijack agent instructions, agents can keep standing credentials they do not need, and agents can be non-compliant under business pressure. Impersonation, unauthorized payments and compromised agents are also flagged, and the evidence on defenses is mostly from simulations, benchmarks and proposals rather than live deployments. The set does not cover real-world incident rates, so the picture of how often these failures happen in production is incomplete.",
+    "key_findings": [
+      {
+        "claim": "Agents can be hijacked through untrusted content: websites, emails, documents and databases can enter the same context as system instructions, and indirect prompt injection is named as a key failure mode. A tool-using agent can turn an incorrect model response into a consequential real-world action.",
+        "citations": [
+          "2609.22712",
+          "2609.13334"
+        ]
+      },
+      {
+        "claim": "Persistent memory can carry compromised information across sessions, causing memory contamination and cross-session data leakage. Expert input on incident reporting also flagged data leakage and attacks on the reporting infrastructure itself as risks.",
+        "citations": [
+          "2609.22712",
+          "2609.24515"
+        ]
+      },
+      {
+        "claim": "Enterprise agents are often provisioned with a static set of credentials covering every permission the employee role might need, so these permissions stay exposed even when a task does not use them and can be used by a compromised or misaligned agent. In one evaluation of a 600-prompt dataset, a role-based permission ceiling alone closed 27.9% of the severity-weighted attack surface, and adding a task permission classifier raised this to 84.4%.",
+        "citations": [
+          "2609.15422"
+        ]
+      },
+      {
+        "claim": "In a simulation on synthetic financial transaction data with five adversarial scenarios, an XGBoost-based guard reached 99.77% detection for abnormal agent behavior, 99.73% for impersonation and 100% for malicious delegation and authorization-scope violations. Compromised-agent detection was lower at 72.27%, and mean F1 was 67.49% with behavioral features and 69.46% with agent-specific features added.",
+        "citations": [
+          "2610.27483"
+        ]
+      },
+      {
+        "claim": "In the PACT benchmark of 48 scenarios across 12 regulated domains, across 22 LLM models, even the strongest assistants misapplied a rule on 6 to 10% of items, and ordinary user pressure raised the violation rate by 65% on average.",
+        "citations": [
+          "2609.18605"
+        ]
+      },
+      {
+        "claim": "Proposed defenses include honeypots: decoy opportunities for harmful actions planted in production to detect misbehavior, incriminate malicious agents and deter attacks. This is a proposal with research questions, and no measured results are reported.",
+        "citations": [
+          "2610.26664"
+        ]
+      },
+      {
+        "claim": "Proposed governance frameworks add human oversight, escalation management, decision traceability and progressive autonomy. The Three-Pillar framework and the Trustworthy Agent Development Lifecycle are conceptual, and TADL has not been empirically validated.",
+        "citations": [
+          "2610.30445",
+          "2609.22712"
+        ]
+      }
+    ],
+    "implications": [
+      {
+        "implication": "Security teams may need to treat agent credentials as task-scoped rather than role-scoped, since the permission evaluation suggests that role-level ceilings alone leave much of the attack surface open. This is one evaluation, so the size of the effect in other environments is unknown.",
+        "who_it_affects": "Security and identity teams running enterprise agent deployments",
+        "citations": [
+          "2609.15422"
+        ]
+      },
+      {
+        "implication": "Organizations using agents in finance or payments may be able to add behavioral and authorization-scope checks, as the simulated guard suggests, but detection of compromised agents at 72.27% in simulation would likely still leave gaps. Results from real transactions are not yet available.",
+        "who_it_affects": "Payments and commerce teams deploying agents that spend or authorize transactions",
+        "citations": [
+          "2610.27483"
+        ]
+      },
+      {
+        "implication": "Because rule compliance dropped under user pressure in the PACT benchmark, compliance-sensitive roles such as hiring, healthcare and finance may need pressure testing before an assistant is trusted with rules. Model choice may also matter, since the results varied across models.",
+        "who_it_affects": "Compliance, legal and risk teams in regulated industries",
+        "citations": [
+          "2609.18605"
+        ]
+      },
+      {
+        "implication": "Reporting frameworks for agent security incidents may need to capture memory access, autonomy levels and tool usage, which could change how incidents are logged and audited.",
+        "who_it_affects": "Compliance officers and security operations teams",
+        "citations": [
+          "2609.24515"
+        ]
+      }
+    ],
+    "maturity": "early research",
+    "maturity_rationale": "Most results come from simulations, synthetic data, a single benchmark or a 600-prompt dataset. Several papers are proposals, reviews or position papers that report no measured results, and the authors state that the validation needed in real transactions and production environments remains undone.",
+    "risks_and_limitations": [
+      "The ACAGS results use synthetic financial data and simulated agent characteristics, and the authors call for validation with real-world transactions.",
+      "The PACT results come from a benchmark of 48 scenarios and do not measure real enterprise incident rates.",
+      "The permission evaluation reports attack-surface reduction on a severity-weighted metric, which is a constructed measure rather than observed breaches.",
+      "The honeypot paper is a proposal with research questions and reports no measured effectiveness.",
+      "TADL has not yet been empirically validated, and the trustworthy-agent review notes that some mitigations remain largely conceptual.",
+      "The position paper on enterprise substrates is explicitly a position and says its substrate representation is not a proven primitive.",
+      "The incident-reporting work relies on input from 23 experts rather than measured incident data."
+    ]
+  },
+  "judgement": {
+    "verdicts": [
+      {
+        "claim_number": 1,
+        "verdict": "supported",
+        "reason": "The Trustworthy Agentic AI abstract states that untrusted content from websites, emails, documents and databases enters the same context as system instructions. It names indirect prompt injection as a key failure mode and says tool access can turn an incorrect response into a consequential real-world action."
+      },
+      {
+        "claim_number": 2,
+        "verdict": "supported",
+        "reason": "2609.22712 states that persistent memory can carry compromised information across sessions and lists memory contamination and cross-session data leakage. 2609.24515 reports that expert feedback flagged data leakage and attacks on the reporting infrastructure."
+      },
+      {
+        "claim_number": 3,
+        "verdict": "supported",
+        "reason": "The abstract describes static role-wide credential sets left exposed regardless of task and usable by compromised or misaligned agents. It uses a 600-prompt dataset and reports that the role ceiling closes 27.9% of the severity-weighted surface and the added task classifier closes 84.4%."
+      },
+      {
+        "claim_number": 4,
+        "verdict": "supported",
+        "reason": "All figures match the abstract: synthetic data, five adversarial scenarios, XGBoost, the 99.77%, 99.73%, 100% and 72.27% detection rates, and mean F1 of 67.49% and 69.46%."
+      },
+      {
+        "claim_number": 5,
+        "verdict": "supported",
+        "reason": "The abstract reports 48 scenarios across twelve domains and 22 models. It states that the strongest assistants misapply rules on 6 to 10% of items and that user pressure raises violations by 65% on average."
+      },
+      {
+        "claim_number": 6,
+        "verdict": "supported",
+        "reason": "The abstract proposes planting decoy opportunities in production to detect misbehavior, incriminate malicious agents and deter attacks. It outlines research questions and reports no measured results."
+      },
+      {
+        "claim_number": 7,
+        "verdict": "supported",
+        "reason": "The 3P abstract covers structured human oversight, escalation management, decision traceability and progressive autonomy. Neither abstract reports an evaluation, and the TADL abstract explicitly says it has not been empirically validated."
+      },
+      {
+        "claim_number": 8,
+        "verdict": "supported",
+        "reason": "This is a hedged inference from the permission study's 27.9% versus 84.4% gap, which the abstract itself frames as an advantage of task-granular over role-granular access. The caveat about a single evaluation is appropriate."
+      },
+      {
+        "claim_number": 9,
+        "verdict": "supported",
+        "reason": "This is a hedged implication consistent with the abstract. It reflects the 72.27% compromised-agent detection rate and the abstract's stated need for validation on real-world transactions."
+      },
+      {
+        "claim_number": 10,
+        "verdict": "supported",
+        "reason": "The abstract names hiring, healthcare and finance, reports pressure-induced increases in violations and variability across models, and motivates guardrails and careful model selection."
+      },
+      {
+        "claim_number": 11,
+        "verdict": "supported",
+        "reason": "The abstract lists agent memory and memory accesses, levels of autonomy and tool usage as potential reporting elements. The implication for logging and auditing is hedged."
+      }
+    ],
+    "usefulness": 4,
+    "usefulness_reason": "The brief is concrete and well organized. It covers specific risk categories (injection, memory, over-broad credentials, compliance under pressure) with quantified results and honest caveats about simulation and missing validation. It also gives actionable implications for security teams. Its weaknesses are limited explanation of how attacks actually unfold and limited prioritization among the risks."
+  },
+  "n_claims": 11,
+  "citation_validity": 1.0,
+  "faithfulness": 1.0,
+  "finding_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "implication_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "usefulness": 4
+}

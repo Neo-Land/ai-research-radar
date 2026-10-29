@@ -1,0 +1,231 @@
+{
+  "question": "How reliable is using an LLM as a judge to evaluate other AI outputs?",
+  "papers": [
+    "2609.13422",
+    "2609.32407",
+    "2610.05094",
+    "2610.24335",
+    "2610.02492",
+    "2609.33955",
+    "2610.14029",
+    "2610.28826"
+  ],
+  "brief": {
+    "summary": "Reliability depends heavily on the task, the judge design, and what is being measured. On simple rating and classification tasks with reference labels, several papers report usable agreement with humans, but agreement on rankings does not guarantee agreement on absolute rates, and small design changes can shift verdicts. On surface-sensitive pairwise comparisons, many judges agree with humans only about half the time, though their internal signals can be more informative. The papers do not support a general claim that LLM judges are reliable; most results come from specific domains, and several are preliminary or lack expert grading.",
+    "key_findings": [
+      {
+        "claim": "On a 1-7 scale rating task (sentiment and toxicity, over 500 items per category), judges across 10 reasoning models showed mean absolute deviation of 0.11 points from human ground truth, despite significant disagreements; toxicity judges outperformed standard classifiers. Judges reached 96.5% average accuracy on a binary question-answer accuracy classification task (n=600).",
+        "citations": [
+          "2610.05094"
+        ]
+      },
+      {
+        "claim": "Design choices shifted judge outputs. Changing the rating scale alone shifted measured bias by up to 0.93 points. Detailed prompts reduced leniency by 28.9 percentage points, and switching models changed leniency by up to 56.1 points. Lower reasoning effort affected neither accuracy nor leniency, and model identity was the dominant source of variance.",
+        "citations": [
+          "2610.05094"
+        ]
+      },
+      {
+        "claim": "On LLMBar, where the superficially better answer is the worse one, 50 open-weight judges agreed with human labels only 0.456 of the time even after averaging both answer orders. A small probe on the same judges' activations reached 0.846, and 0.686 after length and position were residualized out (0.507 with shuffled labels). This was tested across 64 evaluators and 14 datasets, and the gap was not universal: it was predicted by a surface-feature score (Spearman rho = 0.90). On single-answer rubric tasks, reading internals gave no advantage.",
+        "citations": [
+          "2609.32407"
+        ]
+      },
+      {
+        "claim": "In an occupational audit of 33 judge configurations, 25 reached tie-aware pair accuracy of at least 0.60, but a train-fitted TF-IDF baseline nearly matched the strongest judge. Judges estimated that 3.0% to 97.9% of responses were acceptable, compared with 61.1% for occupation-matched workers. Calibrated scores explained at most 8.5% of individual worker-rating variance.",
+        "citations": [
+          "2610.02492"
+        ]
+      },
+      {
+        "claim": "In one fine-tuned judge lineage, switching from pointwise scoring to a bundled few-shot/listwise protocol improved response ordering but reduced agreement with worker means at the task and occupation levels. This reversal replicated on a held-out validation split.",
+        "citations": [
+          "2610.02492"
+        ]
+      },
+      {
+        "claim": "In a patent-drafting testbed, judge-guided revision consistently improved judge-assessed quality while unguided revision tended to saturate. A professional patent attorney validated the judge, finding meaningful but strongly metric-dependent agreement and systematic calibration differences.",
+        "citations": [
+          "2609.13422"
+        ]
+      },
+      {
+        "claim": "SCUR, a label-free method that scores instance-level reliability from a judge panel's behavior, was evaluated on five real-world benchmarks. It was reported to detect high-consensus risk items that majority-vote evaluation tends to miss.",
+        "citations": [
+          "2610.14029"
+        ]
+      },
+      {
+        "claim": "On 118 pediatric answers graded by physicians, the decision language model Jev reached Gwet's AC2 0.50 (expected score 0.53), matching or exceeding seven of 12 LLM judges, including Claude Opus 5.5 (0.49) and GPT-6 (0.38). Frontier judges cost 73-294 times more than Jev and took 7-57 times longer.",
+        "citations": [
+          "2610.28826"
+        ]
+      },
+      {
+        "claim": "In a dental hygiene coaching case study, two local judges were not distinguishable from hosted judges on six of seven metrics by rank correlation. One hosted judge's hallucination flags were not corroborated by any other judge, and no expert graded the responses, so the authors describe the findings as preliminary.",
+        "citations": [
+          "2610.24335"
+        ]
+      },
+      {
+        "claim": "For production multi-turn business agents, a measurement system combining human audits and automated judges showed system-level fidelity improving across repeated audits. The studies were observational, and the human reference itself required revision.",
+        "citations": [
+          "2609.33955"
+        ]
+      }
+    ],
+    "implications": [
+      {
+        "implication": "Judges may be reasonable for ranking or screening responses on well-defined criteria, but teams using them to estimate absolute rates such as acceptance or leniency may need to validate those rates against human labels, since ranking agreement did not carry over to rates in the occupational audit.",
+        "who_it_affects": "Teams using LLM judges to report pass rates, acceptance rates, or occupational aggregates",
+        "citations": [
+          "2610.02492",
+          "2610.05094"
+        ]
+      },
+      {
+        "implication": "Changes to a judge's prompt, rating scale, or model may change its verdicts enough to alter conclusions drawn from the same data, so reported judge configurations may need to be documented and compared with care.",
+        "who_it_affects": "Researchers and evaluation teams comparing results across studies",
+        "citations": [
+          "2610.05094"
+        ]
+      },
+      {
+        "implication": "Judge-guided revision may improve outputs as measured by the judge, but the patent study found only metric-dependent agreement with an expert, so judge scores may not track expert-assessed quality.",
+        "who_it_affects": "Teams using LLM judges as optimization signals for professional drafting workflows such as legal or patent work",
+        "citations": [
+          "2609.13422"
+        ]
+      },
+      {
+        "implication": "Instance-level reliability signals such as SCUR, or probes on judge internals, could help flag individual verdicts that are likely wrong, which may matter more than aggregate accuracy when judges are used for preference labels.",
+        "who_it_affects": "Developers building evaluation pipelines and preference-learning datasets",
+        "citations": [
+          "2610.14029",
+          "2609.32407"
+        ]
+      },
+      {
+        "implication": "Smaller or cheaper judges may be a practical option for some clinical or high-volume evaluations, but the Jev results come from specific pediatric and benchmark settings, so they may not transfer to other clinical uses without physician validation.",
+        "who_it_affects": "Health AI teams facing cost or latency constraints on evaluation",
+        "citations": [
+          "2610.28826"
+        ]
+      }
+    ],
+    "maturity": "emerging",
+    "maturity_rationale": "LLM judges are already used in several settings, and some studies report usable agreement on specific tasks. However, the reported reliability depends on task, prompt, model and domain. Several papers are preliminary, observational, or lack independent expert grading, and the strongest negative results show judges failing on surface-sensitive comparisons. The evidence supports careful piloting with human validation, not reliance without checks.",
+    "risks_and_limitations": [
+      "Most results come from specific benchmarks or domains (sentiment and toxicity, LLMBar, occupational ratings, patent drafting, pediatric answers, dental coaching) and should not be generalized.",
+      "The dental hygiene study used synthetic, clinically unvalidated data and had no expert grading.",
+      "The patent validation found metric-dependent agreement with one professional attorney.",
+      "The production multi-turn study is observational, and its human reference required revision.",
+      "The probe results on LLMBar come from open-weight judges, and the rubric-task finding shows no advantage from reading internals.",
+      "The Jev clinical results rely on a limited number of physician-graded items (118 pediatric answers in one comparison)."
+    ]
+  },
+  "judgement": {
+    "verdicts": [
+      {
+        "claim_number": 1,
+        "verdict": "supported",
+        "reason": "The abstract gives all of these figures directly: 10 reasoning models, 0.11 mean absolute deviation on a 1-7 scale, toxicity judges beating classifiers, and 96.5% accuracy on n=600."
+      },
+      {
+        "claim_number": 2,
+        "verdict": "supported",
+        "reason": "The abstract states each figure: 0.93-point bias shift, 28.9 pp and 56.1 pp leniency changes, no effect of lower reasoning effort, and model identity as the dominant source of variance."
+      },
+      {
+        "claim_number": 3,
+        "verdict": "supported",
+        "reason": "The abstract matches every figure (0.456, 0.846, 0.686, 0.507, 64 evaluators, 14 datasets, rho=0.90) and the finding that internals give no advantage on single-answer rubric tasks."
+      },
+      {
+        "claim_number": 4,
+        "verdict": "supported",
+        "reason": "The abstract reports 33 configurations, 25 with pair accuracy \u22650.60, the TF-IDF baseline nearly matching the best judge, the 3.0-97.9% vs 61.1% acceptance range, and at most 8.5% variance explained."
+      },
+      {
+        "claim_number": 5,
+        "verdict": "supported",
+        "reason": "The abstract describes this reversal and says it replicated on a task- and worker-disjoint validation split."
+      },
+      {
+        "claim_number": 6,
+        "verdict": "supported",
+        "reason": "The abstract states both the revision results and the attorney validation findings as claimed."
+      },
+      {
+        "claim_number": 7,
+        "verdict": "partially supported",
+        "reason": "The abstract says SCUR is label-free, tested on five benchmarks, and better at detecting high-consensus risk items. However, it calls these the blind spots of 'many other LLM-as-a-judge evaluation methods', not majority vote specifically."
+      },
+      {
+        "claim_number": 8,
+        "verdict": "supported",
+        "reason": "The abstract contains all figures: AC2 0.50, expected score 0.53, 7 of 12 judges, Opus 0.49, GPT-6 0.38, 73-294x cost, 7-57x time."
+      },
+      {
+        "claim_number": 9,
+        "verdict": "supported",
+        "reason": "The abstract reports the six-of-seven-metric result (framed relative to agreement between the hosted judges), the uncorroborated hallucination flags, the absence of expert grading, and the preliminary status."
+      },
+      {
+        "claim_number": 10,
+        "verdict": "supported",
+        "reason": "The abstract states that fidelity improved across repeated audits, that the studies are observational, and that the human reference required revision."
+      },
+      {
+        "claim_number": 11,
+        "verdict": "supported",
+        "reason": "This is a hedged inference consistent with the occupational audit's conclusion that ranking agreement is insufficient and that judges should be validated against the rates they will be used to estimate."
+      },
+      {
+        "claim_number": 12,
+        "verdict": "supported",
+        "reason": "This closely follows the abstract's motivation and its finding that design choices are meaningful sources of variance."
+      },
+      {
+        "claim_number": 13,
+        "verdict": "supported",
+        "reason": "It follows directly from the reported judge-assessed improvements and the metric-dependent agreement with the patent attorney."
+      },
+      {
+        "claim_number": 14,
+        "verdict": "partially supported",
+        "reason": "The probe paper says the recovered signal flags likely-wrong verdicts and yields better preference labels. The claim that this may matter more than aggregate accuracy, and its extension of SCUR to preference labels, go beyond the abstracts."
+      },
+      {
+        "claim_number": 15,
+        "verdict": "partially supported",
+        "reason": "The cost and speed advantages are supported. Jev's size is not stated, and the caveat about transfer to other clinical uses is the brief's own inference rather than something the abstract says."
+      }
+    ],
+    "usefulness": 5,
+    "usefulness_reason": "The brief is concrete and quantitative. It contrasts aggregate reliability with specific failure modes: design sensitivity, ranking versus rates, surface bias, and expert disagreement. It also gives practical guidance on when to trust judges and when to validate them against human labels."
+  },
+  "n_claims": 15,
+  "citation_validity": 1.0,
+  "faithfulness": 0.9,
+  "finding_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.5,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "implication_scores": [
+    1.0,
+    1.0,
+    1.0,
+    0.5,
+    0.5
+  ],
+  "usefulness": 5
+}

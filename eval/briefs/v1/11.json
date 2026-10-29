@@ -1,0 +1,219 @@
+{
+  "question": "What is the state of AI for understanding documents, charts and engineering drawings?",
+  "papers": [
+    "2609.32041",
+    "2610.33105",
+    "2609.36079",
+    "2609.34082",
+    "2610.02014",
+    "2609.31136",
+    "2610.07480",
+    "2610.04084"
+  ],
+  "brief": {
+    "summary": "The provided papers give only a partial picture. The clearest evidence is for engineering drawings: a 2026 method fine-tunes Qwen3-VL models on architecture, engineering and construction (AEC) drawings and reports a top judge score of 0.819 and accuracy of 0.738, but these are preliminary results on one benchmark family. The set contains no paper focused on chart understanding, so charts are effectively unaddressed. The broader document-AI papers argue that current systems are stateless and that persistent, cross-session document state is untested, but they report a framework and benchmark design rather than measured gains.",
+    "key_findings": [
+      {
+        "claim": "Current Document AI systems are stateless: they extract fields, reason over tables and ground answers to page regions, but do not retain schemas, detect contradictions across documents or carry experience forward between sessions. The authors call this the statelessness bottleneck and argue that scaling, longer context and retrieval do not solve it.",
+        "citations": [
+          "2609.32041"
+        ]
+      },
+      {
+        "claim": "An audit of ten representative document-AI benchmarks, coded against eight statefulness criteria, found that none tests cross-session state evolution. The paper proposes a longitudinal harness with five counterfactual metrics (Experience Gain, Cost Efficiency, Memory Harm, Forgetting Fidelity, Coverage Retention). These are defined but no results are reported.",
+        "citations": [
+          "2609.32041"
+        ]
+      },
+      {
+        "claim": "K-OPSD post-trains vision-language models on AEC drawings by building a teacher from the model's own best-of-N generations, certified by a process-level verifier, and rescuing failed prompts with hints. Training uses cross-entropy on verified completions rather than the bounded JSD loss used in standard on-policy distillation.",
+        "citations": [
+          "2609.34082"
+        ]
+      },
+      {
+        "claim": "Fine-tuned Qwen3-VL models on the AECV-Bench dataset reach a top average judge score of 0.819 and combined accuracy of 0.738, which the authors describe as competitive with open-source baselines. The recipe also transfers to the out-of-domain ArchCAD dataset, where the 8B model gains most.",
+        "citations": [
+          "2609.34082"
+        ]
+      },
+      {
+        "claim": "In a legal document-automation study, large language models were used in preliminary experiments to identify and fix issues in texts written by laypeople. The work combines these models with expert-system style symbolic approaches. No quantitative results are reported in the abstract.",
+        "citations": [
+          "2610.07480"
+        ]
+      },
+      {
+        "claim": "In a wing-spar structural-analysis case study, AI-generated CAD code passed all 23 deterministic checks and was admitted at the first attempt. Stress criteria were referred to human engineering judgement because the predeclared mesh-convergence evidence was insufficient, so the framework gated the AI output rather than trusting it.",
+        "citations": [
+          "2610.04084"
+        ]
+      },
+      {
+        "claim": "A formal framework assigns AI participation and assurance to individual workflow units. It separates deterministic verification, statistically calibrated admission, human judgement supported by AI, and explicit non-participation, and it distinguishes formalization fidelity from verifier soundness. The authors explicitly claim no workflow-level dependability, certification, structural safety or productivity result.",
+        "citations": [
+          "2610.04084"
+        ]
+      },
+      {
+        "claim": "A survey of 104 responses from 14 student teams in the European Rover Challenge identified bottlenecks such as limited documentation, unclear requirements, fragmented communication and integration rework. The authors derive requirements and propose an assistant architecture for document and requirement handling, but the architecture is not evaluated.",
+        "citations": [
+          "2609.31136"
+        ]
+      },
+      {
+        "claim": "A mechanical engineering perspective argues that AI should complement engineering judgement. It stresses physical consistency, validation, explicit uncertainty quantification and certification for safety-relevant uses, and it is a position paper rather than an empirical study.",
+        "citations": [
+          "2610.33105"
+        ]
+      }
+    ],
+    "implications": [
+      {
+        "implication": "Teams evaluating AI for reading engineering or architecture drawings can treat the AEC results as a promising signal for fine-tuning open VLMs with verifier-filtered self-generated data. Results are judge-scored and single-benchmark, so they should be checked on their own drawing sets before adoption.",
+        "who_it_affects": "CAD and AEC software teams, drawing-review and document-control groups in engineering firms, and ML teams building domain VLMs",
+        "citations": [
+          "2609.34082"
+        ]
+      },
+      {
+        "implication": "Engineering organisations adopting AI-generated CAD or analysis artefacts may need unit-level gates: deterministic checks where possible, and human sign-off where evidence such as mesh convergence is missing. The wing-spar case suggests this gating can work, but it is a single case study.",
+        "who_it_affects": "Structural and mechanical engineers, safety assurance and certification roles, and teams integrating generative design tools",
+        "citations": [
+          "2610.04084",
+          "2610.33105"
+        ]
+      },
+      {
+        "implication": "Persistent document state, such as remembering schemas, tracking amendments and detecting contradictions across sessions, is a plausible next capability for contract and records processing. It is currently a research agenda with no demonstrated benefit in the papers.",
+        "who_it_affects": "Legal, contract-management and compliance teams that handle long-running document sets",
+        "citations": [
+          "2609.32041"
+        ]
+      },
+      {
+        "implication": "LLM-based fixing of legal and administrative text could help laypeople, but the evidence is preliminary and unquantified. Benefits and error rates would need to be measured before relying on it for legal outcomes.",
+        "who_it_affects": "Legal-aid providers, public-sector form and document services, and self-represented users",
+        "citations": [
+          "2610.07480"
+        ]
+      },
+      {
+        "implication": "Project teams in engineering education and student competitions may gain from AI support for requirement clarification, documentation and integration tracking. The proposed assistant is an untested design, so value is unproven.",
+        "who_it_affects": "Engineering students, academic team leads and systems engineers in project-based settings",
+        "citations": [
+          "2609.31136"
+        ]
+      }
+    ],
+    "maturity": "early research",
+    "maturity_rationale": "The strongest result is a single preliminary fine-tuning study on AEC drawings with judge-based scores and no chart-specific work. The persistent-state work is a survey and benchmark design with no reported results. The engineering workflow papers are case studies, surveys or position pieces. None of the papers report deployment, production use or independent replication.",
+    "risks_and_limitations": [
+      "No paper in the set addresses chart understanding directly, so claims about charts cannot be made from this evidence.",
+      "The main AEC result uses a judge score and accuracy on AECV-Bench and ArchCAD, and the abstract does not give per-task error breakdowns or failure modes.",
+      "Judge-based evaluation can be biased toward the model family used to judge, and the abstract does not say how the judge was validated.",
+      "The persistent-state framework reports no experimental outcomes; its five metrics are defined but unmeasured.",
+      "The wing-spar case is a single 17-unit workflow and explicitly makes no claims about certification, structural safety or productivity.",
+      "The legal and workflow papers rely on small or preliminary experiments and surveys, with no reported effect sizes.",
+      "The position papers on mechanical and chemical engineering express principles rather than measured results about documents or drawings."
+    ]
+  },
+  "judgement": {
+    "verdicts": [
+      {
+        "claim_number": 1,
+        "verdict": "supported",
+        "reason": "The abstract describes Document AI doing these tasks and then forgetting everything. It coins the 'statelessness bottleneck' and says the problem lies beyond parameter scaling, context extension and retrieval augmentation."
+      },
+      {
+        "claim_number": 2,
+        "verdict": "supported",
+        "reason": "The abstract reports the audit of ten benchmarks against eight criteria, says cross-session state evolution is left untested, and names the five metrics. It presents itself as a survey and gives no results, so 'no results reported' is a fair reading."
+      },
+      {
+        "claim_number": 3,
+        "verdict": "supported",
+        "reason": "The abstract directly states the best-of-N teacher, the process-level verifier, hint-based rescue of failed prompts, and the cross-entropy inner loss in place of bounded JSD."
+      },
+      {
+        "claim_number": 4,
+        "verdict": "supported",
+        "reason": "The numbers (0.819 judge score, 0.738 combined accuracy), the 'competitive' framing and the ArchCAD transfer with the 8B model gaining most all appear in the abstract."
+      },
+      {
+        "claim_number": 5,
+        "verdict": "supported",
+        "reason": "The abstract reports preliminary LLM experiments on fixing issues in texts written by laypeople, in the context of expert-system and symbolic document automation. No numbers are given."
+      },
+      {
+        "claim_number": 6,
+        "verdict": "partially supported",
+        "reason": "The 23 checks, first-attempt admission and referral of stress criteria for insufficient mesh-convergence evidence are all stated. However, the claim frames the stress referral as gating the AI output. The abstract does not say the stress analysis was AI-produced; it was the CAD that was deterministically gated."
+      },
+      {
+        "claim_number": 7,
+        "verdict": "supported",
+        "reason": "The abstract states unit-level assignment, the listed arrangements, the separation of formalization fidelity from verifier soundness, and the explicit disclaimers."
+      },
+      {
+        "claim_number": 8,
+        "verdict": "supported",
+        "reason": "The abstract gives the survey numbers and bottlenecks and describes an initial proposed architecture. It reports no evaluation of that architecture."
+      },
+      {
+        "claim_number": 9,
+        "verdict": "supported",
+        "reason": "The abstract calls itself a perspective based on a round-table, not an exhaustive survey. It lists the stated principles and concludes that AI should complement engineering judgement."
+      },
+      {
+        "claim_number": 10,
+        "verdict": "partially supported",
+        "reason": "The abstract does call the results preliminary and judge-scored. But calling them 'single-benchmark' contradicts the reported out-of-domain transfer to ArchCAD."
+      },
+      {
+        "claim_number": 11,
+        "verdict": "supported",
+        "reason": "This is a reasonable, hedged inference from the gated wing-spar case, which the abstract presents as a single executed workflow with explicit limits on its claims."
+      },
+      {
+        "claim_number": 12,
+        "verdict": "supported",
+        "reason": "The paper is a survey and framework with a proposed harness and no reported benefit. Contracts and amendments are its motivating examples."
+      },
+      {
+        "claim_number": 13,
+        "verdict": "supported",
+        "reason": "The abstract describes only preliminary experiments without quantitative results. The caution in the claim follows from that."
+      },
+      {
+        "claim_number": 14,
+        "verdict": "supported",
+        "reason": "The abstract proposes an initial architecture aimed at requirement clarification, knowledge capture and integration risk detection, with no evaluation reported."
+      }
+    ],
+    "usefulness": 4,
+    "usefulness_reason": "The brief is concrete and well-hedged. It gives specific numbers and clearly separates evidence from proposals, with practical implications for practitioners. It loses a point for slightly mischaracterising the AEC evaluation as single-benchmark, for conflating the stress referral with gating of AI output, and for offering little on chart understanding even though the question asks about it."
+  },
+  "n_claims": 14,
+  "citation_validity": 1.0,
+  "faithfulness": 0.9285714285714286,
+  "finding_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.5,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "implication_scores": [
+    0.5,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "usefulness": 4
+}

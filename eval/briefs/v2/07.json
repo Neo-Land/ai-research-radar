@@ -1,0 +1,157 @@
+{
+  "question": "What progress has been made on making self-driving systems safer?",
+  "papers": [
+    "2610.08825",
+    "2609.31186",
+    "2610.04088",
+    "2610.12233",
+    "2610.30319",
+    "2610.03948",
+    "2610.14020",
+    "2609.34085"
+  ],
+  "brief": {
+    "summary": "The papers show progress on driving safety mainly in simulation and benchmarks, not on real roads. The clearest safety gain is a hybrid planner that cut collisions by 89% versus a neural-network-only planner in CARLA scenarios with emergency vehicles running red lights. Other papers report higher driving-quality scores on NAVSIM and Highway-env, and one is a position paper on data practices. None of the provided papers measures real-world crash rates, so the answer to how much safer real vehicles have become is not established by these papers.",
+    "key_findings": [
+      {
+        "claim": "A dual-process design, with a neural planner for routine driving and model predictive control for unfamiliar situations, switched by a knowledge-graph meta-cognitive component, reduced collisions by 89% versus the neural-network-only planner in CARLA on out-of-distribution scenarios involving (emergency) vehicles running a red light, and improved compliance with special right-of-way rules.",
+        "citations": [
+          "2610.04088"
+        ]
+      },
+      {
+        "claim": "CPW-Drive, a retrieval-augmented LLM framework that adds value principles from Confucian texts, reached 93.0%, 86.0% and 72.0% success across three Highway-env multilane traffic configurations. These beat the strongest baseline by 8.0, 22.5 and 25.0 percentage points, with the highest collision-free step count and low lane-change frequency. The paper notes efficiency and latency trade-offs.",
+        "citations": [
+          "2610.03948"
+        ]
+      },
+      {
+        "claim": "TerraTransfer++ trains a planner by self-play, without human demonstrations. It reaches 59.4 EPDMS on the NAVSIM navhard split, above every published method listed, including DriveZero-Scale at 57.1, and 95.5 PDMS on navtest. Its closed-loop policy outperforms every published imitation-based end-to-end method on the HUGSim 3D Gaussian splatting benchmark.",
+        "citations": [
+          "2610.30319"
+        ]
+      },
+      {
+        "claim": "AD-E2E-JEPA, a world model with a learned projector, reaches 67.3/72.9 EPDMS on NAVSIMv2 with multiplicative safety metrics and 84.1/86.5 EPDMS without them, in goal-conditioned zero-shot planning. The projector gives a 100x inference speedup, with 0.8 seconds for an 8-frame rollout over 256 candidate trajectories. Pretraining the projector raises imitation-learning performance from 80.2 to 85.4 EPDMS.",
+        "citations": [
+          "2609.34085"
+        ]
+      },
+      {
+        "claim": "A position paper argues that autonomous driving research needs a community-driven data paradigm. It notes over 600 driving datasets across nearly 50 countries, most underused because of fragmentation and benchmark incentives. This is a proposal with an early realization, not an experimental result.",
+        "citations": [
+          "2610.08825"
+        ]
+      }
+    ],
+    "implications": [
+      {
+        "implication": "Hybrid architectures that switch between a learned planner and a rule- and risk-aware reasoning planner could help when a vehicle meets situations unlike its training data. Whether this reduces crashes on real roads is untested, since the 89% result comes from CARLA scenarios.",
+        "who_it_affects": "Autonomous driving planning engineers and safety teams at vehicle developers",
+        "citations": [
+          "2610.04088"
+        ]
+      },
+      {
+        "implication": "Training planners from simulator self-play rather than logged human driving could reduce dependence on large expert-driving datasets and cover rare near-miss states. This depends on simulators whose realism for real traffic is not shown here.",
+        "who_it_affects": "Developers of end-to-end driving stacks and organizations that collect or buy driving logs",
+        "citations": [
+          "2610.30319"
+        ]
+      },
+      {
+        "implication": "Two papers report large gains on NAVSIM planning scores, which could raise the bar for comparing end-to-end planners. Both use the EPDMS metric, but the scores come from different setups and should not be read as directly comparable.",
+        "who_it_affects": "Researchers and teams benchmarking end-to-end planners",
+        "citations": [
+          "2610.30319",
+          "2609.34085"
+        ]
+      },
+      {
+        "implication": "Sharing and reusing the many existing driving datasets could broaden coverage of scenarios beyond a few benchmarks. This is a position and has no experimental evidence yet.",
+        "who_it_affects": "Academic researchers, dataset maintainers and industry data teams",
+        "citations": [
+          "2610.08825"
+        ]
+      }
+    ],
+    "maturity": "early research",
+    "maturity_rationale": "The results come from simulators (CARLA, HUGSim, Highway-env) and offline benchmarks (NAVSIM), and no real-road deployment or real-world crash-rate result is reported. The data-paradigm paper is a position piece. Each safety result covers a narrow scenario set.",
+    "risks_and_limitations": [
+      "The 89% collision reduction is for a set of CARLA out-of-distribution scenarios involving emergency vehicles running red lights, not general driving.",
+      "CPW-Drive is evaluated only on Highway-env multilane highway driving, and it reports efficiency and latency trade-offs.",
+      "EPDMS and PDMS are offline planning benchmark scores, which are not real-world safety measurements.",
+      "AD-E2E-JEPA reports both results with and without multiplicative safety metrics, so the headline score depends on which metric is used.",
+      "The two papers that report NAVSIM results use different setups, so their scores may not be directly comparable.",
+      "Two provided papers on recursive self-improvement (2610.12233 and 2609.31186) concern language-model safety in general, not driving, and are excluded from this answer. LabInstruct (2610.14020) concerns laboratory video generation and is also out of scope."
+    ]
+  },
+  "judgement": {
+    "verdicts": [
+      {
+        "claim_number": 1,
+        "verdict": "supported",
+        "reason": "The abstract matches: a neural network for routine driving, MPC for unfamiliar situations, a knowledge-graph meta-cognitive switch, tests in CARLA on red-light-running (emergency) vehicle scenarios, 89% fewer collisions versus the NN-only planner, and better right-of-way compliance."
+      },
+      {
+        "claim_number": 2,
+        "verdict": "supported",
+        "reason": "All figures and details match the abstract: Confucian-text RAG, success rates of 93.0/86.0/72.0%, margins of +8.0/22.5/25.0 points, the highest collision-free step count, low lane-change frequency and efficiency/latency trade-offs."
+      },
+      {
+        "claim_number": 3,
+        "verdict": "supported",
+        "reason": "The abstract states self-play training without human demonstrations, 59.4 EPDMS on navhard above every published method including DriveZero-Scale (57.1), 95.5 PDMS on navtest, and a closed-loop policy that beats imitation-based methods on HUGSim."
+      },
+      {
+        "claim_number": 4,
+        "verdict": "supported",
+        "reason": "All numbers match the abstract: 67.3/72.9 and 84.1/86.5 EPDMS, zero-shot goal-conditioned planning, a 100x speedup, 0.8 s for 256 candidates, and the 80.2 to 85.4 EPDMS improvement."
+      },
+      {
+        "claim_number": 5,
+        "verdict": "supported",
+        "reason": "It is a position paper citing over 600 datasets across nearly 50 countries, underused due to fragmentation and benchmark incentives among other reasons, and it illustrates an early realization."
+      },
+      {
+        "claim_number": 6,
+        "verdict": "supported",
+        "reason": "The framing of the hybrid architecture for novel situations matches the abstract. The caveat that results come only from CARLA scenarios is a fair reading, since the abstract reports only simulator tests."
+      },
+      {
+        "claim_number": 7,
+        "verdict": "supported",
+        "reason": "The abstract says self-play yields collisions, near-misses and recoveries absent from driving logs, and removes the need for curated expert demonstrations. The caveat about simulator realism is a reasonable hedge, since the abstract presents no real-world validation."
+      },
+      {
+        "claim_number": 8,
+        "verdict": "partially supported",
+        "reason": "TerraTransfer++ does report state-of-the-art EPDMS. AD-E2E-JEPA's headline EPDMS, however, comes from a zero-shot setting that uses ground-truth goals and is not presented as a gain over the state of the art, so 'two papers report large gains' overstates it. The 'raise the bar' framing is speculative, although the non-comparability caveat is fair."
+      },
+      {
+        "claim_number": 9,
+        "verdict": "supported",
+        "reason": "The abstract argues that community data sharing and reuse would broaden coverage beyond a few benchmarks. It offers principles and an early realization rather than experimental results."
+      }
+    ],
+    "usefulness": 4,
+    "usefulness_reason": "The brief is concrete, with specific methods, benchmark numbers and sensible caveats about simulation-only evidence and comparability. Some items, such as the JEPA world-model efficiency work and the dataset position paper, connect only loosely to safety. Benchmark acronyms like EPDMS and PDMS are left unexplained for a non-specialist."
+  },
+  "n_claims": 9,
+  "citation_validity": 1.0,
+  "faithfulness": 0.9444444444444444,
+  "finding_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "implication_scores": [
+    1.0,
+    1.0,
+    0.5,
+    1.0
+  ],
+  "usefulness": 4
+}

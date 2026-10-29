@@ -1,0 +1,212 @@
+{
+  "question": "How are AI agents being given long-term memory, and what are the risks?",
+  "papers": [
+    "2610.28093",
+    "2609.32091",
+    "2610.29357",
+    "2609.34385",
+    "2609.24971",
+    "2609.24515",
+    "2610.05162",
+    "2609.22712"
+  ],
+  "brief": {
+    "summary": "Agents are getting long-term memory mainly through external memory layers that store past interactions and retrieve them later. Papers in this set range from architectures (runtime retrieval, pluggable memory middleware) to benchmarks and protection designs, but the abstracts give few head-to-head numbers and no real-world deployment data. The main risks are that memory can carry injected instructions from untrusted web pages and tool outputs, that stale or contaminated memory can persist across sessions, and that memory can make models over-agree with users. The papers answer the question at the level of proposals and frameworks, so this is an early-stage picture.",
+    "key_findings": [
+      {
+        "claim": "Memory is commonly built as bespoke, hand-wired logic tied to one agent and one storage engine. The authors argue it should be a separate, swappable middleware layer, and they describe a reference implementation (ALTK-Evolve) without reporting benchmark results in the abstract.",
+        "citations": [
+          "2609.32091"
+        ]
+      },
+      {
+        "claim": "Just-In-Time memory (JAM) builds context at query time instead of ahead of time. It keeps full raw histories in a page store with summaries and reports stronger task performance than ahead-of-time memory systems, at lower cost than prior trained agentic memory methods. The abstract does not give specific figures.",
+        "citations": [
+          "2609.34385"
+        ]
+      },
+      {
+        "claim": "DolphinBench evaluates memory through task completion rather than question answering. It uses three personas with roughly 500k tokens of user messages each and 200 verified tasks per persona, and requires reporting cost and latency alongside accuracy.",
+        "citations": [
+          "2609.24971"
+        ]
+      },
+      {
+        "claim": "Memory-Centric Continual Learning proposes judging memory by whether it improves future actions, not by recall. It offers a three-axis taxonomy, an evaluation protocol for retention, adaptation and transfer, and a scaling framework, but the abstract reports no experimental results.",
+        "citations": [
+          "2610.29357"
+        ]
+      },
+      {
+        "claim": "Memadapter addresses memory-induced sycophancy, where agents over-align with users' historical beliefs, including when those beliefs are wrong or outdated. It adaptively weights retrieved memories and reports improved memory reliability across three benchmarks, without specific numbers in the abstract.",
+        "citations": [
+          "2610.05162"
+        ]
+      },
+      {
+        "claim": "Harnesses typically do not record who is allowed to act on stored memory, so an instruction hidden in a fetched web page can be treated as the user's own. ClawMMU proposes labeling each memory with owner, scope, origin and authority, and checking those labels on every read, write and tool call, so attacks become protection faults. It is a proposal and the abstract reports no measured results.",
+        "citations": [
+          "2610.28093"
+        ]
+      },
+      {
+        "claim": "A trustworthiness review lists memory contamination and cross-session data leakage as core failure modes of agents, alongside indirect prompt injection. It separates mitigations with empirical support from conceptual ones, and its lifecycle framework (TADL) has not been empirically validated.",
+        "citations": [
+          "2609.22712"
+        ]
+      },
+      {
+        "claim": "Expert input on AI agent security incidents (23 experts) identifies agent memory and memory accesses as things incident reports should capture. The same input flags data leakage through reporting and attacks on the reporting infrastructure itself as new risks.",
+        "citations": [
+          "2609.24515"
+        ]
+      }
+    ],
+    "implications": [
+      {
+        "implication": "Teams building agents that fetch web pages or read tool output should assume memory can be poisoned and that injected text may later be treated as a user instruction. Authority and origin tracking at the harness level, as ClawMMU proposes, is a candidate control, but it is not yet shown to work at scale.",
+        "who_it_affects": "Developers and security teams deploying agents with persistent memory and tool access",
+        "citations": [
+          "2610.28093",
+          "2609.22712"
+        ]
+      },
+      {
+        "implication": "Persistent memory increases the blast radius of a single bad input, since contamination can carry across sessions and users. Data-retention and access policies for agent memory will likely need to be designed in from the start.",
+        "who_it_affects": "Privacy, compliance and governance teams in organizations running multi-session or multi-user agents",
+        "citations": [
+          "2609.22712",
+          "2609.24515",
+          "2609.32091"
+        ]
+      },
+      {
+        "implication": "Memory that personalizes an agent can also make it flatter users and reinforce false beliefs. Evaluation for personal assistants may need to test for agreement with inaccurate memories, not just recall accuracy.",
+        "who_it_affects": "Product teams building personalized assistants and their evaluators",
+        "citations": [
+          "2610.05162",
+          "2610.29357"
+        ]
+      },
+      {
+        "implication": "Benchmarks that require cost and latency reporting alongside accuracy could change how memory systems are compared, shifting purchasing and build decisions away from accuracy-only leaderboards.",
+        "who_it_affects": "Engineering leads choosing memory systems and researchers designing evaluations",
+        "citations": [
+          "2609.24971",
+          "2609.34385"
+        ]
+      },
+      {
+        "implication": "Standardized memory middleware, if it matures, would let teams swap memory backends and share memory across agents, but it would also widen the attack surface through shared, federated memory. Provenance and isolation would become core requirements.",
+        "who_it_affects": "Platform and infrastructure teams, and vendors of agent frameworks",
+        "citations": [
+          "2609.32091",
+          "2609.22712"
+        ]
+      }
+    ],
+    "maturity": "early research",
+    "maturity_rationale": "The papers are mostly position papers, proposed frameworks, and benchmarks. The closest to practice are a reference implementation (ALTK-Evolve) and a benchmark with a public dataset, but the abstracts give no production results, the security framework is explicitly unvalidated, and the main protection design is a proposal. Most abstracts report no quantitative head-to-head results.",
+    "risks_and_limitations": [
+      "Prompt injection through fetched content can be treated as user authority, and the proposed fix (ClawMMU) has no reported measured results in its abstract.",
+      "Memory contamination and cross-session leakage are identified as failure modes, but the review notes many mitigations remain conceptual rather than empirically tested.",
+      "Many memory papers lack quantitative comparisons in their abstracts, so claimed gains over prior systems cannot be checked from these summaries.",
+      "The TADL lifecycle framework is explicitly not empirically validated.",
+      "Incident reporting for agent memory is still an open research area, and reporting systems themselves may leak data.",
+      "Benchmarks for memory may not reflect real workloads; DolphinBench is designed around knowledge-work personas, and its generality is unknown.",
+      "Memory-induced sycophancy can make agents rely on outdated or incorrect user beliefs, and mitigation methods are only beginning to be evaluated."
+    ]
+  },
+  "judgement": {
+    "verdicts": [
+      {
+        "claim_number": 1,
+        "verdict": "supported",
+        "reason": "The abstract calls bespoke, hand-wired memory bound to one storage engine the dominant fix. It argues for a pluggable middleware layer and presents ALTK-Evolve with no benchmark results."
+      },
+      {
+        "claim_number": 2,
+        "verdict": "supported",
+        "reason": "The abstract describes query-conditioned runtime construction and raw histories kept in a hierarchical page-store with summaries. It reports stronger performance than AOT systems and greater efficiency than prior trained approaches, without figures."
+      },
+      {
+        "claim_number": 3,
+        "verdict": "supported",
+        "reason": "All the details match the abstract: task completion rather than QA, three personas with about 500k tokens each, 200 verified tasks per persona, and mandatory cost and latency reporting."
+      },
+      {
+        "claim_number": 4,
+        "verdict": "supported",
+        "reason": "The abstract matches on the action-based criterion, the three-axis taxonomy, the retention/adaptation/transfer protocol and the scaling framework. No experimental results are mentioned."
+      },
+      {
+        "claim_number": 5,
+        "verdict": "supported",
+        "reason": "The abstract defines memory-induced sycophancy, including inaccurate or outdated beliefs. It describes adaptive calibration of each memory's influence and improved reliability on three benchmarks, without numbers."
+      },
+      {
+        "claim_number": 6,
+        "verdict": "supported",
+        "reason": "The abstract matches closely on the missing authority records, the owner/scope/origin/authority labels, the checks at context entry, storage write and read, and tool calls, and attacks becoming protection faults. No results are reported."
+      },
+      {
+        "claim_number": 7,
+        "verdict": "supported",
+        "reason": "The abstract lists memory contamination, cross-session leakage and indirect prompt injection in its taxonomy. It distinguishes empirical from conceptual mitigations and states TADL is not empirically validated."
+      },
+      {
+        "claim_number": 8,
+        "verdict": "supported",
+        "reason": "The abstract cites 23 experts, names memory and memory accesses as reporting elements, and flags data leakage and attacks on reporting infrastructure."
+      },
+      {
+        "claim_number": 9,
+        "verdict": "supported",
+        "reason": "This is a reasonable practical inference from ClawMMU's threat description and the review's memory-contamination and indirect-injection failure modes. ClawMMU reports no validation, consistent with 'not yet shown at scale'."
+      },
+      {
+        "claim_number": 10,
+        "verdict": "partially supported",
+        "reason": "The abstracts support contamination carrying across sessions, but not explicitly across users. 'Blast radius' and the design-from-start policy advice are extrapolations."
+      },
+      {
+        "claim_number": 11,
+        "verdict": "supported",
+        "reason": "MemAdapter describes personalization memory causing over-alignment with inaccurate beliefs. The evaluation suggestion follows reasonably from this and from MCCL's critique of recall-only evaluation."
+      },
+      {
+        "claim_number": 12,
+        "verdict": "partially supported",
+        "reason": "DolphinBench does require cost and latency reporting. However, the claimed effect on purchasing and build decisions is speculation not found in the abstracts."
+      },
+      {
+        "claim_number": 13,
+        "verdict": "partially supported",
+        "reason": "The middleware abstract lists swappability, federated sharing with provenance and multi-tenant isolation as challenges. It does not explicitly say federated memory widens the attack surface; that is inferred."
+      }
+    ],
+    "usefulness": 4,
+    "usefulness_reason": "The brief is concrete and well organized, naming specific approaches and benchmarks and clearly flagging which papers lack results. It links memory design to concrete risks such as injection, sycophancy and leakage, and to practical implications. A few implications are speculative, and it is somewhat dense for non-specialists."
+  },
+  "n_claims": 13,
+  "citation_validity": 1.0,
+  "faithfulness": 0.8846153846153846,
+  "finding_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "implication_scores": [
+    1.0,
+    0.5,
+    1.0,
+    0.5,
+    0.5
+  ],
+  "usefulness": 4
+}

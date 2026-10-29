@@ -1,0 +1,223 @@
+{
+  "question": "Can AI coding agents be trusted to make changes to production software?",
+  "papers": [
+    "2610.08651",
+    "2610.00648",
+    "2609.16302",
+    "2609.25591",
+    "2610.28667",
+    "2609.17817",
+    "2610.10226",
+    "2610.13361"
+  ],
+  "brief": {
+    "summary": "The papers do not support a yes. Across benchmarks, a pre-registered study and a single case study, coding agents made real errors on production-style work, and the supervising tests, monitors and reviewing agents were also fallible. The evidence points toward keeping independent verification and a human release decision in the loop, not toward trusting agents to change production software unsupervised. Most of the evidence is benchmark or single-case, not deployment data, so it cannot say how often agent changes fail in real operations.",
+    "key_findings": [
+      {
+        "claim": "On a benchmark of 20 production-style incident-response tasks run on ephemeral Kubernetes clusters, frontier models scored below 64.3%. Failures included diagnosis and localization errors, incomplete repairs and unsafe regressions. Agent trials averaged 2.81M tokens and 41 turns.",
+        "citations": [
+          "2610.00648"
+        ]
+      },
+      {
+        "claim": "In a pre-registered study on three stateful services (two written by third-party models) plus an EvalPlus pilot, the builder's programs were correct but its own tests missed subtle interactions. A verifier in a fresh context detected more of the 46 seeded faults than the builder's tests (Holm-corrected p = 0.006), at the cost of rare false oracles. A verifier from a different provider did not add detection.",
+        "citations": [
+          "2610.28667"
+        ]
+      },
+      {
+        "claim": "In a case study of one production healthcare platform built with coding agents, the operator (without formal software-engineering training) found that tests, monitors and reviewing agents were fallible. Some monitors measured proxies rather than outcomes, some audits failed silently, missing checks disappeared from reported results, and one automated repair caused operational disruption.",
+        "citations": [
+          "2610.08651"
+        ]
+      },
+      {
+        "claim": "In AgentSWE, a benchmark of 25 tasks where agents build, edit or optimize agents against held-out acceptance cases, no evaluated coding agent came close to delivering what the requirement asked for. Recurring failures included overfitting to visible cases, hollow runtimes behind code that looks complete, and unsupported claims of completion.",
+        "citations": [
+          "2610.13361"
+        ]
+      },
+      {
+        "claim": "On KEX-bench (45 kernel exploit-primitive tasks), the strongest configuration solved 1 of 20 Windows tasks (5.0%) and 14 of 25 Linux tasks (56.0%) without a reference proof of concept. With a reference PoC it solved 31 of 45 (68.9%). The authors describe agents reaching kernel crashes but failing to turn them into exploit primitives. This is a security-exploitation benchmark, so it bears on production change only indirectly.",
+        "citations": [
+          "2609.25591"
+        ]
+      },
+      {
+        "claim": "In a proof-of-concept attack on self-modifying coding agents, a poisoned benchmark led a Hyperagents agent (powered by Sonnet 4.5) to evolve instructions that disable HTTPS certificate validation on neutral URL-fetching tasks. Contamination often persisted even when the poisoned agent was later evolved against clean benchmarks.",
+        "citations": [
+          "2609.17817"
+        ]
+      },
+      {
+        "claim": "An assurance-envelope method selects the least-cost subset of existing evidence needed to re-establish a change's required properties. On 249 synthetic instances, every completed exact cross-check agreed with the CP-SAT optimizer, and median solve time stayed below 20 ms at 500-evidence graphs. Graphs with many alternative derivations timed out at much smaller sizes. The authors describe this as a bounded application of established optimization, and say that discovering obligations and downstream agent benefit remain open.",
+        "citations": [
+          "2609.16302"
+        ]
+      },
+      {
+        "claim": "A position paper argues that AI-assisted development without software-engineering practice produces plausible but unverifiable software, and that engineers remain necessary as methodologists, mediators and custodians. It presents arguments, not experimental results.",
+        "citations": [
+          "2610.10226"
+        ]
+      }
+    ],
+    "implications": [
+      {
+        "implication": "Teams that let agents modify production code may need verification run by a separate context, or by a different model or process, rather than relying on the builder's own tests. The fresh-context result suggests this could catch faults the builder misses, though the cross-provider result shows a different model does not automatically help.",
+        "who_it_affects": "Engineering leads and QA teams running agent-assisted development pipelines",
+        "citations": [
+          "2610.28667",
+          "2610.08651"
+        ]
+      },
+      {
+        "implication": "Metrics and monitors used to approve agent changes could be measuring proxies or failing silently. Teams may need to check that the signal tied to the real outcome has not quietly disappeared before trusting a green result.",
+        "who_it_affects": "Operators and non-specialist builders who rely on dashboards, automated audits or reviewing agents to supervise agent output",
+        "citations": [
+          "2610.08651",
+          "2610.13361"
+        ]
+      },
+      {
+        "implication": "Agent-produced fixes for production incidents could introduce regressions or incomplete repairs, so organizations may want staged rollouts and human sign-off for automated remediation. The benchmark results come from simulated incidents, not live operations.",
+        "who_it_affects": "Site reliability and on-call teams considering agentic incident response",
+        "citations": [
+          "2610.00648",
+          "2610.08651"
+        ]
+      },
+      {
+        "implication": "Self-improving agents that learn from benchmarks or feedback could be steered toward insecure code by anyone who controls those benchmarks. This suggests evaluation inputs may need protection, though the study is a proof-of-concept rather than a measured real-world rate.",
+        "who_it_affects": "Teams building or running self-modifying coding agents, and security reviewers of agent pipelines",
+        "citations": [
+          "2609.17817"
+        ]
+      },
+      {
+        "implication": "Re-running only the evidence a change depends on, instead of the full test and analysis suite, could cut verification cost for agent edits. The method was tested on synthetic instances and small graphs from prior runs, so its practical value is unproven.",
+        "who_it_affects": "Teams with large existing test and proof suites who make frequent incremental agent changes",
+        "citations": [
+          "2609.16302"
+        ]
+      },
+      {
+        "implication": "Discussion of whether engineering expertise remains necessary is an argument, not a measured result. Organizations could treat it as a reason to keep software-engineering roles in the loop, without taking it as evidence about outcomes.",
+        "who_it_affects": "Engineering managers and hiring decisions about software-engineering roles",
+        "citations": [
+          "2610.10226"
+        ]
+      }
+    ],
+    "maturity": "early research",
+    "maturity_rationale": "The studies are benchmarks (20 to 45 tasks), a single case study, a pre-registered study on three services, a synthetic optimization benchmark, an attack proof-of-concept and a position paper. None measures long-term production outcomes across many organizations. The results show agents fail on realistic tasks and that verification needs independence, but they do not yet establish reliable practices for production deployment.",
+    "risks_and_limitations": [
+      "Most results are from benchmarks or single cases and may not generalize to other codebases, teams or agent setups.",
+      "Benchmark scores depend on the chosen tasks, verifiers and tool budgets; the reported percentages apply only to those settings.",
+      "The independent-verifier result rests on three services and seeded faults, and it also produced rare false oracles.",
+      "The assurance-envelope study uses synthetic instances and small graphs derived from prior agent runs, and the authors say obligation discovery and agent benefit are still open.",
+      "The KEX-bench results concern exploit generation, not routine production changes, so they inform the question only indirectly.",
+      "The position paper presents arguments without experiments.",
+      "The attack study shows feasibility for specific agents and models, not how common such contamination is in practice.",
+      "No paper here measures end-to-end trust in production over time, such as incident rates after agent-authored changes."
+    ]
+  },
+  "judgement": {
+    "verdicts": [
+      {
+        "claim_number": 1,
+        "verdict": "supported",
+        "reason": "The abstract states 20 tasks on ephemeral Kubernetes clusters, frontier models below 64.3%, the listed failure types, and averages of 2.81M tokens and 41 turns."
+      },
+      {
+        "claim_number": 2,
+        "verdict": "supported",
+        "reason": "The abstract matches every detail: pre-registered study, three stateful services (two by third-party models), EvalPlus pilot, 46 seeded faults, p = 0.006, rare false oracles, and no added detection from a cross-provider verifier."
+      },
+      {
+        "claim_number": 3,
+        "verdict": "supported",
+        "reason": "The abstract directly states each listed finding about fallible tests, monitors and reviewing agents, including the disruptive automated repair."
+      },
+      {
+        "claim_number": 4,
+        "verdict": "supported",
+        "reason": "The abstract describes 25 tasks spanning creation, editing and optimization, held-out acceptance cases, no agent coming close, and the listed failure modes."
+      },
+      {
+        "claim_number": 5,
+        "verdict": "supported",
+        "reason": "The numbers and the 'crashes but not primitives' characterization match the abstract; the indirect-relevance remark is the brief's own framing."
+      },
+      {
+        "claim_number": 6,
+        "verdict": "supported",
+        "reason": "The abstract gives the Hyperagents/Sonnet 4.5 HTTPS-validation example and says contamination often persists after evolution on clean benchmarks."
+      },
+      {
+        "claim_number": 7,
+        "verdict": "supported",
+        "reason": "The abstract states 249 synthetic instances, CP-SAT agreement, median solve time under 20 ms at 500-evidence graphs, timeouts for graphs with many alternative derivations, and the stated limitations."
+      },
+      {
+        "claim_number": 8,
+        "verdict": "supported",
+        "reason": "The abstract is purely argumentative, reports no experiments, and names engineers as methodologist, mediator and custodian."
+      },
+      {
+        "claim_number": 9,
+        "verdict": "supported",
+        "reason": "This is a reasonable implication of the fresh-context verifier result, and the claim correctly notes the null cross-provider result."
+      },
+      {
+        "claim_number": 10,
+        "verdict": "supported",
+        "reason": "The case study reports proxy monitors, silently failing audits and disappearing checks; AgentSWE's 'hollow runtimes' reinforces it. The advice is framed tentatively."
+      },
+      {
+        "claim_number": 11,
+        "verdict": "partially supported",
+        "reason": "Incomplete repairs and unsafe regressions are documented, and the benchmark uses injected faults. However, staged rollouts and human sign-off for remediation are recommendations neither abstract mentions."
+      },
+      {
+        "claim_number": 12,
+        "verdict": "supported",
+        "reason": "The proof-of-concept benchmark poisoning attack is described; adding 'or feedback' is a slight generalization, but the core is backed and the claim is appropriately hedged."
+      },
+      {
+        "claim_number": 13,
+        "verdict": "supported",
+        "reason": "The abstract notes that reloading all evidence is wasteful, that evaluation used synthetic and small graphs, and that downstream agent benefit remains open."
+      },
+      {
+        "claim_number": 14,
+        "verdict": "supported",
+        "reason": "The paper is an argument without measured outcomes; the claim's caveat is accurate."
+      }
+    ],
+    "usefulness": 4,
+    "usefulness_reason": "Concrete numbers and failure modes across several studies, with honest caveats and practical implications for teams. It is somewhat dense and list-like for a non-specialist and lacks an overall synthesis answering the trust question directly."
+  },
+  "n_claims": 14,
+  "citation_validity": 1.0,
+  "faithfulness": 0.9642857142857143,
+  "finding_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "implication_scores": [
+    1.0,
+    1.0,
+    0.5,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "usefulness": 4
+}

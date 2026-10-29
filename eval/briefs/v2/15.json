@@ -1,0 +1,232 @@
+{
+  "question": "How are companies evaluating whether AI agents are ready for real-world deployment?",
+  "papers": [
+    "2610.22350",
+    "2609.34274",
+    "2610.14539",
+    "2609.29773",
+    "2609.13334",
+    "2610.19005",
+    "2610.26664",
+    "2610.16916"
+  ],
+  "brief": {
+    "summary": "The provided papers do not show how companies actually decide whether agents are ready for deployment; they are academic benchmarks, a method paper, and proposals, with no company deployment data. The benchmarks that test realistic delivery (FDE-Gym, FDE-Bench) find low success on underspecified customer tasks, and BIABench and CyberArena add findings on reliability and adversarial behavior. Several papers are position or proposal pieces without experimental results.",
+    "key_findings": [
+      {
+        "claim": "FDE-Gym tests agents on 95 end-to-end delivery tasks from 20 customer scenarios across 18 sectors, run in simulated customer environments with scripted stakeholders. The best of 13 model configurations reached a mean score of 0.56 in the realistic setting and resolved 14 of 95 tasks (score at least 0.8 with no incident).",
+        "citations": [
+          "2610.22350"
+        ]
+      },
+      {
+        "claim": "In FDE-Gym, discovering unstated constraints was the main bottleneck. Even on the 23 tasks where the best configuration obtained every key fact from stakeholders, it reached a normalized business uplift of 0.8 or above on only 10.",
+        "citations": [
+          "2610.22350"
+        ]
+      },
+      {
+        "claim": "FDE-Bench uses 49 cases from real customer projects (combinatorial optimization and machine learning), where agents elicit requirements from a simulated customer. Across 18 configurations, the highest mean delivery score was 0.5510 against an FDE reference of 1.0, and the highest delivery success rate was 6.12%.",
+        "citations": [
+          "2610.14539"
+        ]
+      },
+      {
+        "claim": "BIABench tests agents on 16 bioimage analysis tasks rebuilt from published studies, scored against ground truth and a rubric-based process score. Routine two-dimensional tasks were solved well, but on some tasks adding a third dimension or time axis, no agent scored above 0.19. Biology-specific agents, stronger models and detailed expert instructions did not close this gap.",
+        "citations": [
+          "2609.34274"
+        ]
+      },
+      {
+        "claim": "In BIABench, scores varied more between repeated runs of one agent than between different agents. Without ground truth, a correct run could not be told from a wrong one by its process score or by time spent.",
+        "citations": [
+          "2609.34274"
+        ]
+      },
+      {
+        "claim": "Env-Rethink reports that state-of-the-art agents drop from 83.9% to 57.6% in environments with scattered information, misleading or conflicting versions, and evolving noise. Its 27B system raised mean rubric pass rate by 15.1 percentage points across nine models on 30 tasks.",
+        "citations": [
+          "2609.29773"
+        ]
+      },
+      {
+        "claim": "CyberArena pits 12 frontier LLM agents against each other in symmetric live attack-and-defense across 40 challenges and 466 matches. Trajectories showed defenders patching one hole while missing the next and certifying repairs on stale evidence, while stronger agents planned backdoors for later rounds.",
+        "citations": [
+          "2610.19005"
+        ]
+      },
+      {
+        "claim": "The Agentic Company OS paper is a position paper, not an experiment. It cites an industry report estimate that most enterprise agent pilots never reach production, and argues that agents reason poorly over data built for humans. It proposes a research agenda for evaluating its approach but reports no results.",
+        "citations": [
+          "2609.13334"
+        ]
+      },
+      {
+        "claim": "The honeypot paper is a proposal, not an experiment. It suggests planting decoy opportunities for harmful actions throughout production environments to detect misbehavior and deter attacks, and lists research questions for measuring their effectiveness.",
+        "citations": [
+          "2610.26664"
+        ]
+      },
+      {
+        "claim": "The Information Flow Methodology paper applies a modeling approach to EU AI Act assessment in one real case: a recruitment support tool used by a public-sector organization. It evaluates both the provider's system and the deployer's process. It is a governance analysis, not a test of agent capability.",
+        "citations": [
+          "2610.16916"
+        ]
+      }
+    ],
+    "implications": [
+      {
+        "implication": "Vendors and consultancies building customer-facing delivery agents could find that evaluation needs to weigh requirement elicitation and information discovery, not only solution quality, since the simulated benchmarks show this as the main gap.",
+        "who_it_affects": "AI vendors, forward-deployed engineering teams, and consultancies delivering AI projects",
+        "citations": [
+          "2610.22350",
+          "2610.14539"
+        ]
+      },
+      {
+        "implication": "Teams evaluating agents on complex data (3D or time-series imaging, for example) may need repeated runs and ground-truth checks, since run-to-run variance and process scores alone may not separate good from bad results.",
+        "who_it_affects": "Research labs and life-science R&D teams adopting agents for data analysis",
+        "citations": [
+          "2609.34274"
+        ]
+      },
+      {
+        "implication": "Work on organizing and cleaning enterprise context may affect agent performance as much as model choice, if the Env-Rethink gains generalize beyond its benchmark.",
+        "who_it_affects": "Enterprise IT and knowledge-management teams running agents over internal files and records",
+        "citations": [
+          "2609.29773"
+        ]
+      },
+      {
+        "implication": "Live adversarial testing could become a way to probe agent reliability under changing conditions, and decoy-based monitoring could become a complement to pre-deployment testing, though the honeypot idea is untested.",
+        "who_it_affects": "Security teams deploying agents inside organizations",
+        "citations": [
+          "2610.19005",
+          "2610.26664"
+        ]
+      },
+      {
+        "implication": "Process-modeling methods like IFM may help organizations map responsibilities and risk pathways for AI Act compliance, though evidence so far is a single case.",
+        "who_it_affects": "Compliance and governance teams for high-risk AI systems in the EU, including public-sector deployers",
+        "citations": [
+          "2610.16916"
+        ]
+      }
+    ],
+    "maturity": "early research",
+    "maturity_rationale": "The papers are benchmarks, a single method evaluation, a single compliance case study, and two proposals. The strongest benchmark results show low success rates on realistic delivery tasks, and none reports production deployment outcomes from a company.",
+    "risks_and_limitations": [
+      "FDE-Gym and FDE-Bench use simulated customers with scripted stakeholders, so results may differ from real customer interactions.",
+      "Task counts are small (16 to 95), and several results are reported only for the best configuration.",
+      "No paper reports how companies themselves evaluate deployment readiness; the adoption claim about most pilots failing is cited secondhand in a position paper.",
+      "Benchmark scores depend on specific models and configurations that change quickly, so the reported numbers may age fast.",
+      "Env-Rethink's gain is measured on its own 30 tasks and nine models, and CyberArena's scores rely on a dynamical model to convert match outcomes into scores.",
+      "The honeypot and Agentic Company OS papers are proposals and position pieces without experimental evidence.",
+      "The AI Act paper is based on one recruitment tool case and assesses governance rather than agent capability."
+    ]
+  },
+  "judgement": {
+    "verdicts": [
+      {
+        "claim_number": 1,
+        "verdict": "supported",
+        "reason": "The abstract states 95 tasks, 20 scenarios, 18 sectors, simulated environments with scripted stakeholders, 13 configurations, a best mean score of 0.56 and 14 of 95 tasks resolved under the stated criterion."
+      },
+      {
+        "claim_number": 2,
+        "verdict": "supported",
+        "reason": "The abstract directly says discovering unstated constraints is the primary bottleneck and gives the 23-task and 10-task figures."
+      },
+      {
+        "claim_number": 3,
+        "verdict": "supported",
+        "reason": "The abstract gives 49 cases from real customer projects in combinatorial optimization and ML, a simulated customer, 18 configurations, a 0.5510 best mean score against a 1.0 reference, and a 6.12% DSR."
+      },
+      {
+        "claim_number": 4,
+        "verdict": "supported",
+        "reason": "The abstract states 16 tasks from published studies, outcome and rubric-based process scores, routine 2D tasks solved well, no agent above 0.19 on some 3D or time tasks, and that specialization, stronger models and expert instructions did not close the gap."
+      },
+      {
+        "claim_number": 5,
+        "verdict": "supported",
+        "reason": "Both points are stated directly in the abstract."
+      },
+      {
+        "claim_number": 6,
+        "verdict": "supported",
+        "reason": "The abstract gives the drop from 83.9% to 57.6% under the described environment issues, the 27B system, and the 15.1-point gain across nine models on 30 tasks."
+      },
+      {
+        "claim_number": 7,
+        "verdict": "supported",
+        "reason": "The abstract states 12 agents, 40 challenges, 466 matches in symmetric live combat, and the described trajectory behaviors."
+      },
+      {
+        "claim_number": 8,
+        "verdict": "supported",
+        "reason": "The abstract calls itself a position paper, cites the industry report estimate, argues agents reason over data structured for human operators, and outlines a research agenda. It reports no results."
+      },
+      {
+        "claim_number": 9,
+        "verdict": "supported",
+        "reason": "The abstract proposes planting decoys in production to detect misbehavior and deter attacks, and outlines research questions on effectiveness."
+      },
+      {
+        "claim_number": 10,
+        "verdict": "supported",
+        "reason": "The abstract describes applying IFM to one public-sector recruitment tool case, evaluating both the Provider's system and the Deployer's process, as a governance assessment."
+      },
+      {
+        "claim_number": 11,
+        "verdict": "partially supported",
+        "reason": "FDE-Gym names constraint discovery as the primary bottleneck but also says discovery alone does not explain the gap. FDE-Bench does not identify elicitation as the main gap, so 'the simulated benchmarks show this as the main gap' overgeneralizes."
+      },
+      {
+        "claim_number": 12,
+        "verdict": "supported",
+        "reason": "This is a reasonable hedged inference from BIABench's findings on run-to-run variance and the inability to tell correct runs from wrong ones without ground truth."
+      },
+      {
+        "claim_number": 13,
+        "verdict": "partially supported",
+        "reason": "Env-Rethink shows that environment preparation improves performance, but the abstract makes no comparison to the effect of model choice, so 'as much as model choice' is unsupported."
+      },
+      {
+        "claim_number": 14,
+        "verdict": "supported",
+        "reason": "This is a hedged forward-looking claim consistent with CyberArena's dynamic testing and the honeypot proposal, and it correctly notes the honeypot idea is untested."
+      },
+      {
+        "claim_number": 15,
+        "verdict": "supported",
+        "reason": "The abstract says IFM supports transparency and identifies risk pathways and responsibilities, based on a single case."
+      }
+    ],
+    "usefulness": 4,
+    "usefulness_reason": "The brief gives concrete benchmark numbers and clearly separates empirical work from position papers. It draws practical, appropriately hedged implications for who is affected. A couple of implications overreach slightly, and the brief is mostly academic benchmarks rather than direct evidence of company practice."
+  },
+  "n_claims": 15,
+  "citation_validity": 1.0,
+  "faithfulness": 0.9333333333333333,
+  "finding_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "implication_scores": [
+    0.5,
+    1.0,
+    0.5,
+    1.0,
+    1.0
+  ],
+  "usefulness": 4
+}

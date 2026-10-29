@@ -1,0 +1,217 @@
+{
+  "question": "How are companies evaluating whether AI agents are ready for real-world deployment?",
+  "papers": [
+    "2610.22350",
+    "2609.34274",
+    "2610.14539",
+    "2609.29773",
+    "2609.13334",
+    "2610.19005",
+    "2610.26664",
+    "2610.16916"
+  ],
+  "brief": {
+    "summary": "The provided papers mostly show how researchers, rather than companies, are testing whether agents are ready: through end-to-end benchmarks built from real customer or published-study tasks, plus position and governance proposals. Across these, agents perform far from reliably on underspecified, multi-step, or long-horizon work, so the papers suggest readiness is not yet established. The set does not include company case studies or deployment outcome data, so claims about what firms actually do internally are not supported here.",
+    "key_findings": [
+      {
+        "claim": "In FDE-Gym, a benchmark of 95 delivery tasks adapted from real projects, the best of 13 model configurations scored a mean of 0.56 in the realistic setting with unstated constraints, resolving only 14 of 95 tasks to a score of at least 0.8 with no incident.",
+        "citations": [
+          "2610.22350"
+        ]
+      },
+      {
+        "claim": "In FDE-Gym, discovering unstated constraints is the main bottleneck, but discovery alone does not explain the gap: even when the best configuration got every key fact on 23 tasks, it reached 0.8 or above on only 10.",
+        "citations": [
+          "2610.22350"
+        ]
+      },
+      {
+        "claim": "FDE-Bench (49 cases from real customer projects) found the highest mean delivery score across 18 agent configurations was 0.5510 versus an FDE reference of 1.0, with a best delivery success rate of only 6.12%.",
+        "citations": [
+          "2610.14539"
+        ]
+      },
+      {
+        "claim": "BIABench (16 tasks from published bioimage studies) found routine 2D tasks were solved well, but on tasks adding a third dimension or time axis no agent scored above 0.19; specialization, stronger models, and expert instructions did not close the gap.",
+        "citations": [
+          "2609.34274"
+        ]
+      },
+      {
+        "claim": "BIABench also found agents were unreliable: score variation across repeated runs of one agent exceeded variation between different agents, and without ground truth a correct run could not be distinguished from a wrong one by process score or time spent.",
+        "citations": [
+          "2609.34274"
+        ]
+      },
+      {
+        "claim": "Env-Rethink reports that messy real environments (scattered information, misleading or conflicting versions, evolving noise) cut a state-of-the-art agent's performance from 83.9% to 57.6%, and its 27B-model system raised mean rubric pass rate by 15.1 percentage points across nine models on 30 tasks.",
+        "citations": [
+          "2609.29773"
+        ]
+      },
+      {
+        "claim": "CyberArena evaluated 12 frontier LLM agents across 40 challenges in 466 live symmetric attack-and-defense matches, finding defenders often patch one hole while missing the next and certify repairs on stale evidence, which single-agent static benchmarks do not capture.",
+        "citations": [
+          "2610.19005"
+        ]
+      },
+      {
+        "claim": "A position paper argues that enterprise agents often succeed in demos but stall in sustained operation, and that an industry report estimates most pilots never reach production; it proposes a shared, agent-native substrate with a four-layer framework and a per-skill trust gradient, but notes Markdown is not a proven primitive and no evaluation is reported.",
+        "citations": [
+          "2609.13334"
+        ]
+      },
+      {
+        "claim": "A honeypot approach proposes planting decoy harmful-action opportunities in production to detect and deter misbehaving agents; it is presented as a proposal with research questions, with no measured results in the abstract.",
+        "citations": [
+          "2610.26664"
+        ]
+      },
+      {
+        "claim": "For EU AI Act compliance, the Information Flow Methodology was applied to a real recruitment support tool used by a public-sector organization, mapping provider and deployer roles; the paper reports qualitative benefits for transparency and risk-pathway identification rather than quantitative results.",
+        "citations": [
+          "2610.16916"
+        ]
+      }
+    ],
+    "implications": [
+      {
+        "implication": "Teams evaluating agents for customer-facing delivery should test with underspecified requirements and simulated stakeholders, not only well-specified tickets, because pass rates on well-specified tasks overstate readiness.",
+        "who_it_affects": "Forward-deployed engineers, consultancies and internal delivery teams deploying agents to clients",
+        "citations": [
+          "2610.22350",
+          "2610.14539"
+        ]
+      },
+      {
+        "implication": "Benchmarks that only score final outputs may miss unreliability; repeated-run variance and process checks may be needed before trusting an agent for long, multi-dimensional analysis, though the papers show process scores alone were not enough to separate correct from wrong runs.",
+        "who_it_affects": "Scientific and research organizations, and any team automating long-horizon analysis",
+        "citations": [
+          "2609.34274"
+        ]
+      },
+      {
+        "implication": "Security teams may need to test agents in dynamic, adversarial settings and consider monitoring methods such as honeypots, though the honeypot idea is untested in the provided material.",
+        "who_it_affects": "Security operations teams and organizations running agents with internal system access",
+        "citations": [
+          "2610.19005",
+          "2610.26664"
+        ]
+      },
+      {
+        "implication": "Regulated deployers may use structured modeling to map roles and information flows for compliance, which could make accountability clearer, but this is shown on a single case study.",
+        "who_it_affects": "Compliance and legal teams in organizations deploying high-risk AI in the EU, including HR and public-sector users",
+        "citations": [
+          "2610.16916"
+        ]
+      }
+    ],
+    "maturity": "early research",
+    "maturity_rationale": "The evidence is benchmarks and proposals with best-case success rates well below half on realistic tasks, reliability problems across repeated runs, and no reported production deployments or company outcome data in these papers. Readiness is not established by this set.",
+    "risks_and_limitations": [
+      "The papers are benchmarks and simulations with scripted or simulated stakeholders, so real customer behavior may differ.",
+      "Benchmark sizes are small (16 to 95 tasks), and results depend on the specific model configurations tested at the time.",
+      "None of the provided papers report how companies internally decide go or no-go for deployment; that practice is not covered here.",
+      "The enterprise substrate and honeypot papers are position papers without measured results.",
+      "The compliance paper covers one case and is qualitative in its reported results."
+    ]
+  },
+  "judgement": {
+    "verdicts": [
+      {
+        "claim_number": 1,
+        "verdict": "supported",
+        "reason": "The abstract states 95 tasks, 13 configurations, a best mean of 0.56 in the realistic setting, and 14/95 tasks resolved (score of at least 0.8 with no incident)."
+      },
+      {
+        "claim_number": 2,
+        "verdict": "supported",
+        "reason": "The abstract names unstated-constraint discovery as the primary bottleneck. It also says that on the 23 tasks with all key facts obtained, only 10 reached 0.8 or above."
+      },
+      {
+        "claim_number": 3,
+        "verdict": "supported",
+        "reason": "The abstract gives 49 cases, 18 configurations, a highest mean of 0.5510 versus a 1.0 reference, and a best DSR of 6.12%."
+      },
+      {
+        "claim_number": 4,
+        "verdict": "partially supported",
+        "reason": "The abstract says no agent scored above 0.19 only on 'some' tasks that added a third dimension or time axis. The claim generalises this to all such tasks. The rest of the claim matches."
+      },
+      {
+        "claim_number": 5,
+        "verdict": "supported",
+        "reason": "The abstract states that run-to-run variance exceeded between-agent variance. It also says correct runs could not be distinguished by process score or time spent."
+      },
+      {
+        "claim_number": 6,
+        "verdict": "supported",
+        "reason": "The abstract lists the three environment challenges and the drop from 83.9% to 57.6%. It also reports the 27B system and a 15.1 pp gain across nine models on 30 tasks."
+      },
+      {
+        "claim_number": 7,
+        "verdict": "supported",
+        "reason": "The abstract states 12 agents, 40 challenges and 466 matches, and describes defenders patching one hole and missing the next and certifying repairs on stale evidence. It says static or single-agent baselines miss this."
+      },
+      {
+        "claim_number": 8,
+        "verdict": "supported",
+        "reason": "The abstract matches each part: demo success then stalling, the industry report estimate, the four-layer framework, the trust gradient, and Markdown not being proven. No evaluation is reported and only a research agenda is outlined."
+      },
+      {
+        "claim_number": 9,
+        "verdict": "supported",
+        "reason": "The abstract proposes planting decoys in production to detect and deter misbehaving agents and outlines research questions. It reports no measured results."
+      },
+      {
+        "claim_number": 10,
+        "verdict": "supported",
+        "reason": "The abstract describes applying IFM to a public-sector recruitment tool, covering both the Provider and Deployer. The benefits it reports are qualitative (transparency, risk pathways)."
+      },
+      {
+        "claim_number": 11,
+        "verdict": "supported",
+        "reason": "This recommendation follows from both abstracts, which stress the gap between solving well-specified tasks and real delivery and the sharp performance drops under underspecification."
+      },
+      {
+        "claim_number": 12,
+        "verdict": "supported",
+        "reason": "The hedged recommendation is consistent with BIABench's findings on run-to-run variance and on process scores failing to separate correct from wrong runs."
+      },
+      {
+        "claim_number": 13,
+        "verdict": "supported",
+        "reason": "This hedged suggestion is consistent with CyberArena's dynamic adversarial testing and with the honeypot paper being a proposal only."
+      },
+      {
+        "claim_number": 14,
+        "verdict": "supported",
+        "reason": "The abstract shows IFM applied to a single real-world case to map roles and information flows, supporting accountability and transparency."
+      }
+    ],
+    "usefulness": 4,
+    "usefulness_reason": "The brief gives concrete numbers across several realistic benchmarks and explains why standard benchmarks overstate readiness. It also offers practical takeaways for delivery, security and compliance teams. However, it is mostly academic benchmarks rather than actual company practice, and one claim slightly overgeneralises."
+  },
+  "n_claims": 14,
+  "citation_validity": 1.0,
+  "faithfulness": 0.9642857142857143,
+  "finding_scores": [
+    1.0,
+    1.0,
+    1.0,
+    0.5,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "implication_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "usefulness": 4
+}

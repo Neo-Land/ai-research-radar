@@ -1,0 +1,207 @@
+{
+  "question": "How are AI agents being given long-term memory, and what are the risks?",
+  "papers": [
+    "2610.28093",
+    "2609.32091",
+    "2610.29357",
+    "2609.34385",
+    "2609.24971",
+    "2609.24515",
+    "2610.05162",
+    "2609.22712"
+  ],
+  "brief": {
+    "summary": "Current papers describe several ways to give agents durable memory: runtime retrieval over stored raw histories (JAM), a pluggable memory middleware layer (ALTK-Evolve), and provenance labels that gate what memory can do (ClawMMU). Most of these are proposals, visions, or frameworks, and the abstracts report few concrete results, so they do not show a proven method for long-term agent memory. The papers agree that persistent memory creates new risks, including instructions hidden in fetched content being treated as user instructions, contaminated memory carried across sessions, and memories that cause sycophancy. The benchmark and mitigation work is still early.",
+    "key_findings": [
+      {
+        "claim": "JAM builds memory at request time rather than ahead of time. It keeps complete raw histories in a hierarchical page-store with compact summaries, and a Researcher model retrieves and inspects evidence for each query. The authors report stronger task performance than AOT-style memory systems and much lower cost than earlier trained agentic memory approaches. The abstract gives no numbers.",
+        "citations": [
+          "2609.34385"
+        ]
+      },
+      {
+        "claim": "The middleware proposal argues that agent memory should be a separate, swappable layer rather than logic hard-wired into one agent and one storage engine. It names six systems challenges, including multi-tenant isolation, federated sharing with provenance, and lifecycle governance. This is a vision paper; ALTK-Evolve is presented as a reference implementation used to motivate a research agenda, not as an evaluated result.",
+        "citations": [
+          "2609.32091"
+        ]
+      },
+      {
+        "claim": "ClawMMU proposes labeling each memory item with owner, scope, origin, and authority, and checking those labels whenever content enters context, is written to or read from storage, or drives a tool call. Its rule is that authority can rise but never lift itself. The authors say memory attacks then become classical protection faults the harness can stop even if the model is fooled. The abstract reports no experimental results.",
+        "citations": [
+          "2610.28093"
+        ]
+      },
+      {
+        "claim": "Memory-Centric Continual Learning is a position-style framework arguing that agent memory should be judged by whether it improves future actions, not by recall. It offers a three-axis taxonomy (substrates, assets, policies), an evaluation protocol for retention, adaptation, and transfer, and a scaling framework. The abstract reports no empirical results.",
+        "citations": [
+          "2610.29357"
+        ]
+      },
+      {
+        "claim": "DolphinBench is a benchmark that scores memory by whether an agent completes tasks that depend on earlier history. It has three knowledge-work personas with roughly 500k tokens of user messages each and 200 tasks per persona. Each task was verified to succeed with the relevant history and fail without it. It requires reporting total cost and latency alongside accuracy.",
+        "citations": [
+          "2609.24971"
+        ]
+      },
+      {
+        "claim": "Memadapter studies memory-induced sycophancy, where agents over-align with users' past beliefs. The authors argue that correct, objective memories can also cause this, so filtering bad memories is not enough. Their method weighs each retrieved memory against the current task, and they report improved memory reliability across three benchmarks, without figures in the abstract.",
+        "citations": [
+          "2610.05162"
+        ]
+      },
+      {
+        "claim": "A study drawing on 23 experts in academia and industry identifies what should be recorded when an AI agent's security is harmed. Suggested fields include agent memory, memory accesses, levels of autonomy, and tool use. Experts also flagged that incident reports could leak data or be targeted themselves.",
+        "citations": [
+          "2609.24515"
+        ]
+      },
+      {
+        "claim": "A review lists memory contamination and cross-session data leakage among failure modes for agentic systems. It notes that persistent memory can carry compromised information across sessions. It also distinguishes mitigations with empirical support from conceptual ones. The Trustworthy Agent Development Lifecycle it proposes has not been empirically validated.",
+        "citations": [
+          "2609.22712"
+        ]
+      }
+    ],
+    "implications": [
+      {
+        "implication": "Agent framework builders may adopt provenance and authority labels on memory, so that content fetched from the web cannot silently act as user instructions. This is untested beyond the proposal, and the protection depends on the harness enforcing the labels.",
+        "who_it_affects": "Developers and platform teams building agent harnesses that fetch web pages or tool results into memory",
+        "citations": [
+          "2610.28093",
+          "2609.22712"
+        ]
+      },
+      {
+        "implication": "If benchmarks like DolphinBench, which require task success with history and report cost and latency, become standard, memory systems could be compared on completed work and efficiency rather than recall accuracy alone.",
+        "who_it_affects": "Teams evaluating or selecting agent memory systems",
+        "citations": [
+          "2609.24971"
+        ]
+      },
+      {
+        "implication": "Personal assistants with long-term memory may repeat a user's outdated or mistaken beliefs. Approaches that weigh each retrieved memory against current evidence could reduce this, though the results are reported on three benchmarks only.",
+        "who_it_affects": "Product teams building personalized assistants and users who rely on them for factual answers",
+        "citations": [
+          "2610.05162"
+        ]
+      },
+      {
+        "implication": "Security and compliance teams may need to log agent memory accesses and autonomy levels when recording incidents. The expert panel's suggestions could shape future reporting requirements, but no standard exists yet.",
+        "who_it_affects": "Security, governance, and compliance teams responsible for AI agent deployments",
+        "citations": [
+          "2609.24515"
+        ]
+      },
+      {
+        "implication": "A swappable memory layer could let organizations change storage engines or share memory across agents without rewriting each agent. This remains a research agenda, not an available product.",
+        "who_it_affects": "Engineering teams running several agents who want shared or replaceable memory",
+        "citations": [
+          "2609.32091"
+        ]
+      }
+    ],
+    "maturity": "early research",
+    "maturity_rationale": "Most papers are proposals, visions, frameworks, or benchmarks. The abstracts report few quantitative results, and those that exist come from specific benchmarks or personas. The review states that its proposed lifecycle is not empirically validated. No paper reports a deployed system.",
+    "risks_and_limitations": [
+      "Memory can carry instructions from untrusted web pages or tool outputs into the agent's authority; ClawMMU's protections are proposed but not evaluated in these abstracts.",
+      "Persistent memory can spread compromised information across sessions (memory contamination and cross-session leakage).",
+      "Memories that are correct can still cause sycophancy, so filtering alone may not be sufficient.",
+      "Reported gains (JAM, Memadapter) come from specific benchmarks and the abstracts give few numbers, so they may not generalize.",
+      "DolphinBench covers three knowledge-work personas only.",
+      "The incident-reporting study relies on expert input rather than measured data, and experts flagged leakage risks in the reporting process itself.",
+      "Several frameworks (MCCL, middleware vision, lifecycle framework) are not empirically validated."
+    ]
+  },
+  "judgement": {
+    "verdicts": [
+      {
+        "claim_number": 1,
+        "verdict": "supported",
+        "reason": "The abstract describes request-time memory construction, a hierarchical page-store with summaries, and a Researcher that retrieves and inspects evidence. It reports stronger performance than AOT systems and substantially better efficiency than prior trained agentic memory, with no numbers."
+      },
+      {
+        "claim_number": 2,
+        "verdict": "supported",
+        "reason": "The abstract argues for a pluggable middleware layer instead of bespoke memory, lists the six challenges including those named, and presents ALTK-Evolve as a reference implementation that motivates a research agenda."
+      },
+      {
+        "claim_number": 3,
+        "verdict": "supported",
+        "reason": "The labels, checkpoints, central authority rule and the protection-fault framing all match the abstract. No results are reported."
+      },
+      {
+        "claim_number": 4,
+        "verdict": "supported",
+        "reason": "The abstract gives the 'judge by future actions' argument, the three-axis taxonomy, the evaluation protocol for retention, adaptation and transfer, and the scaling framework. No empirical results are mentioned."
+      },
+      {
+        "claim_number": 5,
+        "verdict": "supported",
+        "reason": "The personas, the ~500k tokens, the 200 verified tasks per persona, and the cost and latency reporting requirement all match the abstract."
+      },
+      {
+        "claim_number": 6,
+        "verdict": "supported",
+        "reason": "The abstract states that correct memories can also induce sycophancy, describes context-aware calibration of each memory's influence, and reports improved reliability on three benchmarks without figures."
+      },
+      {
+        "claim_number": 7,
+        "verdict": "supported",
+        "reason": "The 23 experts, the reporting elements, and the risks of data leakage and attacks on reporting infrastructure all match the abstract."
+      },
+      {
+        "claim_number": 8,
+        "verdict": "supported",
+        "reason": "The abstract lists memory contamination and cross-session leakage, says persistent memory can carry compromised information, distinguishes empirical from conceptual mitigations, and states TADL is not yet validated."
+      },
+      {
+        "claim_number": 9,
+        "verdict": "supported",
+        "reason": "This is a reasonable implication of ClawMMU's provenance labels and its reliance on the harness. The abstract reports no evaluation."
+      },
+      {
+        "claim_number": 10,
+        "verdict": "supported",
+        "reason": "This is a conditional implication drawn directly from DolphinBench's stated design."
+      },
+      {
+        "claim_number": 11,
+        "verdict": "supported",
+        "reason": "The abstract describes over-alignment with outdated or inaccurate beliefs, calibration of each memory's influence, and results on three benchmarks."
+      },
+      {
+        "claim_number": 12,
+        "verdict": "supported",
+        "reason": "This follows from the reporting elements identified in the paper and its call to adapt current frameworks. The 'no standard yet' part is a reasonable reading."
+      },
+      {
+        "claim_number": 13,
+        "verdict": "partially supported",
+        "reason": "The pluggable, shareable layer and the research-agenda framing match the abstract. However, a reference implementation (ALTK-Evolve) exists, and the abstract does not say whether it is available, so 'not an available product' goes beyond the source."
+      }
+    ],
+    "usefulness": 4,
+    "usefulness_reason": "The brief is concrete and well-caveated. It covers specific memory architectures, a benchmark, security labeling, sycophancy and incident reporting, and says who is affected. It is somewhat dense, and offers few quantitative details because the abstracts lack them."
+  },
+  "n_claims": 13,
+  "citation_validity": 1.0,
+  "faithfulness": 0.9615384615384616,
+  "finding_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "implication_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.5
+  ],
+  "usefulness": 4
+}
